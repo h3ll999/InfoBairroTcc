@@ -27,6 +27,8 @@ public class ActivityMenuInicial extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+
+
         RecyclerView recyclerView = (RecyclerView) findViewById(R.id.activity_menu_inicial_recycler_view);
 
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);

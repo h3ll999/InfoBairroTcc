@@ -16,13 +16,18 @@ public class Mock {
 
 
 
-        for (int i = 0; i<200; i++){
+        for (int i = 0; i<20000; i++){
             Postagem p = new Postagem();
             p.setTitulo("Comprei minha moto");
-            p.setConteudo("Ganheir na loteria e comprei uma moto");
+            p.setConteudo("Ganheir na loteria e comprei uma moto" +
+                    "Ganheir na loteria e comprei uma moto" +
+                    "Ganheir na loteria e comprei uma moto" +
+                    "Ganheir na loteria e comprei uma moto" +
+                    "Ganheir na loteria e comprei uma moto" +
+                    "Ganheir na loteria e comprei uma moto");
             p.setCategoria("Evento");
-            p.setNome("Jose bunda");
-            p.setUrlPerfilUsuario("http://www.pi-cube.com/wp-content/uploads/2015/04/team-placeholder.jpg");
+            p.setNome("Mr. Mundiça");
+            p.setUrlPerfilUsuario("https://pbs.twimg.com/profile_images/689937066520625153/EKPQ5hNO.jpg");
             postagens.add(p);
         }
 

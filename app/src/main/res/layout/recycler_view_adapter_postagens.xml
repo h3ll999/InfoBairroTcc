@@ -6,28 +6,24 @@
     android:layout_height="wrap_content">
 
     <RelativeLayout
-        android:background="#ff0000"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/layout"
+        android:clickable="true"
+        android:focusable="true"
+        android:background="?android:attr/selectableItemBackground"
         android:layout_alignParentTop="true"
         android:layout_alignParentStart="true">
-
-        <ImageView
-            app:srcCompat="@mipmap/ic_launcher"
-            android:id="@+id/menu_inicial_img_foto_usuario"
-            android:layout_marginLeft="16dp"
-            android:layout_marginTop="16dp"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            />
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="ATIREI O PAU NO GATO"
+            android:textSize="20sp"
+            android:textStyle="bold"
             android:layout_marginTop="16dp"
             android:layout_marginLeft="16dp"
+            android:layout_marginRight="16dp"
             android:layout_toRightOf="@+id/menu_inicial_img_foto_usuario"
             android:id="@+id/menu_inicial_txv_titulo_postagem"/>
 
@@ -37,6 +33,7 @@
             android:text="E o gato morreu"
             android:layout_marginTop="10dp"
             android:layout_marginLeft="16dp"
+            android:layout_marginRight="16dp"
             android:layout_toRightOf="@+id/menu_inicial_img_foto_usuario"
             android:layout_below="@+id/menu_inicial_txv_titulo_postagem"
             android:id="@+id/menu_inicial_txv_conteudo_postagem"/>
@@ -45,21 +42,40 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="José"
-            android:layout_marginTop="5dp"
+            android:gravity="center_horizontal"
+            android:layout_marginTop="16dp"
             android:layout_marginLeft="16dp"
-            android:layout_below="@+id/menu_inicial_img_foto_usuario"
-            android:id="@+id/menu_inicial_txv_nome_usuario_postagem"/>
+            android:layout_marginBottom="16dp"
+            android:layout_below="@id/menu_inicial_txv_conteudo_postagem"
+            android:id="@+id/menu_inicial_txv_nome_usuario_postagem"
+            android:layout_toEndOf="@+id/menu_inicial_img_foto_usuario" />
+
+        <ImageView
+            app:srcCompat="@mipmap/ic_launcher"
+            android:id="@+id/menu_inicial_img_foto_usuario"
+            android:layout_marginLeft="16dp"
+            android:layout_width="70dp"
+            android:layout_marginTop="16dp"
+            android:layout_alignParentStart="true"
+            android:layout_height="70dp" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Categoria"
             android:layout_marginLeft="16dp"
-            android:layout_below="@+id/menu_inicial_txv_nome_usuario_postagem"
-
             android:id="@+id/menu_inicial_txv_categoria_postagem"
-            android:layout_alignParentBottom="false"
-            android:layout_alignParentEnd="true" />
+            android:layout_alignBaseline="@+id/menu_inicial_txv_nome_usuario_postagem"
+            android:layout_alignBottom="@+id/menu_inicial_txv_nome_usuario_postagem"
+            android:layout_alignEnd="@+id/menu_inicial_txv_conteudo_postagem" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+            android:background="#a9a9a9"
+            android:layout_marginLeft="16dp"
+            android:layout_marginRight="16dp"
+            android:layout_below="@+id/menu_inicial_txv_nome_usuario_postagem"/>
 
     </RelativeLayout>
 

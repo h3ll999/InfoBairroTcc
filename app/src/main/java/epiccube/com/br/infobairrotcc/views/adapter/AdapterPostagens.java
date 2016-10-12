@@ -8,7 +8,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
@@ -42,7 +44,7 @@ public class AdapterPostagens extends RecyclerView.Adapter<AdapterPostagens.Adap
     }
 
     @Override
-    public void onBindViewHolder(AdapterPostagensViewHolder holder, int position) {
+    public void onBindViewHolder(final AdapterPostagensViewHolder holder, int position) {
         Glide.with(context)
                 .load(listaPostagem.get(holder.getAdapterPosition()).getUrlPerfilUsuario())
                 .bitmapTransform(new CropCircleTransformation(context))
@@ -53,6 +55,13 @@ public class AdapterPostagens extends RecyclerView.Adapter<AdapterPostagens.Adap
         holder.conteudo.setText(listaPostagem.get(position).getConteudo());
         holder.categoria.setText(listaPostagem.get(position).getCategoria());
         holder.nome.setText(listaPostagem.get(position).getNome());
+
+        holder.layout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Toast.makeText(context,holder.getAdapterPosition()+" pos", Toast.LENGTH_SHORT).show();
+            }
+        });
 
     }
 
@@ -69,6 +78,7 @@ public class AdapterPostagens extends RecyclerView.Adapter<AdapterPostagens.Adap
     public static class AdapterPostagensViewHolder extends RecyclerView.ViewHolder {
 
         //DECLARA VARIAVEIS DO POSTAGEM
+        private RelativeLayout layout;
         private ImageView imagemPerfil;
         private TextView titulo;
         private TextView conteudo;
@@ -77,6 +87,7 @@ public class AdapterPostagens extends RecyclerView.Adapter<AdapterPostagens.Adap
 
         public AdapterPostagensViewHolder(View itemView) {
             super(itemView);
+            layout = (RelativeLayout) itemView.findViewById(R.id.layout);
             imagemPerfil = (ImageView) itemView.findViewById(R.id.menu_inicial_img_foto_usuario);
             titulo = (TextView) itemView.findViewById(R.id.menu_inicial_txv_titulo_postagem);
             conteudo = (TextView) itemView.findViewById(R.id.menu_inicial_txv_conteudo_postagem);
