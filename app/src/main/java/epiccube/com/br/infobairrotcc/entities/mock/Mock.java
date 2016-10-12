@@ -14,10 +14,15 @@ public class Mock {
     public static List<Postagem> postagens(){
         List<Postagem> postagens = new ArrayList<>();
 
-        for (int i = 0; i<20000; i++){
+
+
+        for (int i = 0; i<200; i++){
             Postagem p = new Postagem();
-            p.setTitulo("AAAAA");
-            p.setConteudo("AAAAA");
+            p.setTitulo("Comprei minha moto");
+            p.setConteudo("Ganheir na loteria e comprei uma moto");
+            p.setCategoria("Evento");
+            p.setNome("Jose bunda");
+            p.setUrlPerfilUsuario("http://www.pi-cube.com/wp-content/uploads/2015/04/team-placeholder.jpg");
             postagens.add(p);
         }
 

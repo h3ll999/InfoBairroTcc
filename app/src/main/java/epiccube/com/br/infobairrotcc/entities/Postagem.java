@@ -10,9 +10,11 @@ public class Postagem {
 
     private String id;
     private String titulo;
+    private String nome;
     private String conteudo;
     private String categoria;
     private String uidUsuario;
+    private String urlPerfilUsuario; //TODO TEMPORARIO
     private List<String> urlFotosPostagem;
 
     public String getId() {
@@ -62,4 +64,21 @@ public class Postagem {
     public void setUrlFotosPostagem(List<String> urlFotosPostagem) {
         this.urlFotosPostagem = urlFotosPostagem;
     }
+
+    public String getNome() {
+        return nome;
+    }
+
+    public void setNome(String nome) {
+        this.nome = nome;
+    }
+
+    public String getUrlPerfilUsuario() {
+        return urlPerfilUsuario;
+    }
+
+    public void setUrlPerfilUsuario(String urlPerfilUsuario) {
+        this.urlPerfilUsuario = urlPerfilUsuario;
+    }
 }
+
