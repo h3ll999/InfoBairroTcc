@@ -16,14 +16,15 @@
             android:text="Toque na imagem ao lado para adicionar uma foto ao seu perfil."
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_toRightOf="@+id/imageView2"
+            android:layout_marginLeft="16dp"
+            android:layout_toRightOf="@+id/cadastro_img_perfil"
             android:id="@+id/cadastro_txv_foto"
             android:layout_centerVertical="true" />
 
         <ImageView
             android:layout_height="120dp"
             app:srcCompat="@mipmap/ic_launcher"
-            android:id="@+id/imageView2"
+            android:id="@+id/cadastro_img_perfil"
             android:layout_width="120dp"
             android:layout_centerVertical="true"
             android:layout_alignParentStart="true" />
@@ -43,7 +44,7 @@
             android:ems="10"
             android:layout_alignParentTop="true"
 
-            android:id="@+id/editText"
+            android:id="@+id/cadastro_edt_nome"
             android:hint="Nome"
             android:layout_alignParentEnd="true"
             android:layout_alignParentStart="true" />
@@ -54,9 +55,9 @@
             android:layout_marginTop="16dp"
             android:inputType="textEmailAddress"
             android:ems="10"
-            android:layout_below="@+id/editText"
-            android:layout_alignEnd="@+id/editText"
-            android:id="@+id/editText2"
+            android:layout_below="@+id/cadastro_edt_nome"
+            android:layout_alignEnd="@+id/cadastro_edt_nome"
+            android:id="@+id/cadastro_edt_email"
             android:hint="Email"
             android:layout_alignParentStart="true" />
 
@@ -66,9 +67,9 @@
             android:inputType="textPassword"
             android:layout_marginTop="16dp"
             android:ems="10"
-            android:id="@+id/editText3"
+            android:id="@+id/cadastro_edt_senha"
             android:hint="Senha"
-            android:layout_below="@+id/editText2"
+            android:layout_below="@+id/cadastro_edt_email"
             android:layout_alignParentStart="true" />
     </RelativeLayout>
 

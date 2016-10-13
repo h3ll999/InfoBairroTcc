@@ -6,6 +6,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
+import epiccube.com.br.infobairrotcc.views.activity.ActivityCadastro;
 import epiccube.com.br.infobairrotcc.views.activity.ActivityMenuInicial;
 import epiccube.com.br.infobairrotcc.R;
 import epiccube.com.br.infobairrotcc.entities.Usuario;
@@ -67,7 +68,7 @@ public class HelperTelaLogin {
             @Override
             public void onClick(View v) {
 
-                Intent i = new Intent(context, ActivityMenuInicial.class);
+                Intent i = new Intent(context, ActivityCadastro.class);
                 context.startActivity(i);
 
             }
