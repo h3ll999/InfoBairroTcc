@@ -55,12 +55,12 @@ public class ActivityMenuInicial extends AppCompatActivity
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                FragmentManager fm = getSupportFragmentManager();
-                dialog = new DialogPostagem(ActivityMenuInicial.this);
-                dialog.show(fm, "DIALOG_FRAGMENT_POSTAGEM");
+                //FragmentManager fm = getSupportFragmentManager();
+                //dialog = new DialogPostagem(ActivityMenuInicial.this);
+                //dialog.show(fm, "DIALOG_FRAGMENT_POSTAGEM");
 
-                //Intent intent = new Intent(ActivityMenuInicial.this, ActivityPostagem.class);
-                //startActivity(intent);
+                Intent intent = new Intent(ActivityMenuInicial.this, ActivityPostagem.class);
+                startActivity(intent);
             }
         });
     }
