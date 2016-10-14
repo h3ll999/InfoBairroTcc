@@ -12,7 +12,7 @@ import org.greenrobot.eventbus.EventBus;
 
 import epiccube.com.br.infobairrotcc.R;
 import epiccube.com.br.infobairrotcc.eventos.Eventos;
-import epiccube.com.br.infobairrotcc.views.helper.HelperTelaCadastro;
+import epiccube.com.br.infobairrotcc.views.helper.HelperActivityCadastro;
 
 /**
  * Created by ivanc on 11/10/2016.
@@ -20,7 +20,7 @@ import epiccube.com.br.infobairrotcc.views.helper.HelperTelaCadastro;
 
 public class ActivityCadastro  extends AppCompatActivity{
 
-    private HelperTelaCadastro helperTelaCadastro;
+    private HelperActivityCadastro helperActivityCadastro;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -29,8 +29,8 @@ public class ActivityCadastro  extends AppCompatActivity{
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        helperTelaCadastro = new HelperTelaCadastro(this);
-        helperTelaCadastro.cast().onClick();
+        helperActivityCadastro = new HelperActivityCadastro(this);
+        helperActivityCadastro.cast().onClick();
 
     }
 

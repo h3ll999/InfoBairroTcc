@@ -18,7 +18,7 @@ import epiccube.com.br.infobairrotcc.models.entities.Usuario;
  * Created by ivanc on 11/10/2016.
  */
 
-public class HelperTelaLogin {
+public class HelperActivityLogin {
 
     private AppCompatActivity context;
 
@@ -32,15 +32,15 @@ public class HelperTelaLogin {
     private String email;
     private String senha;
 
-    public HelperTelaLogin(AppCompatActivity context){
+    public HelperActivityLogin(AppCompatActivity context){
         this.context = context;
     }
 
-    public static HelperTelaLogin init(AppCompatActivity context){
-        return new HelperTelaLogin(context);
+    public static HelperActivityLogin init(AppCompatActivity context){
+        return new HelperActivityLogin(context);
     }
 
-    public HelperTelaLogin cast(){
+    public HelperActivityLogin cast(){
 
         login_edt_email = (EditText) context.findViewById(R.id.login_edt_email);
         login_edt_senha = (EditText) context.findViewById(R.id.login_edt_senha);
@@ -52,7 +52,7 @@ public class HelperTelaLogin {
 
     }
 
-    public HelperTelaLogin onClick(){
+    public HelperActivityLogin onClick(){
         login_btn_login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

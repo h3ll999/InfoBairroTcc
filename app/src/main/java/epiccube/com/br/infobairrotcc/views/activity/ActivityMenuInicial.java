@@ -3,6 +3,7 @@ package epiccube.com.br.infobairrotcc.views.activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
+import android.support.v4.app.FragmentManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
@@ -15,15 +16,21 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import org.greenrobot.eventbus.EventBus;
+
 import epiccube.com.br.infobairrotcc.R;
+import epiccube.com.br.infobairrotcc.eventos.Eventos;
 import epiccube.com.br.infobairrotcc.models.mock.Mock;
 import epiccube.com.br.infobairrotcc.views.adapter.AdapterPostagens;
+import epiccube.com.br.infobairrotcc.views.dialogs.DialogPostagem;
 
 public class ActivityMenuInicial extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
-    Toolbar toolbar;
-    FloatingActionButton fab;
+    private Toolbar toolbar;
+    private FloatingActionButton fab;
+
+    private DialogPostagem dialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,8 +55,12 @@ public class ActivityMenuInicial extends AppCompatActivity
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(ActivityMenuInicial.this, ActivityPostagem.class);
-                startActivity(intent);
+                FragmentManager fm = getSupportFragmentManager();
+                dialog = new DialogPostagem(ActivityMenuInicial.this);
+                dialog.show(fm, "DIALOG_FRAGMENT_POSTAGEM");
+
+                //Intent intent = new Intent(ActivityMenuInicial.this, ActivityPostagem.class);
+                //startActivity(intent);
             }
         });
     }
@@ -81,6 +92,9 @@ public class ActivityMenuInicial extends AppCompatActivity
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
+        } else if(dialog!=null){
+            EventBus.getDefault().post(new Eventos.FechaDialogoPostagem());
+
         } else {
             super.onBackPressed();
         }
@@ -126,4 +140,5 @@ public class ActivityMenuInicial extends AppCompatActivity
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }
+
 }

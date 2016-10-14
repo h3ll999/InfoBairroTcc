@@ -6,7 +6,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 
 import epiccube.com.br.infobairrotcc.R;
-import epiccube.com.br.infobairrotcc.views.helper.HelperTelaLogin;
+import epiccube.com.br.infobairrotcc.views.helper.HelperActivityLogin;
 
 /**
  * Created by ivanc on 11/10/2016.
@@ -20,7 +20,7 @@ public class ActivityLogin extends AppCompatActivity {
         setContentView(R.layout.activity_login);
         getSupportActionBar().hide();
 
-        HelperTelaLogin.init(this).cast().onClick();
+        HelperActivityLogin.init(this).cast().onClick();
 
     }
 

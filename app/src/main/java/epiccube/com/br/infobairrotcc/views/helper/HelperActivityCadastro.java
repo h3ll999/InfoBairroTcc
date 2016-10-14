@@ -20,7 +20,6 @@ import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 
 import epiccube.com.br.infobairrotcc.R;
-import epiccube.com.br.infobairrotcc.models.entities.Postagem;
 import epiccube.com.br.infobairrotcc.models.entities.Usuario;
 import epiccube.com.br.infobairrotcc.eventos.Eventos;
 import epiccube.com.br.infobairrotcc.validator.Validar;
@@ -31,7 +30,7 @@ import jp.wasabeef.glide.transformations.CropCircleTransformation;
  * Created by ivanc on 13/10/2016.
  */
 
-public class HelperTelaCadastro {
+public class HelperActivityCadastro {
 
     private AppCompatActivity context;
     private ImageView cadastro_img_perfil;
@@ -46,17 +45,17 @@ public class HelperTelaCadastro {
     private Usuario usuario;
     private Uri caminhoImagemSelecionada;
 
-    public HelperTelaCadastro(AppCompatActivity context){
+    public HelperActivityCadastro(AppCompatActivity context){
         this.context=context;
         EventBus.getDefault().register(this); // REGISTRA NA CLASSE O OUVINTE
-        context.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
+        this.context.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
     }
 
-    public static HelperTelaCadastro init(AppCompatActivity context){
-        return new HelperTelaCadastro(context);
+    public static HelperActivityCadastro init(AppCompatActivity context){
+        return new HelperActivityCadastro(context);
     }
 
-    public HelperTelaCadastro cast(){
+    public HelperActivityCadastro cast(){
 
         cadastro_img_perfil = (ImageView) context.findViewById(R.id.cadastro_img_perfil);
         cadastro_edt_nome = (EditText) context.findViewById(R.id.cadastro_edt_nome);
@@ -68,7 +67,7 @@ public class HelperTelaCadastro {
         return this;
     }
 
-    public HelperTelaCadastro onClick(){
+    public HelperActivityCadastro onClick(){
 
         cadastro_img_perfil.setOnClickListener(new View.OnClickListener() {
             @Override

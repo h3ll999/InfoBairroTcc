@@ -9,6 +9,7 @@ import android.net.Uri;
 public class Eventos {
 
 
+    public static class FechaDialogoPostagem{}
 
     public static class SelecionaImagemSelecionada{
 
