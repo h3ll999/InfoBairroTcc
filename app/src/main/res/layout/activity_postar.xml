@@ -5,11 +5,12 @@
     android:id="@+id/activity_postar_linear_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="5dp"
+    android:padding="3dp"
     android:background="#00ff0000"
     >
 
     <LinearLayout
+        android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@drawable/layout_bg"
@@ -18,7 +19,6 @@
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-
             android:layout_weight="1">
 
             <EditText

@@ -23,19 +23,19 @@
     </style>
 
     <style name="TransparentCompat" parent="AppTheme">
-        <item name="android:windowNoTitle">true</item>
-        <item name="android:statusBarColor">#8e0000</item>
-        <item name="android:windowBackground">@android:color/transparent</item>
-        <item name="android:colorBackgroundCacheHint">@null</item>
-        <item name="android:windowIsTranslucent">true</item>
-        <item name="android:windowAnimationStyle">@android:style/Animation</item>
-        <item name="android:windowContentOverlay">@null</item>
-        <item name="android:backgroundDimEnabled">true</item>
-    </style>
+       <!-- <item name="android:windowNoTitle">true</item> -->
+         <item name="android:statusBarColor">#780000</item>
+         <item name="android:windowBackground">@android:color/transparent</item>
+         <item name="android:colorBackgroundCacheHint">@null</item>
+         <item name="android:windowIsTranslucent">true</item>
+         <item name="android:windowAnimationStyle">@android:style/Animation</item>
+         <item name="android:windowContentOverlay">@null</item>
+         <item name="android:backgroundDimEnabled">true</item>
+     </style>
 
-    <style name="dialogAnim" parent="@android:style/Animation.Activity">
-        <item name="android:windowEnterAnimation">@anim/anim_slide_up</item>
-        <item name="android:windowExitAnimation">@anim/anim_slide_down</item>
-    </style>
+     <style name="dialogAnim" parent="@android:style/Animation.Activity">
+         <item name="android:windowEnterAnimation">@anim/anim_slide_up</item>
+         <item name="android:windowExitAnimation">@anim/anim_slide_down</item>
+     </style>
 
-</resources>
+ </resources>
