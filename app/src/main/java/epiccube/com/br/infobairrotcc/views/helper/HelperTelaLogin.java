@@ -9,7 +9,7 @@ import android.widget.EditText;
 import epiccube.com.br.infobairrotcc.views.activity.ActivityCadastro;
 import epiccube.com.br.infobairrotcc.views.activity.ActivityMenuInicial;
 import epiccube.com.br.infobairrotcc.R;
-import epiccube.com.br.infobairrotcc.entities.Usuario;
+import epiccube.com.br.infobairrotcc.models.entities.Usuario;
 
 /**
  * Created by ivanc on 11/10/2016.

@@ -15,7 +15,7 @@ public class ValidatorCadUsuario {
 
     }
 
-    public boolean validaCadastro(){
+    public static boolean validaCadastro(String nome,String email,String senha){
 
         if(nome == null || email == null || senha == null || senha.length()<6){
             return false;

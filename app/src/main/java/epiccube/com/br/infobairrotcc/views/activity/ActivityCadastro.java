@@ -7,7 +7,10 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 
+import org.greenrobot.eventbus.EventBus;
+
 import epiccube.com.br.infobairrotcc.R;
+import epiccube.com.br.infobairrotcc.eventos.Eventos;
 import epiccube.com.br.infobairrotcc.views.helper.HelperTelaCadastro;
 
 /**
@@ -34,7 +37,8 @@ public class ActivityCadastro  extends AppCompatActivity{
         if(resultCode != Activity.RESULT_CANCELED) {
             if (requestCode == 1) {
                 Uri perfilSelecionado = data.getData();
-                helperTelaCadastro.abrirImagemSelecionada(perfilSelecionado);
+                //DÁ UM "GRITO" E JOGA O OBJETO PARA O "ALÉM" E ESPERA QUE ALGUÉM OUÇA...QUEM VAI OUVIR É QUEM TIVER O @Subscribe como annotation e quem receber o parâmetro do mesmo tipo
+                EventBus.getDefault().post(new Eventos.SelecionaImagemSelecionada(perfilSelecionado));
             }
         }
     }

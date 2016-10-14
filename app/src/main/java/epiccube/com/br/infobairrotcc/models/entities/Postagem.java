@@ -1,12 +1,13 @@
-package epiccube.com.br.infobairrotcc.entities;
+package epiccube.com.br.infobairrotcc.models.entities;
 
+import java.io.Serializable;
 import java.util.List;
 
 /**
  * Created by ivanc on 11/10/2016.
  */
 
-public class Postagem {
+public class Postagem implements Serializable{
 
     private String id;
     private String titulo;
@@ -79,6 +80,16 @@ public class Postagem {
 
     public void setUrlPerfilUsuario(String urlPerfilUsuario) {
         this.urlPerfilUsuario = urlPerfilUsuario;
+    }
+
+    @Override
+    public String toString() {
+        return "Postagem{" +
+                "titulo='" + titulo + '\'' +
+                ", nome='" + nome + '\'' +
+                ", conteudo='" + conteudo + '\'' +
+                ", categoria='" + categoria + '\'' +
+                '}';
     }
 }
 

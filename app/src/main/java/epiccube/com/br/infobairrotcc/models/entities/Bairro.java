@@ -1,4 +1,4 @@
-package epiccube.com.br.infobairrotcc.entities;
+package epiccube.com.br.infobairrotcc.models.entities;
 
 import java.util.List;
 

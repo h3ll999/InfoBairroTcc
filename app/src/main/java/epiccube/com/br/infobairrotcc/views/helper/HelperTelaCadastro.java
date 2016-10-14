@@ -12,9 +12,14 @@ import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+
 import epiccube.com.br.infobairrotcc.R;
-import epiccube.com.br.infobairrotcc.entities.Usuario;
+import epiccube.com.br.infobairrotcc.models.entities.Usuario;
+import epiccube.com.br.infobairrotcc.eventos.Eventos;
 import epiccube.com.br.infobairrotcc.validator.ValidatorCadUsuario;
+import epiccube.com.br.infobairrotcc.views.activity.ActivityMenuInicial;
 import jp.wasabeef.glide.transformations.CropCircleTransformation;
 
 /**
@@ -32,13 +37,12 @@ public class HelperTelaCadastro {
     private String nome;
     private String email;
     private String senha;
-    private boolean validatorCadUsuario;
-    boolean testeCadastro;
     private Usuario usuario;
     private Uri caminhoImagemSelecionada;
 
     public HelperTelaCadastro(AppCompatActivity context){
         this.context=context;
+        EventBus.getDefault().register(this); // REGISTRA NA CLASSE O OUVINTE
     }
 
     public static HelperTelaCadastro init(AppCompatActivity context){
@@ -79,9 +83,7 @@ public class HelperTelaCadastro {
                 email = cadastro_edt_email.getText().toString().trim();
                 senha = cadastro_edt_senha.getText().toString().trim();
 
-                testeCadastro = validatorCadUsuario = new ValidatorCadUsuario(nome,email,senha).validaCadastro();
-
-                if(testeCadastro == true){
+                if(ValidatorCadUsuario.validaCadastro(nome,email,senha)){
 
                     Toast.makeText(context, "Cadastrado com sucesso!", Toast.LENGTH_SHORT).show();
 
@@ -92,6 +94,8 @@ public class HelperTelaCadastro {
                     usuario.setSenha(senha);
 
                     //TODO - cadastrar usuario no firebase
+                    Intent intent = new Intent(context, ActivityMenuInicial.class);
+                    context.startActivity(intent);
 
                 }else{
                     Toast.makeText(context, "Erro ao cadastrar campos vazios ou senha curta " +
@@ -103,9 +107,10 @@ public class HelperTelaCadastro {
         return this;
     }
 
-    public void abrirImagemSelecionada(Uri imagemSelecionada){
-
-        caminhoImagemSelecionada = imagemSelecionada;
+    // MÉTODO PARA OUVIR A CHAMADA DO POST...RECEBE O PARÂMETRO DO EventBus.getDefault.post();
+    @Subscribe
+    public void abrirImagemSelecionada(Eventos.SelecionaImagemSelecionada imagemSelecionada){
+        caminhoImagemSelecionada = imagemSelecionada.getImagemSelecionada();
         Glide.get(context).clearMemory();
         Glide.with(context).load(caminhoImagemSelecionada)
                 .bitmapTransform(new CropCircleTransformation(context))

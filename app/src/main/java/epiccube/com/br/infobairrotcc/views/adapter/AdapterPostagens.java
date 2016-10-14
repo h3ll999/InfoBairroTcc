@@ -1,7 +1,7 @@
 package epiccube.com.br.infobairrotcc.views.adapter;
 
 
-import android.support.v4.widget.TextViewCompat;
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -18,7 +18,9 @@ import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import java.util.List;
 
 import epiccube.com.br.infobairrotcc.R;
-import epiccube.com.br.infobairrotcc.entities.Postagem;
+import epiccube.com.br.infobairrotcc.models.contantes.Constantes;
+import epiccube.com.br.infobairrotcc.models.entities.Postagem;
+import epiccube.com.br.infobairrotcc.views.activity.ActivityVisualizaPostagem;
 import jp.wasabeef.glide.transformations.CropCircleTransformation;
 
 /**
@@ -59,7 +61,9 @@ public class AdapterPostagens extends RecyclerView.Adapter<AdapterPostagens.Adap
         holder.layout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(context,holder.getAdapterPosition()+" pos", Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(context, ActivityVisualizaPostagem.class);
+                intent.putExtra(Constantes.INTENT_POSTAGEM, listaPostagem.get(holder.getAdapterPosition()));
+                context.startActivity(intent);
             }
         });
 
@@ -97,3 +101,14 @@ public class AdapterPostagens extends RecyclerView.Adapter<AdapterPostagens.Adap
     }
 
 }
+
+// TODO - VALIDAÇÃO LOGIN
+// TODO - VALIDAÇÃO CADASTRO (INSERIR FOTO DO USUÁRIO)
+// TODO - TELA DE POSTAGEM (E SUA VALIDAÇÃO) (E INSERIR UMAS FOTOS NA POSTAGEM)
+// TODO - TELA VISUALIZAÇÃO POSTAGEM
+
+
+// TODO FILTRAGEM PELOS BAIRROS
+
+
+
