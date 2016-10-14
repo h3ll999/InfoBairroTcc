@@ -1,10 +1,13 @@
 package epiccube.com.br.infobairrotcc.views.helper;
 
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.PorterDuff;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 
 import epiccube.com.br.infobairrotcc.views.activity.ActivityCadastro;
 import epiccube.com.br.infobairrotcc.views.activity.ActivityMenuInicial;
@@ -22,12 +25,12 @@ public class HelperTelaLogin {
     private EditText login_edt_email;
     private EditText login_edt_senha;
     private Button login_btn_login;
-    private Button login_btn_cadastrar;
+    private TextView login_btn_cadastrar;
 
     private Usuario usuario;
 
-    String email;
-    String senha;
+    private String email;
+    private String senha;
 
     public HelperTelaLogin(AppCompatActivity context){
         this.context = context;
@@ -42,7 +45,8 @@ public class HelperTelaLogin {
         login_edt_email = (EditText) context.findViewById(R.id.login_edt_email);
         login_edt_senha = (EditText) context.findViewById(R.id.login_edt_senha);
         login_btn_login = (Button) context.findViewById(R.id.login_btn_login);
-        login_btn_cadastrar = (Button) context.findViewById(R.id.login_btn_cadastrar);
+        login_btn_login.getBackground().setColorFilter(Color.parseColor("#ff4e43"), PorterDuff.Mode.SRC_ATOP); //TODO ARUMAR ESSA PORCARIA
+        login_btn_cadastrar = (TextView) context.findViewById(R.id.login_btn_cadastrar);
 
         return this;
 
@@ -56,10 +60,9 @@ public class HelperTelaLogin {
                 email = login_edt_email.getText().toString().trim();
                 senha = login_edt_senha.getText().toString().trim();
 
+                // Firebase onSuccess
                 Intent i = new Intent(context, ActivityMenuInicial.class);
                 context.startActivity(i);
-
-                //Firebase
 
             }
         });

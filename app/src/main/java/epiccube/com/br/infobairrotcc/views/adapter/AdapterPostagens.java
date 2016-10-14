@@ -49,6 +49,7 @@ public class AdapterPostagens extends RecyclerView.Adapter<AdapterPostagens.Adap
     public void onBindViewHolder(final AdapterPostagensViewHolder holder, int position) {
         Glide.with(context)
                 .load(listaPostagem.get(holder.getAdapterPosition()).getUrlPerfilUsuario())
+                .placeholder(R.drawable.placeholder)
                 .bitmapTransform(new CropCircleTransformation(context))
                 .diskCacheStrategy(DiskCacheStrategy.SOURCE)
                 .into(holder.imagemPerfil);

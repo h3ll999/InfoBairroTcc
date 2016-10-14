@@ -1,89 +1,86 @@
 <?xml version="1.0" encoding="utf-8"?>
+
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:orientation="vertical"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:weightSum="3"
-    >
-
-    <RelativeLayout
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_weight="1">
+        android:weightSum="3"
+        >
 
-        <TextView
-            android:text="Toque na imagem ao lado para adicionar uma foto ao seu perfil."
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="16dp"
-            android:layout_toRightOf="@+id/cadastro_img_perfil"
-            android:id="@+id/cadastro_txv_foto"
-            android:layout_centerVertical="true" />
-
-        <ImageView
-            android:layout_height="120dp"
-            app:srcCompat="@mipmap/ic_launcher"
-            android:id="@+id/cadastro_img_perfil"
-            android:layout_width="120dp"
-            android:layout_centerVertical="true"
-            android:layout_alignParentStart="true" />
-
-    </RelativeLayout>
-
-
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_weight="1">
-
-        <EditText
+        <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:inputType="textPersonName"
-            android:ems="10"
-            android:layout_alignParentTop="true"
+            android:layout_height="match_parent"
+            android:layout_weight="1">
 
-            android:id="@+id/cadastro_edt_nome"
-            android:hint="Nome"
-            android:layout_alignParentEnd="true"
-            android:layout_alignParentStart="true" />
+            <ImageView
+                android:layout_height="120dp"
+                app:srcCompat="@drawable/placeholder"
+                android:id="@+id/cadastro_img_perfil"
+                android:layout_width="120dp"
+                android:layout_centerVertical="true"
+                android:layout_centerHorizontal="true" />
 
-        <EditText
+        </RelativeLayout>
+
+
+        <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:inputType="textEmailAddress"
-            android:ems="10"
-            android:layout_below="@+id/cadastro_edt_nome"
-            android:layout_alignEnd="@+id/cadastro_edt_nome"
-            android:id="@+id/cadastro_edt_email"
-            android:hint="Email"
-            android:layout_alignParentStart="true" />
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center_vertical">
 
-        <EditText
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="textPersonName"
+                android:ems="10"
+                android:layout_alignParentTop="true"
+
+                android:id="@+id/cadastro_edt_nome"
+                android:hint="Nome"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentStart="true" />
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:inputType="textEmailAddress"
+                android:ems="10"
+                android:layout_below="@+id/cadastro_edt_nome"
+                android:layout_alignEnd="@+id/cadastro_edt_nome"
+                android:id="@+id/cadastro_edt_email"
+                android:hint="Email"
+                android:layout_alignParentStart="true" />
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="textPassword"
+                android:layout_marginTop="16dp"
+                android:ems="10"
+                android:id="@+id/cadastro_edt_senha"
+                android:hint="Senha"
+                android:layout_below="@+id/cadastro_edt_email"
+                android:layout_alignParentStart="true" />
+        </RelativeLayout>
+
+        <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:inputType="textPassword"
-            android:layout_marginTop="16dp"
-            android:ems="10"
-            android:id="@+id/cadastro_edt_senha"
-            android:hint="Senha"
-            android:layout_below="@+id/cadastro_edt_email"
-            android:layout_alignParentStart="true" />
-    </RelativeLayout>
+            android:layout_height="match_parent"
+            android:layout_weight="1">
 
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_weight="1">
+            <Button
+                android:text="Cadastrar"
+                android:textColor="@color/cardview_light_background"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/cadastro_btn_cadastrar"
+                android:layout_alignParentBottom="true"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentEnd="true" />
+        </RelativeLayout>
 
-        <Button
-            android:text="Cadastrar"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/cadastro_btn_cadastrar"
-            android:layout_alignParentBottom="true"
-            android:layout_alignParentEnd="true" />
-    </RelativeLayout>
 </LinearLayout>
+

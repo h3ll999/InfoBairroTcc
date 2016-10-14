@@ -24,11 +24,9 @@ public class ActivityPostagem extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-
         switch (item.getItemId()){
             case android.R.id.home: onBackPressed(); break;
         }
-
         return super.onOptionsItemSelected(item);
     }
 

@@ -6,6 +6,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
+import android.view.MenuItem;
 
 import org.greenrobot.eventbus.EventBus;
 
@@ -26,6 +27,8 @@ public class ActivityCadastro  extends AppCompatActivity{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_cadastro_novo_usuario);
 
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
         helperTelaCadastro = new HelperTelaCadastro(this);
         helperTelaCadastro.cast().onClick();
 
@@ -41,5 +44,13 @@ public class ActivityCadastro  extends AppCompatActivity{
                 EventBus.getDefault().post(new Eventos.SelecionaImagemSelecionada(perfilSelecionado));
             }
         }
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()){
+            case android.R.id.home: onBackPressed(); break;
+        }
+        return super.onOptionsItemSelected(item);
     }
 }

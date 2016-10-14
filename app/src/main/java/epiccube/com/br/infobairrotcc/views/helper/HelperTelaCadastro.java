@@ -1,10 +1,14 @@
 package epiccube.com.br.infobairrotcc.views.helper;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.PorterDuff;
 import android.net.Uri;
 import android.provider.MediaStore;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -16,9 +20,10 @@ import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 
 import epiccube.com.br.infobairrotcc.R;
+import epiccube.com.br.infobairrotcc.models.entities.Postagem;
 import epiccube.com.br.infobairrotcc.models.entities.Usuario;
 import epiccube.com.br.infobairrotcc.eventos.Eventos;
-import epiccube.com.br.infobairrotcc.validator.ValidatorCadUsuario;
+import epiccube.com.br.infobairrotcc.validator.Validar;
 import epiccube.com.br.infobairrotcc.views.activity.ActivityMenuInicial;
 import jp.wasabeef.glide.transformations.CropCircleTransformation;
 
@@ -34,6 +39,7 @@ public class HelperTelaCadastro {
     private EditText cadastro_edt_email;
     private EditText cadastro_edt_senha;
     private Button cadastro_btn_cadastrar;
+    private ProgressDialog progressDialog;
     private String nome;
     private String email;
     private String senha;
@@ -43,6 +49,7 @@ public class HelperTelaCadastro {
     public HelperTelaCadastro(AppCompatActivity context){
         this.context=context;
         EventBus.getDefault().register(this); // REGISTRA NA CLASSE O OUVINTE
+        context.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
     }
 
     public static HelperTelaCadastro init(AppCompatActivity context){
@@ -56,6 +63,7 @@ public class HelperTelaCadastro {
         cadastro_edt_email = (EditText) context.findViewById(R.id.cadastro_edt_email);
         cadastro_edt_senha = (EditText) context.findViewById(R.id.cadastro_edt_senha);
         cadastro_btn_cadastrar = (Button) context.findViewById(R.id.cadastro_btn_cadastrar);
+        cadastro_btn_cadastrar.getBackground().setColorFilter(Color.parseColor("#ff4e43"), PorterDuff.Mode.SRC_ATOP); //TODO ARUMAR ESSA PORCARIA
 
         return this;
     }
@@ -79,13 +87,15 @@ public class HelperTelaCadastro {
             @Override
             public void onClick(View v) {
 
+                cadastro_btn_cadastrar.setEnabled(false);
+
+                //progressDialog = ProgressDialog.show(context,"Cadastrando","Aguarde...", true, false);
+
                 nome = cadastro_edt_nome.getText().toString().trim();
                 email = cadastro_edt_email.getText().toString().trim();
                 senha = cadastro_edt_senha.getText().toString().trim();
 
-                if(ValidatorCadUsuario.validaCadastro(nome,email,senha)){
-
-                    Toast.makeText(context, "Cadastrado com sucesso!", Toast.LENGTH_SHORT).show();
+                if(Validar.CADASTRO(nome,email,senha)){
 
                     // com o cadastro validado enviado os valores para entidade usuario
                     usuario = new Usuario();
@@ -93,13 +103,21 @@ public class HelperTelaCadastro {
                     usuario.setEmail(email);
                     usuario.setSenha(senha);
 
+                    //progressDialog.dismiss();
+
                     //TODO - cadastrar usuario no firebase
                     Intent intent = new Intent(context, ActivityMenuInicial.class);
                     context.startActivity(intent);
+                    context.finish();
+
+                    Toast.makeText(context, "Cadastrado com sucesso!", Toast.LENGTH_SHORT).show();
+
 
                 }else{
-                    Toast.makeText(context, "Erro ao cadastrar campos vazios ou senha curta " +
-                            "a senha precisa ter 6 ou mais caracteres", Toast.LENGTH_SHORT).show();
+                    cadastro_btn_cadastrar.setEnabled(true);
+                    //progressDialog.dismiss();
+                    Toast.makeText(context, "Erro ao cadastrar campos vazios ou senha curta. " +
+                            "A senha precisa ter 6 ou mais caracteres", Toast.LENGTH_SHORT).show();
                 }
             }
         });
