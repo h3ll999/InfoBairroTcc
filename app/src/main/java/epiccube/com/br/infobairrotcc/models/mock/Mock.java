@@ -31,7 +31,7 @@ public class Mock {
                 p.setConteudo(SMALL_LOREM);
                 p.setCategoria("Evento "+(i+1));
                 p.setUsuario(new Usuario());
-                p.getUsuario().setNome("Mr. Mundiça "+(i+1));
+                p.getUsuario().setNome("Zézinho "+(i+1));
                 p.getUsuario().setPerfilUrl("https://pbs.twimg.com/profile_images/689937066520625153/EKPQ5hNO.jpg");
                 postagens.add(p);
             } else {
@@ -40,7 +40,7 @@ public class Mock {
                 p.setConteudo(HUGE_LOREM);
                 p.setCategoria("Atenção "+(i+1));
                 p.setUsuario(new Usuario());
-                p.getUsuario().setNome("Mr. Mundiça "+(i+1));
+                p.getUsuario().setNome("Mariazinha "+(i+1));
                 p.getUsuario().setPerfilUrl("https://pbs.twimg.com/profile_images/689937066520625153/EKPQ5hNO.jpg");
                 postagens.add(p);
             }

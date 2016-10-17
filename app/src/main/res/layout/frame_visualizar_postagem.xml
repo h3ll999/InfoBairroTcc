@@ -2,8 +2,8 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
-    android:layout_marginRight="16dp"
-    android:layout_marginLeft="16dp"
+    android:layout_marginRight="10dp"
+    android:layout_marginLeft="10dp"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
@@ -22,32 +22,43 @@
         android:layout_marginLeft="16dp"
         android:text="Nome"/>
 
-    <TextView
-        android:id="@+id/activity_visualiza_postagem_txv_postagem_conteudo"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/activity_visualiza_postagem_img_usuario_foto"
-        android:layout_marginTop="16dp"
-        android:textSize="18sp"
-        android:text="Conteúdo"/>
-
     <RelativeLayout
         android:id="@+id/activity_visualiza_postagem_layout_1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:background="#dedede"
-        android:layout_below="@+id/activity_visualiza_postagem_txv_postagem_conteudo">
+        android:layout_marginTop="5dp"
+        android:background="@drawable/visualizar_postagem_layout"
+        android:layout_below="@+id/activity_visualiza_postagem_img_usuario_foto">
 
+        <TextView
+            android:id="@+id/activity_visualiza_postagem_txv_postagem_conteudo"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:textSize="18sp"
+            android:text="Conteúdo"/>
+
+        <View
+            android:id="@+id/activity_visualiza_postagem_separator"
+            android:layout_width="match_parent"
+            android:layout_height="0.8dp"
+            android:layout_marginTop="16dp"
+            android:background="#bcbcbc"
+            android:layout_below="@+id/activity_visualiza_postagem_txv_postagem_conteudo"
+            />
+
+        <!-- #FF6666 -->
         <com.sackcentury.shinebuttonlib.ShineButton
             android:layout_width="40dp"
             android:layout_height="40dp"
+            android:layout_below="@+id/activity_visualiza_postagem_separator"
+            android:layout_marginTop="5dp"
             android:src="@android:color/darker_gray"
             android:id="@+id/po_image1"
             android:layout_alignParentBottom="true"
             android:layout_alignParentStart="true"
             app:btn_color="@android:color/darker_gray"
-            app:btn_fill_color="#FF6666"
+            app:btn_fill_color="@color/colorPrimary"
             app:allow_random_color="false"
             app:enable_flashing="false"
             app:big_shine_color="#FF6666"

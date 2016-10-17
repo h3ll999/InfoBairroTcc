@@ -27,7 +27,7 @@ public class ActivityVisualizaPostagem extends AppCompatActivity {
         Postagem postagem = (Postagem) getIntent().getSerializableExtra(Constantes.INTENT_POSTAGEM);
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-
+        getSupportActionBar().setElevation(0);
         getSupportActionBar().setTitle(postagem.getTitulo());
 
         HelperVisualizaPostagem visualizaPostagem = new HelperVisualizaPostagem(this, postagem);
