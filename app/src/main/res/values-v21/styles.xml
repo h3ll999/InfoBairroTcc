@@ -34,8 +34,8 @@
      </style>
 
      <style name="dialogAnim" parent="@android:style/Animation.Activity">
-         <item name="android:windowEnterAnimation">@anim/anim_slide_up</item>
-         <item name="android:windowExitAnimation">@anim/anim_slide_down</item>
+         <item name="android:windowEnterAnimation">@anim/anim_up_primeiro</item>
+         <item name="android:windowExitAnimation">@anim/anim_up_segundo</item>
      </style>
 
  </resources>

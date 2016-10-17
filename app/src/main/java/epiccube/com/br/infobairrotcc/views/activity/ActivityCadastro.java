@@ -28,6 +28,7 @@ public class ActivityCadastro  extends AppCompatActivity{
         setContentView(R.layout.activity_cadastro_novo_usuario);
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setElevation(0);
 
         helperActivityCadastro = new HelperActivityCadastro(this);
         helperActivityCadastro.cast().onClick();

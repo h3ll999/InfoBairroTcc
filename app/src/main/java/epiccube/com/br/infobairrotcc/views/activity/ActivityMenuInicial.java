@@ -3,7 +3,6 @@ package epiccube.com.br.infobairrotcc.views.activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
-import android.support.v4.app.FragmentManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
@@ -48,6 +47,7 @@ public class ActivityMenuInicial extends AppCompatActivity
     void setToolbar(){
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        // app:elevation="0dp" no app bar main
     }
 
     void setFAB(){
@@ -59,8 +59,10 @@ public class ActivityMenuInicial extends AppCompatActivity
                 //dialog = new DialogPostagem(ActivityMenuInicial.this);
                 //dialog.show(fm, "DIALOG_FRAGMENT_POSTAGEM");
 
+
                 Intent intent = new Intent(ActivityMenuInicial.this, ActivityPostagem.class);
                 startActivity(intent);
+                overridePendingTransition(R.anim.anim_up_primeiro, R.anim.anim_up_segundo);
             }
         });
     }
