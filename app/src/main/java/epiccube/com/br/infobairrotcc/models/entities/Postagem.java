@@ -11,12 +11,22 @@ public class Postagem implements Serializable{
 
     private String id;
     private String titulo;
-    private String nome;
     private String conteudo;
     private String categoria;
-    private String uidUsuario;
-    private String urlPerfilUsuario; //TODO TEMPORARIO
+    private Usuario usuario;
     private List<String> urlFotosPostagem;
+
+    public Postagem() {
+    }
+
+    public Postagem(String id, String titulo, String conteudo, String categoria, Usuario usuario, List<String> urlFotosPostagem) {
+        this.id = id;
+        this.titulo = titulo;
+        this.conteudo = conteudo;
+        this.categoria = categoria;
+        this.usuario = usuario;
+        this.urlFotosPostagem = urlFotosPostagem;
+    }
 
     public String getId() {
         return id;
@@ -50,12 +60,12 @@ public class Postagem implements Serializable{
         this.categoria = categoria;
     }
 
-    public String getUidUsuario() {
-        return uidUsuario;
+    public Usuario getUsuario() {
+        return usuario;
     }
 
-    public void setUidUsuario(String uidUsuario) {
-        this.uidUsuario = uidUsuario;
+    public void setUsuario(Usuario usuario) {
+        this.usuario = usuario;
     }
 
     public List<String> getUrlFotosPostagem() {
@@ -66,29 +76,14 @@ public class Postagem implements Serializable{
         this.urlFotosPostagem = urlFotosPostagem;
     }
 
-    public String getNome() {
-        return nome;
-    }
-
-    public void setNome(String nome) {
-        this.nome = nome;
-    }
-
-    public String getUrlPerfilUsuario() {
-        return urlPerfilUsuario;
-    }
-
-    public void setUrlPerfilUsuario(String urlPerfilUsuario) {
-        this.urlPerfilUsuario = urlPerfilUsuario;
-    }
-
     @Override
     public String toString() {
         return "Postagem{" +
-                "titulo='" + titulo + '\'' +
-                ", nome='" + nome + '\'' +
+                "id='" + id + '\'' +
+                ", titulo='" + titulo + '\'' +
                 ", conteudo='" + conteudo + '\'' +
                 ", categoria='" + categoria + '\'' +
+                ", usuario=" + usuario +
                 '}';
     }
 }

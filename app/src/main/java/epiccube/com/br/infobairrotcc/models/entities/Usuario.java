@@ -1,12 +1,13 @@
 package epiccube.com.br.infobairrotcc.models.entities;
 
+import java.io.Serializable;
 import java.util.List;
 
 /**
  * Created by ivanc on 11/10/2016.
  */
 
-public class Usuario {
+public class Usuario implements Serializable {
 
     private String uid;
     private String nome;
@@ -89,5 +90,13 @@ public class Usuario {
 
     public void setLatitudeLongitude(Double[] latitudeLongitude) {
         this.latitudeLongitude = latitudeLongitude;
+    }
+
+    @Override
+    public String toString() {
+        return "Usuario{" +
+                "nome='" + nome + '\'' +
+                ", email='" + email + '\'' +
+                '}';
     }
 }

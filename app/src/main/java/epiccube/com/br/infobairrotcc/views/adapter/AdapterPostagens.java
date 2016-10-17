@@ -17,6 +17,7 @@ import com.bumptech.glide.load.engine.DiskCacheStrategy;
 
 import java.util.List;
 
+import de.hdodenhof.circleimageview.CircleImageView;
 import epiccube.com.br.infobairrotcc.R;
 import epiccube.com.br.infobairrotcc.models.contantes.Constantes;
 import epiccube.com.br.infobairrotcc.models.entities.Postagem;
@@ -48,16 +49,16 @@ public class AdapterPostagens extends RecyclerView.Adapter<AdapterPostagens.Adap
     @Override
     public void onBindViewHolder(final AdapterPostagensViewHolder holder, int position) {
         Glide.with(context)
-                .load(listaPostagem.get(holder.getAdapterPosition()).getUrlPerfilUsuario())
+                .load(listaPostagem.get(holder.getAdapterPosition()).getUsuario().getPerfilUrl())
                 .placeholder(R.drawable.placeholder)
-                .bitmapTransform(new CropCircleTransformation(context))
+                //.bitmapTransform(new CropCircleTransformation(context))
                 .diskCacheStrategy(DiskCacheStrategy.SOURCE)
                 .into(holder.imagemPerfil);
 
         holder.titulo.setText(listaPostagem.get(position).getTitulo());
         holder.conteudo.setText(listaPostagem.get(position).getConteudo());
         holder.categoria.setText(listaPostagem.get(position).getCategoria());
-        holder.nome.setText(listaPostagem.get(position).getNome());
+        holder.nome.setText(listaPostagem.get(position).getUsuario().getNome());
 
         holder.layout.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -84,7 +85,7 @@ public class AdapterPostagens extends RecyclerView.Adapter<AdapterPostagens.Adap
 
         //DECLARA VARIAVEIS DO POSTAGEM
         private RelativeLayout layout;
-        private ImageView imagemPerfil;
+        private CircleImageView imagemPerfil;
         private TextView titulo;
         private TextView conteudo;
         private TextView categoria;
@@ -93,7 +94,7 @@ public class AdapterPostagens extends RecyclerView.Adapter<AdapterPostagens.Adap
         public AdapterPostagensViewHolder(View itemView) {
             super(itemView);
             layout = (RelativeLayout) itemView.findViewById(R.id.layout);
-            imagemPerfil = (ImageView) itemView.findViewById(R.id.menu_inicial_img_foto_usuario);
+            imagemPerfil = (CircleImageView) itemView.findViewById(R.id.menu_inicial_img_foto_usuario);
             titulo = (TextView) itemView.findViewById(R.id.menu_inicial_txv_titulo_postagem);
             conteudo = (TextView) itemView.findViewById(R.id.menu_inicial_txv_conteudo_postagem);
             categoria = (TextView) itemView.findViewById(R.id.menu_inicial_txv_categoria_postagem);

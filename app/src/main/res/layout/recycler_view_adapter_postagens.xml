@@ -50,7 +50,7 @@
             android:id="@+id/menu_inicial_txv_nome_usuario_postagem"
             android:layout_toEndOf="@+id/menu_inicial_img_foto_usuario" />
 
-        <ImageView
+        <de.hdodenhof.circleimageview.CircleImageView
             app:srcCompat="@mipmap/ic_launcher"
             android:id="@+id/menu_inicial_img_foto_usuario"
             android:layout_marginLeft="16dp"
