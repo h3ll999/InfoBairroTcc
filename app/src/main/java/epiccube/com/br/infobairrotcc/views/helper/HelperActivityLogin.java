@@ -9,6 +9,8 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import epiccube.com.br.infobairrotcc.models.mock.Mock;
+import epiccube.com.br.infobairrotcc.models.singleton.SingletonUsuario;
 import epiccube.com.br.infobairrotcc.views.activity.ActivityCadastro;
 import epiccube.com.br.infobairrotcc.views.activity.ActivityMenuInicial;
 import epiccube.com.br.infobairrotcc.R;
@@ -63,6 +65,9 @@ public class HelperActivityLogin {
                 // Firebase onSuccess
                 Intent i = new Intent(context, ActivityMenuInicial.class);
                 context.startActivity(i);
+
+                //Cria usuário falso e o salva numa variavel estática
+                SingletonUsuario.getInstancia().setUsuario(Mock.usuario());
 
             }
         });

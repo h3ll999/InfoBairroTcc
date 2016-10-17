@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import epiccube.com.br.infobairrotcc.models.entities.Postagem;
+import epiccube.com.br.infobairrotcc.models.entities.Usuario;
 
 /**
  * Created by ivanc on 11/10/2016.
@@ -11,11 +12,19 @@ import epiccube.com.br.infobairrotcc.models.entities.Postagem;
 
 public class Mock {
 
+    public static Usuario usuario(){
+        Usuario u = new Usuario();
+        u.setNome("Anderson Badari");
+        u.setEmail("a@gmail.com");
+        u.setPerfilUrl("https://lh3.googleusercontent.com/-JSXoTjIhI40/Unj1gNID1dI/AAAAAAAAACQ/" +
+                "S3jyLYloQsELdlCkqKvizmHAaaYfHfNkwCEw/w139-h140-p/1374929_525980544142839_108209134_n.jpg");
+
+
+        return u;
+    }
+
     public static List<Postagem> postagens(){
         List<Postagem> postagens = new ArrayList<>();
-
-
-
         for (int i = 0; i<200; i++){
 
             if (i%2==0){

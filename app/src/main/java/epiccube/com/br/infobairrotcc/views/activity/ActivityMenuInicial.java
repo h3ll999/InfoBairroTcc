@@ -14,14 +14,23 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.ImageView;
+import android.widget.TextView;
+import android.widget.Toast;
+
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
 
 import org.greenrobot.eventbus.EventBus;
 
+import de.hdodenhof.circleimageview.CircleImageView;
 import epiccube.com.br.infobairrotcc.R;
 import epiccube.com.br.infobairrotcc.eventos.Eventos;
 import epiccube.com.br.infobairrotcc.models.mock.Mock;
+import epiccube.com.br.infobairrotcc.models.singleton.SingletonUsuario;
 import epiccube.com.br.infobairrotcc.views.adapter.AdapterPostagens;
 import epiccube.com.br.infobairrotcc.views.dialogs.DialogPostagem;
+import jp.wasabeef.glide.transformations.CropCircleTransformation;
 
 public class ActivityMenuInicial extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -78,9 +87,41 @@ public class ActivityMenuInicial extends AppCompatActivity
     void setNavView(){
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+        setHeaderDetalhes(navigationView);
     }
 
-    void setRecyclerView(){
+    void setHeaderDetalhes(NavigationView nv){
+
+        //Pega
+        View v = nv.getHeaderView(0);
+
+        // Chama
+        CircleImageView imgUser = (CircleImageView) v.findViewById(R.id.activity_menuinicial_img_perfil);
+        TextView nomeUser = (TextView) v.findViewById(R.id.activity_menuinicial_txv_nome_usuario);
+
+        //Valoriza
+        Glide.with(this).load(SingletonUsuario.getInstancia().getUsuario().getPerfilUrl())
+                //.bitmapTransform(new CropCircleTransformation(this))
+                .diskCacheStrategy(DiskCacheStrategy.SOURCE)
+                .placeholder(R.drawable.placeholder)
+                .into(imgUser);
+
+        nomeUser.setText(SingletonUsuario.getInstancia().getUsuario().getNome());
+
+        //Cliques
+        imgUser.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(ActivityMenuInicial.this,
+                        SingletonUsuario.getInstancia().getUsuario().getNome(), Toast.LENGTH_SHORT).show();
+            }
+        });
+
+    }
+
+
+
+    void setRecyclerView(){ // TODO vai ir para um fragmento?!?!?!?!?
         RecyclerView recyclerView = (RecyclerView) findViewById(R.id.activity_menu_inicial_recycler_view);
 
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
@@ -96,7 +137,6 @@ public class ActivityMenuInicial extends AppCompatActivity
             drawer.closeDrawer(GravityCompat.START);
         } else if(dialog!=null){
             EventBus.getDefault().post(new Eventos.FechaDialogoPostagem());
-
         } else {
             super.onBackPressed();
         }
