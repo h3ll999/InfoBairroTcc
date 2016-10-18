@@ -29,6 +29,7 @@
         <activity android:name=".views.activity.ActivityVisualizaPostagem"> </activity>
         <activity android:name=".views.activity.ActivityPostagem"
             android:theme="@style/TransparentCompat"> </activity>
+        <activity android:name=".views.activity.ActivityVisualizarFotos"> </activity>
 
     </application>
 

@@ -15,6 +15,7 @@ import android.widget.Toast;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 
+import java.io.Serializable;
 import java.util.List;
 
 import de.hdodenhof.circleimageview.CircleImageView;
@@ -23,6 +24,7 @@ import epiccube.com.br.infobairrotcc.models.contantes.Constantes;
 import epiccube.com.br.infobairrotcc.models.entities.Postagem;
 import epiccube.com.br.infobairrotcc.utils.MyUtils;
 import epiccube.com.br.infobairrotcc.views.activity.ActivityVisualizaPostagem;
+import epiccube.com.br.infobairrotcc.views.activity.ActivityVisualizarFotos;
 import jp.wasabeef.glide.transformations.CropCircleTransformation;
 
 /**
@@ -57,25 +59,41 @@ public class AdapterPostagens extends RecyclerView.Adapter<AdapterPostagens.Adap
                 .into(holder.imagemPerfil);
 
         holder.titulo.setText(listaPostagem.get(position).getTitulo());
-        holder.conteudo.setText(MyUtils.verificaFormatacaoPostagem(listaPostagem.get(position).getConteudo()));
+        holder.conteudo.setText(MyUtils.verificaFormatacaoPostagem(listaPostagem.get(position).getConteudo()));// TODO ver mais
         holder.categoria.setText(listaPostagem.get(position).getCategoria());
         holder.nome.setText(listaPostagem.get(position).getUsuario().getNome());
 
-        Glide.with(context)
-                .load(listaPostagem.get(holder.getAdapterPosition()).getUsuario().getPerfilUrl())
-                .dontAnimate()
-                .fitCenter()
-                .placeholder(R.drawable.placeholder)
-                .diskCacheStrategy(DiskCacheStrategy.SOURCE)
-                .into(holder.imagemPost);
+        if(listaPostagem.get(holder.getAdapterPosition()).getUrlFotosPostagem().size()<1){
+            holder.verMaisImg.setVisibility(View.GONE);
+            holder.imagemPost.setVisibility(View.GONE);
+        } else {
+            if(listaPostagem.get(holder.getAdapterPosition()).getUrlFotosPostagem().size()>1){
+                holder.verMaisImg.setText("[Mais "+(listaPostagem.get(holder.getAdapterPosition())
+                        .getUrlFotosPostagem().size()-1)+" fotos...]");
+            }
 
-        //holder.imagemPost.setImageResource(R.drawable.placeholder);
+            Glide.with(context)
+                    .load(listaPostagem.get(holder.getAdapterPosition()).getUrlFotosPostagem().get(0))
+                    .centerCrop()
+                    .placeholder(R.drawable.placeholder_img_vazia)
+                    .diskCacheStrategy(DiskCacheStrategy.SOURCE)
+                    .into(holder.imagemPost);
+        }
 
         holder.layout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(context, ActivityVisualizaPostagem.class);
                 intent.putExtra(Constantes.INTENT_POSTAGEM, listaPostagem.get(holder.getAdapterPosition()));
+                context.startActivity(intent);
+            }
+        });
+
+        holder.imagemPost.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(context, ActivityVisualizarFotos.class);
+                intent.putExtra("LISTA_FOTOS", (Serializable) listaPostagem.get(holder.getAdapterPosition()));
                 context.startActivity(intent);
             }
         });
@@ -102,6 +120,7 @@ public class AdapterPostagens extends RecyclerView.Adapter<AdapterPostagens.Adap
         private TextView categoria;
         private TextView nome;
         private ImageView imagemPost;
+        private TextView verMaisImg;
 
         public AdapterPostagensViewHolder(View itemView) {
             super(itemView);
@@ -112,6 +131,7 @@ public class AdapterPostagens extends RecyclerView.Adapter<AdapterPostagens.Adap
             categoria = (TextView) itemView.findViewById(R.id.menu_inicial_txv_categoria_postagem);
             nome = (TextView) itemView.findViewById(R.id.menu_inicial_txv_nome_usuario_postagem);
             imagemPost = (ImageView) itemView.findViewById(R.id.menu_inicial_img_foto_postagem);
+            verMaisImg = (TextView) itemView.findViewById(R.id.menu_inicial_txv_foto_postagem);
         }
     }
 

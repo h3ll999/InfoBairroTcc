@@ -1,12 +1,13 @@
 package epiccube.com.br.infobairrotcc.models.entities;
 
+import java.io.Serializable;
 import java.util.List;
 
 /**
  * Created by ivanc on 11/10/2016.
  */
 
-public class Bairro {
+public class Bairro implements Serializable{
 
     private String id;
     private String nome;

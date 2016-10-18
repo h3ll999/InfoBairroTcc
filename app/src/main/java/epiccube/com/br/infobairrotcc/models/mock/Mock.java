@@ -25,20 +25,36 @@ public class Mock {
         List<Postagem> postagens = new ArrayList<>();
         for (int i = 0; i<200; i++){
 
-            if (i%2==0){
+            if (i%2==0){ // com várias foto
                 Postagem p = new Postagem();
                 p.setTitulo("Lorem Ipsum"+(i+1));
                 p.setConteudo(SMALL_LOREM);
                 p.setCategoria("Evento "+(i+1));
+                p.setUrlFotosPostagem(new ArrayList<String>());
+                p.getUrlFotosPostagem().add("http://simplesmenteberlim.com/wp-content/uploads/2012/08/PortaoDeBrandenburgo21.jpg");
+                p.getUrlFotosPostagem().add("http://www.cvc.com.br/media/6016864/galeria-berlim-ilha-museus-creditos-thinksrock-458895805.jpg");
+                p.getUrlFotosPostagem().add("http://www.circolare.com.br/uploads/2016/05/dsf-1.jpg");
                 p.setUsuario(new Usuario());
                 p.getUsuario().setNome("Zézinho "+(i+1));
                 p.getUsuario().setPerfilUrl("https://pbs.twimg.com/profile_images/689937066520625153/EKPQ5hNO.jpg");
                 postagens.add(p);
-            } else {
+            } else if(i%3==0) { // com 1 foto
                 Postagem p = new Postagem();
                 p.setTitulo("Lorem Ipsum "+(i+1));
                 p.setConteudo(HUGE_LOREM);
                 p.setCategoria("Atenção "+(i+1));
+                p.setUrlFotosPostagem(new ArrayList<String>());
+                p.getUrlFotosPostagem().add("http://www.cvc.com.br/media/6016864/galeria-berlim-ilha-museus-creditos-thinksrock-458895805.jpg");
+                p.setUsuario(new Usuario());
+                p.getUsuario().setNome("Mariazinha "+(i+1));
+                p.getUsuario().setPerfilUrl("https://pbs.twimg.com/profile_images/689937066520625153/EKPQ5hNO.jpg");
+                postagens.add(p);
+            } else { // com nenhum foto
+                Postagem p = new Postagem();
+                p.setTitulo("Lorem Ipsum "+(i+1));
+                p.setConteudo(HUGE_LOREM);
+                p.setCategoria("Atenção "+(i+1));
+                p.setUrlFotosPostagem(new ArrayList<String>());
                 p.setUsuario(new Usuario());
                 p.getUsuario().setNome("Mariazinha "+(i+1));
                 p.getUsuario().setPerfilUrl("https://pbs.twimg.com/profile_images/689937066520625153/EKPQ5hNO.jpg");
