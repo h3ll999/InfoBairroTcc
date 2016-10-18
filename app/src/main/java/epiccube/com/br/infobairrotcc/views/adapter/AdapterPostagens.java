@@ -21,6 +21,7 @@ import de.hdodenhof.circleimageview.CircleImageView;
 import epiccube.com.br.infobairrotcc.R;
 import epiccube.com.br.infobairrotcc.models.contantes.Constantes;
 import epiccube.com.br.infobairrotcc.models.entities.Postagem;
+import epiccube.com.br.infobairrotcc.utils.MyUtils;
 import epiccube.com.br.infobairrotcc.views.activity.ActivityVisualizaPostagem;
 import jp.wasabeef.glide.transformations.CropCircleTransformation;
 
@@ -56,7 +57,7 @@ public class AdapterPostagens extends RecyclerView.Adapter<AdapterPostagens.Adap
                 .into(holder.imagemPerfil);
 
         holder.titulo.setText(listaPostagem.get(position).getTitulo());
-        holder.conteudo.setText(listaPostagem.get(position).getConteudo());
+        holder.conteudo.setText(MyUtils.verificaFormatacaoPostagem(listaPostagem.get(position).getConteudo()));
         holder.categoria.setText(listaPostagem.get(position).getCategoria());
         holder.nome.setText(listaPostagem.get(position).getUsuario().getNome());
 
@@ -102,7 +103,9 @@ public class AdapterPostagens extends RecyclerView.Adapter<AdapterPostagens.Adap
         }
     }
 
+
 }
+
 
 // TODO - VALIDAÇÃO LOGIN
 // TODO - VALIDAÇÃO CADASTRO (INSERIR FOTO DO USUÁRIO)
