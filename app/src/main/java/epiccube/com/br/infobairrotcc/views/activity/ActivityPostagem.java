@@ -24,7 +24,7 @@ public class ActivityPostagem extends Activity {
         //getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         //getSupportActionBar().setTitle("Nova postagem");
 
-        setContentView(R.layout.activity_postar);
+        setContentView(R.layout.activity_postagem);
 
         HelperActivityPostagem.init(this).cast().onClick();
 

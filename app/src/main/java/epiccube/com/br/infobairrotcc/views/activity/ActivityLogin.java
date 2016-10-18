@@ -14,6 +14,11 @@ import epiccube.com.br.infobairrotcc.views.helper.HelperActivityLogin;
 
 public class ActivityLogin extends AppCompatActivity {
 
+    //TODO bibliotecas bem dahoras
+    // https://github.com/KeepSafe/TapTargetView
+    // https://github.com/sjwall/MaterialTapTargetPrompt
+    // https://github.com/truizlop/FABRevealLayout
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

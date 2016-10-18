@@ -5,21 +5,17 @@ import android.app.Activity;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.DialogFragment;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
-import android.widget.LinearLayout;
-import android.widget.Toast;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 
 import epiccube.com.br.infobairrotcc.R;
 import epiccube.com.br.infobairrotcc.eventos.Eventos;
-import epiccube.com.br.infobairrotcc.views.helper.HelperActivityPostagem;
 
 /**
  * Created by abadari on 14/10/2016.
@@ -48,7 +44,7 @@ public class DialogPostagem extends DialogFragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         getDialog().requestWindowFeature(Window.FEATURE_NO_TITLE);
         getDialog().getWindow().getAttributes().windowAnimations = R.style.dialogAnim;
-        View v = inflater.inflate(R.layout.activity_postar, container);
+        View v = inflater.inflate(R.layout.activity_postagem, container);
         //HelperActivityPostagem.init(context).cast().onClick();
         getDialog().getWindow().addFlags(WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE);
         return v;
