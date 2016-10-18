@@ -48,10 +48,10 @@ public class AdapterPostagens extends RecyclerView.Adapter<AdapterPostagens.Adap
     }
 
     @Override
-    public void onBindViewHolder(final AdapterPostagensViewHolder holder, int position) {
+    public void onBindViewHolder(AdapterPostagensViewHolder holder, final int position) {
 
         Glide.with(context)
-                .load(listaPostagem.get(holder.getAdapterPosition()).getUsuario().getPerfilUrl())
+                .load(listaPostagem.get(position).getUsuario().getPerfilUrl())
                 .crossFade()
                 .placeholder(R.drawable.placeholder)
                 .diskCacheStrategy(DiskCacheStrategy.SOURCE)
@@ -62,29 +62,29 @@ public class AdapterPostagens extends RecyclerView.Adapter<AdapterPostagens.Adap
         holder.categoria.setText(listaPostagem.get(position).getCategoria());
         holder.nome.setText(listaPostagem.get(position).getUsuario().getNome());
 
-        if(listaPostagem.get(holder.getAdapterPosition()).getUrlFotosPostagem().size()==0){
+        if(listaPostagem.get(position).getUrlFotosPostagem().size()==0){
             holder.verMaisImg.setVisibility(View.GONE);
             holder.imagemPost.setVisibility(View.GONE);
         } else {
-            if(listaPostagem.get(holder.getAdapterPosition()).getUrlFotosPostagem().size()>1){
-                holder.verMaisImg.setText("[Mais "+(listaPostagem.get(holder.getAdapterPosition())
+            if(listaPostagem.get(position).getUrlFotosPostagem().size()>1){
+                holder.verMaisImg.setText("[Mais "+(listaPostagem.get(position)
                         .getUrlFotosPostagem().size()-1)+" fotos...]");
             }
 
-            /*Glide.with(context)
-                    .load(listaPostagem.get(holder.getAdapterPosition()).getUrlFotosPostagem().get(0))
+            Glide.with(context)
+                    .load(listaPostagem.get(position).getUrlFotosPostagem().get(0))
                     .centerCrop()
                     .thumbnail(0.3f)
                     //.placeholder(R.drawable.placeholder_img_vazia)//placeholder tá cagado
                     .diskCacheStrategy(DiskCacheStrategy.SOURCE)
-                    .into(holder.imagemPost);*/
+                    .into(holder.imagemPost);
         }
 
         holder.layout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(context, ActivityVisualizaPostagem.class);
-                intent.putExtra(Constantes.INTENT_POSTAGEM, listaPostagem.get(holder.getAdapterPosition()));
+                intent.putExtra(Constantes.INTENT_POSTAGEM, listaPostagem.get(position));
                 context.startActivity(intent);
             }
         });
@@ -93,7 +93,7 @@ public class AdapterPostagens extends RecyclerView.Adapter<AdapterPostagens.Adap
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(context, ActivityVisualizarFotos.class);
-                intent.putExtra("LISTA_FOTOS", (Serializable) listaPostagem.get(holder.getAdapterPosition()));
+                intent.putExtra("LISTA_FOTOS", (Serializable) listaPostagem.get(position));
                 context.startActivity(intent);
             }
         });
