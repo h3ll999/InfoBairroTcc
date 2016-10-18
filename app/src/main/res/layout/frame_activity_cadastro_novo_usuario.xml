@@ -36,7 +36,6 @@
                 android:inputType="textPersonName"
                 android:ems="10"
                 android:layout_alignParentTop="true"
-
                 android:id="@+id/cadastro_edt_nome"
                 android:hint="Nome"
                 android:layout_alignParentEnd="true"

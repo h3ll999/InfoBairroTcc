@@ -49,10 +49,10 @@ public class AdapterPostagens extends RecyclerView.Adapter<AdapterPostagens.Adap
 
     @Override
     public void onBindViewHolder(final AdapterPostagensViewHolder holder, int position) {
+
         Glide.with(context)
                 .load(listaPostagem.get(holder.getAdapterPosition()).getUsuario().getPerfilUrl())
                 .placeholder(R.drawable.placeholder)
-                //.bitmapTransform(new CropCircleTransformation(context))
                 .diskCacheStrategy(DiskCacheStrategy.SOURCE)
                 .into(holder.imagemPerfil);
 
@@ -60,6 +60,16 @@ public class AdapterPostagens extends RecyclerView.Adapter<AdapterPostagens.Adap
         holder.conteudo.setText(MyUtils.verificaFormatacaoPostagem(listaPostagem.get(position).getConteudo()));
         holder.categoria.setText(listaPostagem.get(position).getCategoria());
         holder.nome.setText(listaPostagem.get(position).getUsuario().getNome());
+
+        Glide.with(context)
+                .load(listaPostagem.get(holder.getAdapterPosition()).getUsuario().getPerfilUrl())
+                .dontAnimate()
+                .fitCenter()
+                .placeholder(R.drawable.placeholder)
+                .diskCacheStrategy(DiskCacheStrategy.SOURCE)
+                .into(holder.imagemPost);
+
+        //holder.imagemPost.setImageResource(R.drawable.placeholder);
 
         holder.layout.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -91,6 +101,7 @@ public class AdapterPostagens extends RecyclerView.Adapter<AdapterPostagens.Adap
         private TextView conteudo;
         private TextView categoria;
         private TextView nome;
+        private ImageView imagemPost;
 
         public AdapterPostagensViewHolder(View itemView) {
             super(itemView);
@@ -100,6 +111,7 @@ public class AdapterPostagens extends RecyclerView.Adapter<AdapterPostagens.Adap
             conteudo = (TextView) itemView.findViewById(R.id.menu_inicial_txv_conteudo_postagem);
             categoria = (TextView) itemView.findViewById(R.id.menu_inicial_txv_categoria_postagem);
             nome = (TextView) itemView.findViewById(R.id.menu_inicial_txv_nome_usuario_postagem);
+            imagemPost = (ImageView) itemView.findViewById(R.id.menu_inicial_img_foto_postagem);
         }
     }
 

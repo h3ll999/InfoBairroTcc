@@ -62,22 +62,40 @@
             android:layout_height="70dp" />
 
         <TextView
+            android:id="@+id/menu_inicial_txv_categoria_postagem"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Categoria"
             android:layout_marginLeft="16dp"
-            android:id="@+id/menu_inicial_txv_categoria_postagem"
             android:layout_alignBaseline="@+id/menu_inicial_txv_nome_usuario_postagem"
             android:layout_alignBottom="@+id/menu_inicial_txv_nome_usuario_postagem"
             android:layout_alignEnd="@+id/menu_inicial_txv_conteudo_postagem" />
+
+        <ImageView
+            android:id="@+id/menu_inicial_img_foto_postagem"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:maxHeight="150dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginLeft="16dp"
+            android:layout_marginRight="16dp"
+            android:layout_below="@+id/menu_inicial_txv_categoria_postagem"/>
+
+        <!--
+
+        android:elevation="5dp"
+            android:outlineProvider="bounds"
+
+        -->
 
         <View
             android:layout_width="match_parent"
             android:layout_height="0.5dp"
             android:background="#a9a9a9"
+            android:layout_marginTop="16dp"
             android:layout_marginLeft="16dp"
             android:layout_marginRight="16dp"
-            android:layout_below="@+id/menu_inicial_txv_nome_usuario_postagem"/>
+            android:layout_below="@+id/menu_inicial_img_foto_postagem"/>
 
     </RelativeLayout>
 
