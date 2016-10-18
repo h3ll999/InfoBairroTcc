@@ -3,6 +3,7 @@ package epiccube.com.br.infobairrotcc.models.mock;
 import java.util.ArrayList;
 import java.util.List;
 
+import epiccube.com.br.infobairrotcc.R;
 import epiccube.com.br.infobairrotcc.models.entities.Postagem;
 import epiccube.com.br.infobairrotcc.models.entities.Usuario;
 
@@ -27,36 +28,36 @@ public class Mock {
 
             if (i%2==0){ // com várias foto
                 Postagem p = new Postagem();
-                p.setTitulo("Lorem Ipsum"+(i+1));
+                p.setTitulo("Title Impsum"+(i+1));
                 p.setConteudo(SMALL_LOREM);
-                p.setCategoria("Evento "+(i+1));
+                p.setCategoria("Event Ipsum "+(i+1));
                 p.setUrlFotosPostagem(new ArrayList<String>());
                 p.getUrlFotosPostagem().add("http://simplesmenteberlim.com/wp-content/uploads/2012/08/PortaoDeBrandenburgo21.jpg");
                 p.getUrlFotosPostagem().add("http://www.cvc.com.br/media/6016864/galeria-berlim-ilha-museus-creditos-thinksrock-458895805.jpg");
                 p.getUrlFotosPostagem().add("http://www.circolare.com.br/uploads/2016/05/dsf-1.jpg");
                 p.setUsuario(new Usuario());
-                p.getUsuario().setNome("Zézinho "+(i+1));
+                p.getUsuario().setNome("Name Impsum "+(i+1));
                 p.getUsuario().setPerfilUrl("https://pbs.twimg.com/profile_images/689937066520625153/EKPQ5hNO.jpg");
                 postagens.add(p);
             } else if(i%3==0) { // com 1 foto
                 Postagem p = new Postagem();
-                p.setTitulo("Lorem Ipsum "+(i+1));
+                p.setTitulo("Title Impsum "+(i+1));
                 p.setConteudo(HUGE_LOREM);
-                p.setCategoria("Atenção "+(i+1));
+                p.setCategoria("Event Ipsum "+(i+1));
                 p.setUrlFotosPostagem(new ArrayList<String>());
                 p.getUrlFotosPostagem().add("http://www.cvc.com.br/media/6016864/galeria-berlim-ilha-museus-creditos-thinksrock-458895805.jpg");
                 p.setUsuario(new Usuario());
-                p.getUsuario().setNome("Mariazinha "+(i+1));
+                p.getUsuario().setNome("Name Impsum "+(i+1));
                 p.getUsuario().setPerfilUrl("https://pbs.twimg.com/profile_images/689937066520625153/EKPQ5hNO.jpg");
                 postagens.add(p);
             } else { // com nenhum foto
                 Postagem p = new Postagem();
-                p.setTitulo("Lorem Ipsum "+(i+1));
+                p.setTitulo("Title Ipsum "+(i+1));
                 p.setConteudo(HUGE_LOREM);
-                p.setCategoria("Atenção "+(i+1));
+                p.setCategoria("Event Ipsum "+(i+1));
                 p.setUrlFotosPostagem(new ArrayList<String>());
                 p.setUsuario(new Usuario());
-                p.getUsuario().setNome("Mariazinha "+(i+1));
+                p.getUsuario().setNome("Name Ipsum "+(i+1));
                 p.getUsuario().setPerfilUrl("https://pbs.twimg.com/profile_images/689937066520625153/EKPQ5hNO.jpg");
                 postagens.add(p);
             }
@@ -64,6 +65,16 @@ public class Mock {
         }
 
         return postagens;
+    }
+
+    public static List<Integer> fotos(){
+        List<Integer> fotos = new ArrayList<>();
+
+        fotos.add(R.drawable.foto3);
+        fotos.add(R.drawable.foto6);
+        fotos.add(R.drawable.foto7);
+
+        return fotos;
     }
 
 

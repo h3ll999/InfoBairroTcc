@@ -30,7 +30,6 @@ import epiccube.com.br.infobairrotcc.models.mock.Mock;
 import epiccube.com.br.infobairrotcc.models.singleton.SingletonUsuario;
 import epiccube.com.br.infobairrotcc.views.adapter.AdapterPostagens;
 import epiccube.com.br.infobairrotcc.views.dialogs.DialogPostagem;
-import jp.wasabeef.glide.transformations.CropCircleTransformation;
 
 public class ActivityMenuInicial extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -43,7 +42,7 @@ public class ActivityMenuInicial extends AppCompatActivity
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_menu_inicial);
 
         setToolbar();
         setFAB();
@@ -128,6 +127,7 @@ public class ActivityMenuInicial extends AppCompatActivity
         recyclerView.setLayoutManager(linearLayoutManager);
 
         recyclerView.setAdapter(new AdapterPostagens(Mock.postagens(), this));
+        //recyclerView.getRecycledViewPool().setMaxRecycledViews(0, 0);
     }
 
     @Override

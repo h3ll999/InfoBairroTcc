@@ -10,7 +10,6 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
@@ -25,7 +24,6 @@ import epiccube.com.br.infobairrotcc.models.entities.Postagem;
 import epiccube.com.br.infobairrotcc.utils.MyUtils;
 import epiccube.com.br.infobairrotcc.views.activity.ActivityVisualizaPostagem;
 import epiccube.com.br.infobairrotcc.views.activity.ActivityVisualizarFotos;
-import jp.wasabeef.glide.transformations.CropCircleTransformation;
 
 /**
  * Created by ivanc on 11/10/2016.
@@ -44,7 +42,7 @@ public class AdapterPostagens extends RecyclerView.Adapter<AdapterPostagens.Adap
 
     @Override
     public AdapterPostagensViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.recycler_view_adapter_postagens, parent, false);
+        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.adapter_postagens, parent, false);
         AdapterPostagensViewHolder viewHolder = new AdapterPostagensViewHolder(v);
         return viewHolder;
     }
@@ -54,6 +52,7 @@ public class AdapterPostagens extends RecyclerView.Adapter<AdapterPostagens.Adap
 
         Glide.with(context)
                 .load(listaPostagem.get(holder.getAdapterPosition()).getUsuario().getPerfilUrl())
+                .crossFade()
                 .placeholder(R.drawable.placeholder)
                 .diskCacheStrategy(DiskCacheStrategy.SOURCE)
                 .into(holder.imagemPerfil);
@@ -63,7 +62,7 @@ public class AdapterPostagens extends RecyclerView.Adapter<AdapterPostagens.Adap
         holder.categoria.setText(listaPostagem.get(position).getCategoria());
         holder.nome.setText(listaPostagem.get(position).getUsuario().getNome());
 
-        if(listaPostagem.get(holder.getAdapterPosition()).getUrlFotosPostagem().size()<1){
+        if(listaPostagem.get(holder.getAdapterPosition()).getUrlFotosPostagem().size()==0){
             holder.verMaisImg.setVisibility(View.GONE);
             holder.imagemPost.setVisibility(View.GONE);
         } else {
@@ -72,12 +71,13 @@ public class AdapterPostagens extends RecyclerView.Adapter<AdapterPostagens.Adap
                         .getUrlFotosPostagem().size()-1)+" fotos...]");
             }
 
-            Glide.with(context)
+            /*Glide.with(context)
                     .load(listaPostagem.get(holder.getAdapterPosition()).getUrlFotosPostagem().get(0))
                     .centerCrop()
-                    .placeholder(R.drawable.placeholder_img_vazia)
+                    .thumbnail(0.3f)
+                    //.placeholder(R.drawable.placeholder_img_vazia)//placeholder tá cagado
                     .diskCacheStrategy(DiskCacheStrategy.SOURCE)
-                    .into(holder.imagemPost);
+                    .into(holder.imagemPost);*/
         }
 
         holder.layout.setOnClickListener(new View.OnClickListener() {
@@ -124,7 +124,7 @@ public class AdapterPostagens extends RecyclerView.Adapter<AdapterPostagens.Adap
 
         public AdapterPostagensViewHolder(View itemView) {
             super(itemView);
-            layout = (RelativeLayout) itemView.findViewById(R.id.layout);
+            layout = (RelativeLayout) itemView.findViewById(R.id.menu_inicial_layout_adapter);
             imagemPerfil = (CircleImageView) itemView.findViewById(R.id.menu_inicial_img_foto_usuario);
             titulo = (TextView) itemView.findViewById(R.id.menu_inicial_txv_titulo_postagem);
             conteudo = (TextView) itemView.findViewById(R.id.menu_inicial_txv_conteudo_postagem);
