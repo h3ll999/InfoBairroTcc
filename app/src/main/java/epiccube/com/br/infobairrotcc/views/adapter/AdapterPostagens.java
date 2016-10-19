@@ -160,6 +160,8 @@ public class AdapterPostagens extends RecyclerView.Adapter<AdapterPostagens.Adap
             imagemPost = (ImageView) itemView.findViewById(R.id.menu_inicial_img_foto_postagem);
             verMaisImg = (TextView) itemView.findViewById(R.id.menu_inicial_txv_foto_postagem);
 
+
+            //TODO Testar notify data set changed...
             layout.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {

@@ -26,7 +26,7 @@ public class ActivityPostagem extends Activity {
 
         setContentView(R.layout.activity_postagem);
 
-        HelperActivityPostagem.init(this).cast().onClick();
+        HelperActivityPostagem.init(this).cast().onClick().configure();
 
     }
 

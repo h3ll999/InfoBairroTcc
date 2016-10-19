@@ -9,49 +9,44 @@
     android:background="#00ff0000"
     >
 
-    <LinearLayout
+    <RelativeLayout
         android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@drawable/layout_postagem"
-        android:weightSum="2">
+        >
 
         <RelativeLayout
+            android:id="@+id/activity_postar_relative1"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:padding="10dp">
+            android:padding="10dp"
+            android:layout_above="@+id/activity_postar_relative2">
 
             <EditText
                 android:id="@+id/activity_postar_edt_titulo"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
                 android:background="@android:color/transparent"
                 android:hint="O que aconteceu?"
                 android:textStyle="bold"
-                android:textSize="20sp"
-                android:inputType="text" />
+                android:inputType="text"
+                android:layout_toStartOf="@+id/activity_postar_btn_concluir" />
 
             <EditText
                 android:id="@+id/activity_postar_edt_conteudo"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 android:layout_below="@id/activity_postar_edt_titulo"
                 android:background="@android:color/transparent"
                 android:layout_marginTop="16dp"
-                android:layout_weight="1"
                 android:hint="Escreva algo..."
                 android:gravity="top|left"
                 android:inputType="textCapSentences|textMultiLine"
                 android:maxLength="2000"
-                android:maxLines="15" />
-        </RelativeLayout>
-
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="@drawable/layout_postagem"
-            android:layout_weight="1">
+                android:maxLines="15"
+                android:layout_alignParentBottom="true" />
 
             <Button
                 android:text="CONCLUIR"
@@ -60,10 +55,20 @@
                 style="?android:attr/borderlessButtonStyle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignParentBottom="true"
+                android:layout_alignParentTop="true"
                 android:layout_alignParentEnd="true" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/activity_postar_relative2"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:background="@drawable/layout_postagem"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentStart="true">
 
             <ImageView
+                android:id="@+id/activity_postar_img_abrir_galeria"
                 android:background="@drawable/ic_menu_gallery"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
@@ -73,6 +78,15 @@
                 android:layout_alignParentBottom="true"
                 android:layout_alignParentStart="true" />
 
+            <Spinner
+                android:id="@+id/activity_postar_spn_selecionar_categoria"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentEnd="true"> </Spinner>
+
         </RelativeLayout>
-    </LinearLayout>
+
+    </RelativeLayout>
+
 </LinearLayout>
