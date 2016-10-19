@@ -10,9 +10,11 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.squareup.picasso.Picasso;
 
 import java.io.Serializable;
 import java.util.List;
@@ -48,39 +50,53 @@ public class AdapterPostagens extends RecyclerView.Adapter<AdapterPostagens.Adap
     }
 
     @Override
-    public void onBindViewHolder(AdapterPostagensViewHolder holder, final int position) {
+    public void onBindViewHolder(AdapterPostagensViewHolder holder, int position) {
 
         Glide.with(context)
                 .load(listaPostagem.get(position).getUsuario().getPerfilUrl())
-                .crossFade()
+                .centerCrop()
                 .placeholder(R.drawable.placeholder)
                 .diskCacheStrategy(DiskCacheStrategy.SOURCE)
                 .into(holder.imagemPerfil);
 
         holder.titulo.setText(listaPostagem.get(position).getTitulo());
-        holder.conteudo.setText(MyUtils.verificaFormatacaoPostagem(listaPostagem.get(position).getConteudo()));// TODO ver mais
+        holder.conteudo.setText(MyUtils.verificaFormatacaoPostagem(listaPostagem.get(position).getConteudo()));
         holder.categoria.setText(listaPostagem.get(position).getCategoria());
         holder.nome.setText(listaPostagem.get(position).getUsuario().getNome());
 
-        if(listaPostagem.get(position).getUrlFotosPostagem().size()==0){
+        if(listaPostagem.get(position).getUrlFotosPostagem().size() == 0){
+
             holder.verMaisImg.setVisibility(View.GONE);
             holder.imagemPost.setVisibility(View.GONE);
-        } else {
-            if(listaPostagem.get(position).getUrlFotosPostagem().size()>1){
-                holder.verMaisImg.setText("[Mais "+(listaPostagem.get(position)
-                        .getUrlFotosPostagem().size()-1)+" fotos...]");
-            }
+
+        } else if(listaPostagem.get(position).getUrlFotosPostagem().size() == 1){
+
+            holder.verMaisImg.setVisibility(View.GONE);
+            holder.imagemPost.setVisibility(View.VISIBLE);
 
             Glide.with(context)
                     .load(listaPostagem.get(position).getUrlFotosPostagem().get(0))
                     .centerCrop()
                     .thumbnail(0.3f)
-                    //.placeholder(R.drawable.placeholder_img_vazia)//placeholder tá cagado
+                    .placeholder(R.drawable.placeholder_img_vazia)
+                    .diskCacheStrategy(DiskCacheStrategy.SOURCE)
+                    .into(holder.imagemPost);
+        } else {
+            holder.verMaisImg.setVisibility(View.VISIBLE); //TODO FDP
+            holder.imagemPost.setVisibility(View.VISIBLE); //TODO FDP
+            holder.verMaisImg.setText("[Mais "+(listaPostagem.get(position).getUrlFotosPostagem().size()-1)+" fotos...]");
+
+            Glide.with(context)
+                    .load(listaPostagem.get(position).getUrlFotosPostagem().get(0))
+                    .centerCrop()
+                    .thumbnail(0.3f)
+                    .placeholder(R.drawable.placeholder_img_vazia)
                     .diskCacheStrategy(DiskCacheStrategy.SOURCE)
                     .into(holder.imagemPost);
         }
 
-        holder.layout.setOnClickListener(new View.OnClickListener() {
+
+        /*holder.layout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(context, ActivityVisualizaPostagem.class);
@@ -89,6 +105,7 @@ public class AdapterPostagens extends RecyclerView.Adapter<AdapterPostagens.Adap
             }
         });
 
+
         holder.imagemPost.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -96,7 +113,7 @@ public class AdapterPostagens extends RecyclerView.Adapter<AdapterPostagens.Adap
                 intent.putExtra("LISTA_FOTOS", (Serializable) listaPostagem.get(position));
                 context.startActivity(intent);
             }
-        });
+        });*/
 
     }
 

@@ -71,11 +71,8 @@
             android:layout_alignBottom="@+id/menu_inicial_txv_nome_usuario_postagem"
             android:layout_alignEnd="@+id/menu_inicial_txv_conteudo_postagem" />
 
-        <!-- TODO Recyclerview assassino -->
-
         <ImageView
             android:id="@+id/menu_inicial_img_foto_postagem"
-            android:background="@drawable/placeholder_img_vazia"
             android:layout_width="match_parent"
             android:layout_height="200dp"
             android:scaleType="centerCrop"
