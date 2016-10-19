@@ -1,6 +1,7 @@
 package epiccube.com.br.infobairrotcc.views.adapter;
 
 
+import android.app.Activity;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
@@ -26,6 +27,7 @@ import epiccube.com.br.infobairrotcc.models.entities.Postagem;
 import epiccube.com.br.infobairrotcc.utils.MyUtils;
 import epiccube.com.br.infobairrotcc.views.activity.ActivityVisualizaPostagem;
 import epiccube.com.br.infobairrotcc.views.activity.ActivityVisualizarFotos;
+import jp.wasabeef.glide.transformations.RoundedCornersTransformation;
 
 /**
  * Created by ivanc on 11/10/2016.
@@ -45,12 +47,12 @@ public class AdapterPostagens extends RecyclerView.Adapter<AdapterPostagens.Adap
     @Override
     public AdapterPostagensViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.adapter_postagens, parent, false);
-        AdapterPostagensViewHolder viewHolder = new AdapterPostagensViewHolder(v);
+        AdapterPostagensViewHolder viewHolder = new AdapterPostagensViewHolder(v, context, listaPostagem);
         return viewHolder;
     }
 
     @Override
-    public void onBindViewHolder(AdapterPostagensViewHolder holder, final int position) {
+    public void onBindViewHolder(AdapterPostagensViewHolder holder, int position) {
 
         Glide.with(context)
                 .load(listaPostagem.get(position).getUsuario().getPerfilUrl())
@@ -74,13 +76,13 @@ public class AdapterPostagens extends RecyclerView.Adapter<AdapterPostagens.Adap
             holder.verMaisImg.setVisibility(View.GONE);
             holder.imagemPost.setVisibility(View.VISIBLE);
 
-            Glide.with(context)
-                    .load(/*listaPostagem.get(position).getUrlFotosPostagem().get(0)*/R.drawable.wallpaper2)
+            /*Glide.with(context)
+                    .load(*//*listaPostagem.get(position).getUrlFotosPostagem().get(0)*//*R.drawable.wallpaper2)
                     .centerCrop()
                     .thumbnail(0.3f)
                     .placeholder(R.drawable.placeholder_img_vazia)
                     .diskCacheStrategy(DiskCacheStrategy.SOURCE)
-                    .into(holder.imagemPost);
+                    .into(holder.imagemPost);*/
 
         } else {
 
@@ -98,7 +100,7 @@ public class AdapterPostagens extends RecyclerView.Adapter<AdapterPostagens.Adap
         }
 
 
-        holder.layout.setOnClickListener(new View.OnClickListener() {
+        /*holder.layout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(context, ActivityVisualizaPostagem.class);
@@ -115,7 +117,7 @@ public class AdapterPostagens extends RecyclerView.Adapter<AdapterPostagens.Adap
                 intent.putExtra("LISTA_FOTOS", (Serializable) listaPostagem.get(position));
                 context.startActivity(intent);
             }
-        });
+        });*/
 
     }
 
@@ -141,8 +143,14 @@ public class AdapterPostagens extends RecyclerView.Adapter<AdapterPostagens.Adap
         private ImageView imagemPost;
         private TextView verMaisImg;
 
-        public AdapterPostagensViewHolder(View itemView) {
+        private AppCompatActivity context;
+
+        private List<Postagem> listaPostagem;
+
+        public AdapterPostagensViewHolder(View itemView, AppCompatActivity context, List<Postagem> listaPostagem) {
             super(itemView);
+            this.context = context;
+            this.listaPostagem = listaPostagem;
             layout = (RelativeLayout) itemView.findViewById(R.id.menu_inicial_layout_adapter);
             imagemPerfil = (CircleImageView) itemView.findViewById(R.id.menu_inicial_img_foto_usuario);
             titulo = (TextView) itemView.findViewById(R.id.menu_inicial_txv_titulo_postagem);
@@ -151,6 +159,25 @@ public class AdapterPostagens extends RecyclerView.Adapter<AdapterPostagens.Adap
             nome = (TextView) itemView.findViewById(R.id.menu_inicial_txv_nome_usuario_postagem);
             imagemPost = (ImageView) itemView.findViewById(R.id.menu_inicial_img_foto_postagem);
             verMaisImg = (TextView) itemView.findViewById(R.id.menu_inicial_txv_foto_postagem);
+
+            layout.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Intent intent = new Intent(AdapterPostagensViewHolder.this.context, ActivityVisualizaPostagem.class);
+                    intent.putExtra(Constantes.INTENT_POSTAGEM, (Serializable) AdapterPostagensViewHolder.this.listaPostagem.get(getAdapterPosition()));
+                    AdapterPostagensViewHolder.this.context.startActivity(intent);
+                }
+            });
+
+
+            imagemPost.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(AdapterPostagensViewHolder.this.context, ActivityVisualizarFotos.class);
+                    intent.putExtra("LISTA_FOTOS", (Serializable) AdapterPostagensViewHolder.this.listaPostagem.get(getAdapterPosition()));
+                    AdapterPostagensViewHolder.this.context.startActivity(intent);
+                }
+            });
         }
     }
 

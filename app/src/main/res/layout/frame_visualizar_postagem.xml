@@ -27,7 +27,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="5dp"
-        android:background="@drawable/visualizar_postagem_layout"
+        android:background="@drawable/layout_visualizar_postagem"
         android:layout_below="@+id/activity_visualiza_postagem_img_usuario_foto">
 
         <TextView

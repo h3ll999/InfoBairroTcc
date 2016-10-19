@@ -76,31 +76,38 @@
             android:layout_width="match_parent"
             android:layout_height="200dp"
             android:scaleType="centerCrop"
-            android:elevation="10dp"
-            android:outlineProvider="bounds"
+            android:background="@drawable/placeholder_img_vazia"
             android:layout_marginTop="16dp"
             android:layout_marginLeft="16dp"
             android:layout_marginRight="16dp"
             android:layout_below="@+id/menu_inicial_txv_categoria_postagem" />
 
+        <!--
+           android:background="@drawable/layout_txv"
+           android:elevation="5dp"
+           android:outlineProvider="bounds"
+       -->
+
         <TextView
             android:id="@+id/menu_inicial_txv_foto_postagem"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="16dp"
-            android:layout_marginRight="16dp"
-            android:layout_marginBottom="16dp"
+            android:paddingRight="3dp"
+            android:paddingLeft="3dp"
+            android:paddingTop="1dp"
+            android:paddingBottom="1dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginBottom="10dp"
             android:elevation="10dp"
             android:outlineProvider="bounds"
-            android:layout_alignStart="@+id/menu_inicial_img_foto_postagem"
+            android:background="@drawable/layout_txv"
+            android:textColor="#ffffff"
             android:layout_alignEnd="@+id/menu_inicial_img_foto_postagem"
             android:layout_alignBottom="@+id/menu_inicial_img_foto_postagem"
             android:gravity="right" />
 
-        <!--
-        android:elevation="5dp"
-            android:outlineProvider="bounds"
-        -->
+
 
         <View
             android:layout_width="match_parent"
