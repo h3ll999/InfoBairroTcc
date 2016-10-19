@@ -50,7 +50,7 @@ public class AdapterPostagens extends RecyclerView.Adapter<AdapterPostagens.Adap
     }
 
     @Override
-    public void onBindViewHolder(AdapterPostagensViewHolder holder, int position) {
+    public void onBindViewHolder(AdapterPostagensViewHolder holder, final int position) {
 
         Glide.with(context)
                 .load(listaPostagem.get(position).getUsuario().getPerfilUrl())
@@ -75,19 +75,21 @@ public class AdapterPostagens extends RecyclerView.Adapter<AdapterPostagens.Adap
             holder.imagemPost.setVisibility(View.VISIBLE);
 
             Glide.with(context)
-                    .load(listaPostagem.get(position).getUrlFotosPostagem().get(0))
+                    .load(/*listaPostagem.get(position).getUrlFotosPostagem().get(0)*/R.drawable.wallpaper2)
                     .centerCrop()
                     .thumbnail(0.3f)
                     .placeholder(R.drawable.placeholder_img_vazia)
                     .diskCacheStrategy(DiskCacheStrategy.SOURCE)
                     .into(holder.imagemPost);
+
         } else {
+
             holder.verMaisImg.setVisibility(View.VISIBLE); //TODO FDP
             holder.imagemPost.setVisibility(View.VISIBLE); //TODO FDP
-            holder.verMaisImg.setText("[Mais "+(listaPostagem.get(position).getUrlFotosPostagem().size()-1)+" fotos...]");
+            holder.verMaisImg.setText("[Mais "+(listaPostagem.get(position).getUrlFotosPostagem().size()-1)+" fotos]");
 
             Glide.with(context)
-                    .load(listaPostagem.get(position).getUrlFotosPostagem().get(0))
+                    .load(/*listaPostagem.get(position).getUrlFotosPostagem().get(0)*/R.drawable.wallpaper)
                     .centerCrop()
                     .thumbnail(0.3f)
                     .placeholder(R.drawable.placeholder_img_vazia)
@@ -96,7 +98,7 @@ public class AdapterPostagens extends RecyclerView.Adapter<AdapterPostagens.Adap
         }
 
 
-        /*holder.layout.setOnClickListener(new View.OnClickListener() {
+        holder.layout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(context, ActivityVisualizaPostagem.class);
@@ -113,7 +115,7 @@ public class AdapterPostagens extends RecyclerView.Adapter<AdapterPostagens.Adap
                 intent.putExtra("LISTA_FOTOS", (Serializable) listaPostagem.get(position));
                 context.startActivity(intent);
             }
-        });*/
+        });
 
     }
 

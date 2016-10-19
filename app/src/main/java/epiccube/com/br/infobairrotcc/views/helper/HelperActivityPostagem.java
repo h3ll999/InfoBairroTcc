@@ -47,7 +47,7 @@ public class HelperActivityPostagem {
         titulo = (EditText) context.findViewById(R.id.activity_postar_edt_titulo);
         conteudo = (EditText) context.findViewById(R.id.activity_postar_edt_conteudo);
         postar = (Button) context.findViewById(R.id.activity_postar_btn_concluir);
-        postar.getBackground().setColorFilter(Color.parseColor("#ff4e43"), PorterDuff.Mode.SRC_ATOP); //TODO ARUMAR ESSA PORCARIA
+        postar.getBackground().setColorFilter(Color.parseColor("#00ffffff"), PorterDuff.Mode.SRC_ATOP); //TODO ARUMAR ESSA PORCARIA
         LinearLayout linearLayout = (LinearLayout) context.findViewById(R.id.activity_postar_linear_layout);
         return this;
     }

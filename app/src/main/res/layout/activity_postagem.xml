@@ -56,18 +56,19 @@
             <Button
                 android:text="CONCLUIR"
                 android:id="@+id/activity_postar_btn_concluir"
-                android:textColor="@color/cardview_light_background"
-                android:layout_width="match_parent"
+                android:textColor="@color/colorPrimary"
+                style="?android:attr/borderlessButtonStyle"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentBottom="true"
-                android:layout_alignParentStart="true" />
+                android:layout_alignParentEnd="true" />
 
             <ImageView
-                android:background="@drawable/mais"
+                android:background="@drawable/ic_menu_gallery"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
-                android:layout_above="@+id/activity_postar_btn_concluir"
-                android:visibility="gone"
+                android:visibility="visible"
+                android:layout_alignParentBottom="true"
                 android:layout_alignParentStart="true" />
 
         </RelativeLayout>
