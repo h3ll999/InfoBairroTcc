@@ -1,20 +1,18 @@
 package epiccube.com.br.infobairrotcc.views.helper;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
-import android.support.v7.app.AppCompatActivity;
+import android.provider.MediaStore;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.Toast;
-
-import org.greenrobot.eventbus.EventBus;
 
 import epiccube.com.br.infobairrotcc.R;
 
@@ -28,7 +26,7 @@ public class HelperActivityPostagem {
 
     private EditText titulo;
     private EditText conteudo;
-    // fotos...ver como vai ficar
+    private ImageView inserirFotos;
     private Button postar;
     private Spinner categorias;
 
@@ -51,6 +49,9 @@ public class HelperActivityPostagem {
         conteudo = (EditText) context.findViewById(R.id.activity_postar_edt_conteudo);
         postar = (Button) context.findViewById(R.id.activity_postar_btn_concluir);
         postar.getBackground().setColorFilter(Color.parseColor("#00ffffff"), PorterDuff.Mode.SRC_ATOP);
+        inserirFotos = (ImageView) context.findViewById(R.id.activity_postar_img_abrir_galeria);
+
+
         categorias = (Spinner) context.findViewById(R.id.activity_postar_spn_selecionar_categoria);
 
         // esconde do teclado
@@ -66,8 +67,8 @@ public class HelperActivityPostagem {
             public void onClick(View v) {
 
                 Toast.makeText(context,
-                        titulo.getText().toString().trim()+"\n"+
-                                conteudo.getText().toString().trim()+"\n"+
+                        titulo.getText().toString().trim()+"\n\n"+
+                                conteudo.getText().toString().trim()+"\n\n"+
                         categorias.getSelectedItem().toString(),
                         Toast.LENGTH_SHORT).show();
 
@@ -75,6 +76,20 @@ public class HelperActivityPostagem {
 
             }
         });
+
+        inserirFotos.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent();
+                intent.setType("image/*");
+                intent.setAction(Intent.ACTION_GET_CONTENT);
+                intent.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true);
+                context.startActivityForResult(Intent.createChooser(intent,
+                        "Select Picture"), 1);
+                //context.startActivityForResult(intent, 1);
+            }
+        });
+
         return this;
     }
 

@@ -1,7 +1,6 @@
 package epiccube.com.br.infobairrotcc.views.adapter;
 
 
-import android.app.Activity;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
@@ -11,11 +10,9 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
-import com.squareup.picasso.Picasso;
 
 import java.io.Serializable;
 import java.util.List;
@@ -27,7 +24,6 @@ import epiccube.com.br.infobairrotcc.models.entities.Postagem;
 import epiccube.com.br.infobairrotcc.utils.MyUtils;
 import epiccube.com.br.infobairrotcc.views.activity.ActivityVisualizaPostagem;
 import epiccube.com.br.infobairrotcc.views.activity.ActivityVisualizarFotos;
-import jp.wasabeef.glide.transformations.RoundedCornersTransformation;
 
 /**
  * Created by ivanc on 11/10/2016.
@@ -76,13 +72,13 @@ public class AdapterPostagens extends RecyclerView.Adapter<AdapterPostagens.Adap
             holder.verMaisImg.setVisibility(View.GONE);
             holder.imagemPost.setVisibility(View.VISIBLE);
 
-            /*Glide.with(context)
-                    .load(*//*listaPostagem.get(position).getUrlFotosPostagem().get(0)*//*R.drawable.wallpaper2)
+            Glide.with(context)
+                    .load(/*listaPostagem.get(position).getUrlFotosPostagem().get(0)*/R.drawable.wallpaper2)
                     .centerCrop()
                     .thumbnail(0.3f)
                     .placeholder(R.drawable.placeholder_img_vazia)
                     .diskCacheStrategy(DiskCacheStrategy.SOURCE)
-                    .into(holder.imagemPost);*/
+                    .into(holder.imagemPost);
 
         } else {
 

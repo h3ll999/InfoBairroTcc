@@ -5,6 +5,9 @@
         <item name="windowNoTitle">true</item>
         <item name="android:windowDrawsSystemBarBackgrounds">true</item>
         <item name="android:statusBarColor">@android:color/transparent</item>
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
     </style>
 
     <style name="Theme.Design.Transparent">
@@ -22,7 +25,7 @@
         <item name="android:windowAnimationStyle">@android:style/Animation</item>
     </style>
 
-    <style name="TransparentCompat" parent="AppTheme">
+    <style name="TransparentCompat" parent="AppTheme.NoActionBar">
        <!-- <item name="android:windowNoTitle">true</item> -->
          <item name="android:statusBarColor">#780000</item>
          <item name="android:windowBackground">@android:color/transparent</item>

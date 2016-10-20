@@ -24,14 +24,13 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.HashMap;
 
+import epiccube.com.br.infobairrotcc.R;
 import epiccube.com.br.infobairrotcc.models.contantes.Constantes;
+import epiccube.com.br.infobairrotcc.models.entities.Usuario;
 import epiccube.com.br.infobairrotcc.models.mock.Mock;
 import epiccube.com.br.infobairrotcc.models.singleton.SingletonUsuario;
-import epiccube.com.br.infobairrotcc.validator.Validar;
 import epiccube.com.br.infobairrotcc.views.activity.ActivityCadastro;
 import epiccube.com.br.infobairrotcc.views.activity.ActivityMenuInicial;
-import epiccube.com.br.infobairrotcc.R;
-import epiccube.com.br.infobairrotcc.models.entities.Usuario;
 
 /**
  * Created by ivanc on 11/10/2016.
