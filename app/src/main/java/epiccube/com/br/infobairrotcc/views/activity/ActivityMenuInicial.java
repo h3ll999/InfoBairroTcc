@@ -14,6 +14,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -21,13 +22,18 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 
 import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+
+import java.util.ArrayList;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 import epiccube.com.br.infobairrotcc.R;
 import epiccube.com.br.infobairrotcc.eventos.Eventos;
+import epiccube.com.br.infobairrotcc.models.entities.Postagem;
 import epiccube.com.br.infobairrotcc.models.mock.Mock;
 import epiccube.com.br.infobairrotcc.models.singleton.SingletonUsuario;
 import epiccube.com.br.infobairrotcc.views.adapter.AdapterPostagens;
+import epiccube.com.br.infobairrotcc.views.asynctask.AsynkTaskMockPostagem;
 import epiccube.com.br.infobairrotcc.views.dialogs.DialogPostagem;
 
 public class ActivityMenuInicial extends AppCompatActivity
@@ -43,12 +49,23 @@ public class ActivityMenuInicial extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_menu_inicial);
 
+        EventBus.getDefault().register(this);
+
+        new AsynkTaskMockPostagem().execute();
+
+
+
+
+    }
+
+    // após o fim da requisição dos dados da asynctask, executa os métodos abaixo...
+    @Subscribe
+    public void onEventMockPostagens(Eventos.ResultadoAsyncTaskMockPostagem postagens){
         setToolbar();
         setFAB();
         setDrawer();
         setNavView();
-        setRecyclerView();
-
+        setRecyclerView(postagens.getPostagems());
     }
 
     void setToolbar(){
@@ -119,14 +136,19 @@ public class ActivityMenuInicial extends AppCompatActivity
 
 
 
-    void setRecyclerView(){ // TODO vai ir para um fragmento?!?!?!?!?
+    void setRecyclerView(ArrayList<Postagem> listagemPostagem){
         RecyclerView recyclerView = (RecyclerView) findViewById(R.id.activity_menu_inicial_recycler_view);
 
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(linearLayoutManager);
-
-        recyclerView.setAdapter(new AdapterPostagens(Mock.postagens(), this));
+        dismissLoading();
+        recyclerView.setAdapter(new AdapterPostagens(listagemPostagem, this));
         //recyclerView.getRecycledViewPool().setMaxRecycledViews(0, 0);
+    }
+
+    void dismissLoading(){
+        ProgressBar p = (ProgressBar) findViewById(R.id.progressBar1);
+        p.setVisibility(View.GONE);
     }
 
     @Override
