@@ -1,5 +1,6 @@
 package epiccube.com.br.infobairrotcc.views.helper;
 
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
@@ -8,11 +9,13 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.GridView;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.Spinner;
 import android.widget.Toast;
 
@@ -22,6 +25,8 @@ import org.greenrobot.eventbus.Subscribe;
 import epiccube.com.br.infobairrotcc.R;
 import epiccube.com.br.infobairrotcc.eventos.Eventos;
 import epiccube.com.br.infobairrotcc.views.adapter.AdapterPostagemFotos;
+
+import static android.content.Context.INPUT_METHOD_SERVICE;
 
 /**
  * Created by abadari on 14/10/2016.
@@ -37,6 +42,7 @@ public class HelperActivityPostagem {
     private Button postar;
     private Spinner categorias;
     private GridView fotos;
+    private RelativeLayout layoutGrid;
 
     // TODO SEGUIR ESSE PADRÃO DE DESIGN....LOUCO DEMAIS
     // http://www.cssauthor.com/wp-content/uploads/2015/04/Facebook-Material-Design-GUI-Kit-PSD.jpg
@@ -54,16 +60,14 @@ public class HelperActivityPostagem {
 
     public HelperActivityPostagem cast(){
 
-        titulo = (EditText) context.findViewById(R.id.activity_postar_edt_titulo); titulo.requestFocus();
+        titulo = (EditText) context.findViewById(R.id.activity_postar_edt_titulo);
         conteudo = (EditText) context.findViewById(R.id.activity_postar_edt_conteudo);
         postar = (Button) context.findViewById(R.id.activity_postar_btn_concluir);
         postar.getBackground().setColorFilter(Color.parseColor("#00ffffff"), PorterDuff.Mode.SRC_ATOP);
         inserirFotos = (ImageView) context.findViewById(R.id.activity_postar_img_abrir_galeria);
         categorias = (Spinner) context.findViewById(R.id.activity_postar_spn_selecionar_categoria);
         fotos = (GridView) context.findViewById(R.id.activity_postar_grid_view);
-
-        // esconde do teclado
-        context.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE);
+        layoutGrid = (RelativeLayout) context.findViewById(R.id.activity_postar_relative2);
 
         return this;
     }
@@ -100,16 +104,12 @@ public class HelperActivityPostagem {
         return this;
     }
 
-    public void configure(){
+    public void configureSpn(){
         String [] categorias = context.getResources().getStringArray(R.array.activity_postar_spinner);
 
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(context, R.layout.support_simple_spinner_dropdown_item, categorias);
         this.categorias.setAdapter(adapter);
     }
-
-
-
-
 
     @Subscribe
     public void onEventSelecionarFotos(Eventos.PostagemMultiplasImagens imagens){
@@ -127,8 +127,8 @@ public class HelperActivityPostagem {
 
     @Subscribe
     public void onEventApareceImagem(Eventos.AparecerImagem img){
+        //se a lista chegar a zero, reaparece a imagem de chamar a galeria
         inserirFotos.setVisibility(View.VISIBLE);
     }
-
 
 }

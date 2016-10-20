@@ -10,6 +10,7 @@ import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.MenuItem;
+import android.view.WindowManager;
 
 import org.greenrobot.eventbus.EventBus;
 
@@ -38,7 +39,7 @@ public class ActivityPostagem extends AppCompatActivity {
 
         setContentView(R.layout.activity_postagem);
 
-        HelperActivityPostagem.init(this).cast().onClick().configure();
+        HelperActivityPostagem.init(this).cast().onClick().configureSpn();
 
 
     }
@@ -49,14 +50,19 @@ public class ActivityPostagem extends AppCompatActivity {
             if (requestCode == 1) {
 
                 ArrayList<Uri> fotos = new ArrayList<>();
-                ClipData clipData = data.getClipData();
 
-                int qtdFotos = clipData.getItemCount();
+                if(data.getClipData()==null){ //ÚNICA FOTO
+                    fotos.add(data.getData());
+                } else { //VÁRIAS FOTO
+                    ClipData clipData = data.getClipData();
 
-                for (int i = 0; i<qtdFotos;i++){
-                    ClipData.Item item = clipData.getItemAt(i);
-                    fotos.add(item.getUri());
-                    Log.e("FOTO PEGOU", item.getUri().getPath());
+                    int qtdFotos = clipData.getItemCount();
+
+                    for (int i = 0; i<qtdFotos;i++){
+                        ClipData.Item item = clipData.getItemAt(i);
+                        fotos.add(item.getUri());
+                        Log.e("FOTO PEGOU", item.getUri().getPath());
+                    }
                 }
 
                 // Passa o array de fotos para o "além" e espera alguém ouvir.
@@ -72,6 +78,13 @@ public class ActivityPostagem extends AppCompatActivity {
             case android.R.id.home: onBackPressed(); break;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    protected void onResume() {
+
+        getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE);
+        super.onResume();
     }
 
     @Override
