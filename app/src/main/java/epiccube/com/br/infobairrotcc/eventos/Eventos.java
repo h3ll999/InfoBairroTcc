@@ -10,7 +10,6 @@ import java.util.ArrayList;
 
 public class Eventos {
 
-
     public static class FechaDialogoPostagem{}
 
     public static class SelecionaImagemSelecionada{
@@ -41,6 +40,8 @@ public class Eventos {
             this.fotos = fotos;
         }
     }
+
+    public static class AparecerImagem{}
 
 
 

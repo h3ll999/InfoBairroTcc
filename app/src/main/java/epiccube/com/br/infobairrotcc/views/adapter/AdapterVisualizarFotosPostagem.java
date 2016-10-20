@@ -21,7 +21,7 @@ import uk.co.senab.photoview.PhotoViewAttacher;
  * Created by abadari on 18/10/2016.
  */
 
-public class AdapterFotos extends PagerAdapter{
+public class AdapterVisualizarFotosPostagem extends PagerAdapter{
 
     private List<String> fotos;
 
@@ -29,7 +29,7 @@ public class AdapterFotos extends PagerAdapter{
     private PhotoViewAttacher photoView;;
     private Context context;
 
-    public AdapterFotos(List<String> fotos, Context context){
+    public AdapterVisualizarFotosPostagem(List<String> fotos, Context context){
         this.fotos = fotos;
         this.context = context;
     }

@@ -56,6 +56,7 @@ public class ActivityPostagem extends AppCompatActivity {
                 for (int i = 0; i<qtdFotos;i++){
                     ClipData.Item item = clipData.getItemAt(i);
                     fotos.add(item.getUri());
+                    Log.e("FOTO PEGOU", item.getUri().getPath());
                 }
 
                 // Passa o array de fotos para o "além" e espera alguém ouvir.

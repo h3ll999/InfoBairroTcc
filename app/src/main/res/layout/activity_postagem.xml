@@ -55,15 +55,35 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentTop="true"
                 android:layout_alignParentEnd="true" />
+
+            <Spinner
+                android:id="@+id/activity_postar_spn_selecionar_categoria"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/activity_postar_btn_concluir"
+                android:layout_alignStart="@+id/activity_postar_btn_concluir"
+                android:layout_alignParentEnd="true"> </Spinner>
         </RelativeLayout>
 
         <RelativeLayout
             android:id="@+id/activity_postar_relative2"
             android:layout_width="match_parent"
-            android:layout_height="60dp"
-            android:background="@drawable/layout_postagem"
+            android:layout_height="70dp"
+            android:background="@drawable/layout_postagem_fotos_selecionadas"
             android:layout_alignParentBottom="true"
-            android:layout_alignParentStart="true">
+            android:layout_alignParentStart="true"
+            android:gravity="center_vertical">
+
+            <GridView
+                android:id="@+id/activity_postar_grid_view"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:numColumns="5"
+                android:verticalSpacing="1dp"
+                android:horizontalSpacing="1dp"
+                android:stretchMode="columnWidth"
+                android:gravity="center">
+            </GridView>
 
             <ImageView
                 android:id="@+id/activity_postar_img_abrir_galeria"
@@ -71,17 +91,9 @@
                 android:layout_width="50dp"
                 android:layout_height="50dp"
                 android:layout_marginLeft="10dp"
-                android:layout_marginBottom="10dp"
                 android:visibility="visible"
-                android:layout_alignParentBottom="true"
+                android:layout_centerVertical="true"
                 android:layout_alignParentStart="true" />
-
-            <Spinner
-                android:id="@+id/activity_postar_spn_selecionar_categoria"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentTop="true"
-                android:layout_alignParentEnd="true"> </Spinner>
 
         </RelativeLayout>
 

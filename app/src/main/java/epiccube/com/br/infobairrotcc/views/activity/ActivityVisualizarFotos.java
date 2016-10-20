@@ -8,7 +8,7 @@ import android.view.MenuItem;
 
 import epiccube.com.br.infobairrotcc.R;
 import epiccube.com.br.infobairrotcc.models.entities.Postagem;
-import epiccube.com.br.infobairrotcc.views.adapter.AdapterFotos;
+import epiccube.com.br.infobairrotcc.views.adapter.AdapterVisualizarFotosPostagem;
 
 /**
  * Created by abadari on 18/10/2016.
@@ -40,7 +40,7 @@ public class ActivityVisualizarFotos extends AppCompatActivity{
 
     void setViewPager(){
         ViewPager viewPager = (ViewPager) findViewById(R.id.activity_visualizar_fotos_view_pager);
-        viewPager.setAdapter(new AdapterFotos(p.getUrlFotosPostagem(), this));
+        viewPager.setAdapter(new AdapterVisualizarFotosPostagem(p.getUrlFotosPostagem(), this));
     }
 
 
