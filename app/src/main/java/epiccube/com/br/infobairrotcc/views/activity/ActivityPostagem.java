@@ -1,6 +1,7 @@
 package epiccube.com.br.infobairrotcc.views.activity;
 
 import android.app.Activity;
+import android.content.ClipData;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -12,6 +13,7 @@ import android.view.MenuItem;
 
 import org.greenrobot.eventbus.EventBus;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 import epiccube.com.br.infobairrotcc.R;
@@ -43,20 +45,22 @@ public class ActivityPostagem extends AppCompatActivity {
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        Log.e("FOTO", "AAA");
-        if(resultCode != Activity.RESULT_CANCELED) {
+        if(resultCode != Activity.RESULT_CANCELED) {// se não foi cancelado, entra aqui...
             if (requestCode == 1) {
-                if (Intent.ACTION_SEND_MULTIPLE.equals(data.getAction())&& data.hasExtra(Intent.EXTRA_STREAM)) { //TODO BUGADO
-                    ArrayList<Parcelable> list = data.getParcelableArrayListExtra(Intent.EXTRA_STREAM);
-                    if( list != null ) {
-                        for (Parcelable parcel : list) {
-                            Uri uri = (Uri) parcel;
-                            Log.e("FOTO", uri.getPath());
-                        }
-                    }
+
+                ArrayList<Uri> fotos = new ArrayList<>();
+                ClipData clipData = data.getClipData();
+
+                int qtdFotos = clipData.getItemCount();
+
+                for (int i = 0; i<qtdFotos;i++){
+                    ClipData.Item item = clipData.getItemAt(i);
+                    fotos.add(item.getUri());
                 }
-                /*Uri perfilSelecionado = data.getData();
-                EventBus.getDefault().post(new Eventos.SelecionaImagemSelecionada(perfilSelecionado));*/
+
+                // Passa o array de fotos para o "além" e espera alguém ouvir.
+                // Quem vai ouvir é a classe HelperActivityPostagem...
+                EventBus.getDefault().post(new Eventos.PostagemMultiplasImagens(fotos));
             }
         }
     }

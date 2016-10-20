@@ -4,7 +4,9 @@ import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
+import android.net.Uri;
 import android.provider.MediaStore;
+import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.ArrayAdapter;
@@ -14,7 +16,13 @@ import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
+
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+
 import epiccube.com.br.infobairrotcc.R;
+import epiccube.com.br.infobairrotcc.eventos.Eventos;
 
 /**
  * Created by abadari on 14/10/2016.
@@ -36,6 +44,7 @@ public class HelperActivityPostagem {
     public HelperActivityPostagem(Activity context){
         this.context = context;
         this.context.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
+        EventBus.getDefault().register(this); //registra a classe para ele ouvir...
     }
 
     public static HelperActivityPostagem init(Activity context){
@@ -86,7 +95,7 @@ public class HelperActivityPostagem {
                 intent.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true);
                 context.startActivityForResult(Intent.createChooser(intent,
                         "Select Picture"), 1);
-                //context.startActivityForResult(intent, 1);
+                //context.startActivityForResult(intentGaleria, 1);
             }
         });
 
@@ -101,6 +110,15 @@ public class HelperActivityPostagem {
         this.categorias.setAdapter(adapter);
     }
 
+    @Subscribe
+    public void onEventSelecionarFotos(Eventos.PostagemMultiplasImagens imagens){
+        for(Uri u: imagens.getFotos()){
+            Log.e("CHEGOU A FOTO", u.getPath());
+        }
+
+        Glide.with(context).load(imagens.getFotos().get(0)).into(inserirFotos);
+
+    }
 
 
 }
