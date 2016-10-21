@@ -120,16 +120,14 @@ public class HelperActivityCadastro {
                     usuario.setEmail(email);
                     usuario.setSenha(senha);
 
-                    //firebase();
-                    SingletonUsuario.getInstancia().setUsuario(Mock.usuario());
+                    firebase();
+                    /*SingletonUsuario.getInstancia().setUsuario(Mock.usuario());
 
                     Toast.makeText(context, "Cadastrado com sucesso!", Toast.LENGTH_SHORT).show();
 
                     Intent intent = new Intent(context, ActivityMenuInicial.class);
                     context.startActivity(intent);
-                    context.finish();
-
-
+                    context.finish();*/
 
                 }else{
                     cadastro_btn_cadastrar.setEnabled(true);
@@ -144,11 +142,13 @@ public class HelperActivityCadastro {
     }
 
     private void firebase() {
+        autenticador = FirebaseAuth.getInstance();
         autenticador.createUserWithEmailAndPassword(email, senha)
                 .addOnSuccessListener(new OnSuccessListener<AuthResult>() {
                     @Override
                     public void onSuccess(AuthResult authResult) {
                         user = authResult.getUser();
+                        usuario.setUid(user.getUid());
                         finalizaInsercaoDados();
                     }
                 })
@@ -170,9 +170,9 @@ public class HelperActivityCadastro {
                         progressDialog.dismiss();
 
                         //Cria usuário falso e o salva numa variavel estática
-                        SingletonUsuario.getInstancia().setUsuario(Mock.usuario());
+                        SingletonUsuario.getInstancia().setUsuario(usuario);
 
-                        Toast.makeText(context, "Cadastrado com sucesso!", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(context, usuario.getNome()+", seu cadastrado foi realizado com sucesso!", Toast.LENGTH_SHORT).show();
 
                         Intent intent = new Intent(context, ActivityMenuInicial.class);
                         context.startActivity(intent);

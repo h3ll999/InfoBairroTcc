@@ -103,6 +103,7 @@ public class ActivityMenuInicial extends AppCompatActivity
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
         setHeaderDetalhes(navigationView);
+        navigationView.getMenu().getItem(0).setChecked(true);
     }
 
     void setHeaderDetalhes(NavigationView nv){
@@ -179,7 +180,7 @@ public class ActivityMenuInicial extends AppCompatActivity
         int id = item.getItemId();
 
         if (id == R.id.action_settings) {
-            return true;
+            finish();
         }
 
         return super.onOptionsItemSelected(item);
@@ -190,18 +191,14 @@ public class ActivityMenuInicial extends AppCompatActivity
     public boolean onNavigationItemSelected(MenuItem item) {
         int id = item.getItemId();
 
-        if (id == R.id.nav_camera) {
-
-        } else if (id == R.id.nav_gallery) {
-
-        } else if (id == R.id.nav_slideshow) {
-
-        } else if (id == R.id.nav_manage) {
-
-        } else if (id == R.id.nav_share) {
-
-        } else if (id == R.id.nav_send) {
-
+        if (id == R.id.menu_categoria_todas) {
+            Toast.makeText(this,"query todas", Toast.LENGTH_SHORT).show();
+        } else if (id == R.id.menu_categoria_evento) {
+            Toast.makeText(this,"query evento", Toast.LENGTH_SHORT).show();
+        } else if (id == R.id.menu_categoria_atencao) {
+            Toast.makeText(this,"query atencao", Toast.LENGTH_SHORT).show();
+        } else if (id == R.id.menu_categoria_festival) {
+            Toast.makeText(this,"query festival", Toast.LENGTH_SHORT).show();
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);

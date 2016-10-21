@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "76057461361",
+    "firebase_url": "https://infobairrotcc-fa6f9.firebaseio.com",
+    "project_id": "infobairrotcc-fa6f9",
+    "storage_bucket": "infobairrotcc-fa6f9.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:76057461361:android:5218e20b52e0486d",
+        "android_client_info": {
+          "package_name": "epiccube.com.br.infobairrotcc"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "76057461361-9gnjff4sppliqsrobktukocdtt9sks8r.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBkbC5288HWNOVgSz5_7h6y06fG--w7-wc"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

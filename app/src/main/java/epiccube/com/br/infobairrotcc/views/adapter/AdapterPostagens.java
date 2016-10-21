@@ -171,12 +171,12 @@ public class AdapterPostagens extends RecyclerView.Adapter<AdapterPostagens.Adap
         this.listaPostagem.add(0, postagem.getP());
         this.notifyDataSetChanged();
     }
-
-
 }
 
 // TODO MAIS IMPORTANTE AGORA: DEIFNIÇÃO DAS CATEGORIAS
 // TODO FILTRAGEM PELOS BAIRROS
+// TODO Capturar o BAIRRO através do google api do maps...saber como que captura.
+
 
 
 
