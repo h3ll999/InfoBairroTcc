@@ -24,7 +24,7 @@ public class Mock {
 
     public static List<Postagem> postagens(){
         List<Postagem> postagens = new ArrayList<>();
-        for (int i = 0; i<40000; i++){
+        for (int i = 0; i<2; i++){
 
             if (i%2==0){ // com várias foto
                 Postagem p = new Postagem();
@@ -80,7 +80,25 @@ public class Mock {
     public static List<Integer> fotos(){
         List<Integer> fotos = new ArrayList<>();
 
+        fotos.add(R.drawable.foto1);
+        fotos.add(R.drawable.foto2);
         fotos.add(R.drawable.foto3);
+        fotos.add(R.drawable.foto4);
+        fotos.add(R.drawable.foto5);
+        fotos.add(R.drawable.foto6);
+        fotos.add(R.drawable.foto7);
+        fotos.add(R.drawable.foto1);
+        fotos.add(R.drawable.foto2);
+        fotos.add(R.drawable.foto3);
+        fotos.add(R.drawable.foto4);
+        fotos.add(R.drawable.foto5);
+        fotos.add(R.drawable.foto6);
+        fotos.add(R.drawable.foto7);
+        fotos.add(R.drawable.foto1);
+        fotos.add(R.drawable.foto2);
+        fotos.add(R.drawable.foto3);
+        fotos.add(R.drawable.foto4);
+        fotos.add(R.drawable.foto5);
         fotos.add(R.drawable.foto6);
         fotos.add(R.drawable.foto7);
 

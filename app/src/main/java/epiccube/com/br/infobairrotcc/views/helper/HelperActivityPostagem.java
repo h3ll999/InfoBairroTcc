@@ -22,8 +22,12 @@ import android.widget.Toast;
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 
+import java.util.ArrayList;
+
 import epiccube.com.br.infobairrotcc.R;
 import epiccube.com.br.infobairrotcc.eventos.Eventos;
+import epiccube.com.br.infobairrotcc.models.entities.Postagem;
+import epiccube.com.br.infobairrotcc.models.singleton.SingletonUsuario;
 import epiccube.com.br.infobairrotcc.views.adapter.AdapterPostagemFotos;
 
 import static android.content.Context.INPUT_METHOD_SERVICE;
@@ -43,6 +47,9 @@ public class HelperActivityPostagem {
     private Spinner categorias;
     private GridView fotos;
     private RelativeLayout layoutGrid;
+    private ArrayList<String> imagens;
+
+    private Postagem p;
 
     // TODO SEGUIR ESSE PADRÃO DE DESIGN....LOUCO DEMAIS
     // http://www.cssauthor.com/wp-content/uploads/2015/04/Facebook-Material-Design-GUI-Kit-PSD.jpg
@@ -68,6 +75,7 @@ public class HelperActivityPostagem {
         categorias = (Spinner) context.findViewById(R.id.activity_postar_spn_selecionar_categoria);
         fotos = (GridView) context.findViewById(R.id.activity_postar_grid_view);
         layoutGrid = (RelativeLayout) context.findViewById(R.id.activity_postar_relative2);
+        imagens = new ArrayList<>();
 
         return this;
     }
@@ -78,11 +86,12 @@ public class HelperActivityPostagem {
             @Override
             public void onClick(View v) {
 
-                Toast.makeText(context,
-                        titulo.getText().toString().trim()+"\n\n"+
-                                conteudo.getText().toString().trim()+"\n\n"+
-                        categorias.getSelectedItem().toString(),
-                        Toast.LENGTH_SHORT).show();
+                // firebase...
+
+
+                // teste
+                getData();
+                EventBus.getDefault().post(new Eventos.InseriuPostagemMockPostagem(p));
 
                 context.finish();
 
@@ -111,10 +120,23 @@ public class HelperActivityPostagem {
         this.categorias.setAdapter(adapter);
     }
 
+    private void getData(){
+        p = new Postagem();
+        p.setTitulo(titulo.getText().toString().trim());
+        p.setConteudo(conteudo.getText().toString().trim());
+        p.setUsuario(SingletonUsuario.getInstancia().getUsuario());
+        p.setUrlFotosPostagem(imagens);
+    }
+
     @Subscribe
     public void onEventSelecionarFotos(Eventos.PostagemMultiplasImagens imagens){
         for(Uri u: imagens.getFotos()){
             Log.e("CHEGOU A FOTO", u.getPath());
+        }
+
+        //para fins de teste...
+        for(Uri u: imagens.getFotos()){
+            this.imagens.add(u.getPath());
         }
 
         //mata a foto de chamar a galeria

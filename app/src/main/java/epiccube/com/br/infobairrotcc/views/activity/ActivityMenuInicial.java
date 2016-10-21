@@ -41,6 +41,7 @@ public class ActivityMenuInicial extends AppCompatActivity
 
     private Toolbar toolbar;
     private FloatingActionButton fab;
+    private ProgressBar p;
 
     private DialogPostagem dialog;
 
@@ -51,20 +52,19 @@ public class ActivityMenuInicial extends AppCompatActivity
 
         EventBus.getDefault().register(this);
 
-        new AsynkTaskMockPostagem().execute();
-
-
-
-
-    }
-
-    // após o fim da requisição dos dados da asynctask, executa os métodos abaixo...
-    @Subscribe
-    public void onEventMockPostagens(Eventos.ResultadoAsyncTaskMockPostagem postagens){
+        setLoading();
         setToolbar();
         setFAB();
         setDrawer();
         setNavView();
+
+        new AsynkTaskMockPostagem().execute(p);
+
+    }
+
+    // após o fim da requisição dos dados da asynctask, executa o método abaixo...
+    @Subscribe
+    public void onEventMockPostagens(Eventos.ResultadoAsyncTaskMockPostagem postagens){
         setRecyclerView(postagens.getPostagems());
     }
 
@@ -95,7 +95,7 @@ public class ActivityMenuInicial extends AppCompatActivity
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
-        drawer.setDrawerListener(toggle);
+        drawer.addDrawerListener(toggle);
         toggle.syncState();
     }
 
@@ -142,12 +142,17 @@ public class ActivityMenuInicial extends AppCompatActivity
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(linearLayoutManager);
         dismissLoading();
+
         recyclerView.setAdapter(new AdapterPostagens(listagemPostagem, this));
+
         //recyclerView.getRecycledViewPool().setMaxRecycledViews(0, 0);
     }
 
+    void setLoading(){
+        p = (ProgressBar) findViewById(R.id.progressBar1);
+    }
+
     void dismissLoading(){
-        ProgressBar p = (ProgressBar) findViewById(R.id.progressBar1);
         p.setVisibility(View.GONE);
     }
 

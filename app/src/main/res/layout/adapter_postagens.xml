@@ -53,7 +53,6 @@
             android:layout_toEndOf="@+id/menu_inicial_img_foto_usuario" />
 
         <de.hdodenhof.circleimageview.CircleImageView
-            app:srcCompat="@mipmap/ic_launcher"
             android:id="@+id/menu_inicial_img_foto_usuario"
             android:layout_marginLeft="16dp"
             android:layout_width="70dp"
@@ -76,7 +75,6 @@
             android:layout_width="match_parent"
             android:layout_height="200dp"
             android:scaleType="centerCrop"
-            android:background="@drawable/placeholder_img_vazia"
             android:layout_marginTop="16dp"
             android:layout_marginLeft="16dp"
             android:layout_marginRight="16dp"

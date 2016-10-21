@@ -14,11 +14,16 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+
 import java.io.Serializable;
+import java.util.Collections;
 import java.util.List;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 import epiccube.com.br.infobairrotcc.R;
+import epiccube.com.br.infobairrotcc.eventos.Eventos;
 import epiccube.com.br.infobairrotcc.models.contantes.Constantes;
 import epiccube.com.br.infobairrotcc.models.entities.Postagem;
 import epiccube.com.br.infobairrotcc.utils.MyUtils;
@@ -37,18 +42,18 @@ public class AdapterPostagens extends RecyclerView.Adapter<AdapterPostagens.Adap
     public AdapterPostagens(List<Postagem> listaPostagem, AppCompatActivity context) {
         this.listaPostagem = listaPostagem;
         this.context = context;
+        EventBus.getDefault().register(this);
     }
 
 
     @Override
     public AdapterPostagensViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.adapter_postagens, parent, false);
-        AdapterPostagensViewHolder viewHolder = new AdapterPostagensViewHolder(v, context, listaPostagem);
-        return viewHolder;
+        return new AdapterPostagensViewHolder(v);
     }
 
     @Override
-    public void onBindViewHolder(AdapterPostagensViewHolder holder, int position) {
+    public void onBindViewHolder(final AdapterPostagensViewHolder holder, int position) {
 
         Glide.with(context)
                 .load(listaPostagem.get(position).getUsuario().getPerfilUrl())
@@ -62,7 +67,8 @@ public class AdapterPostagens extends RecyclerView.Adapter<AdapterPostagens.Adap
         holder.categoria.setText(listaPostagem.get(position).getCategoria());
         holder.nome.setText(listaPostagem.get(position).getUsuario().getNome());
 
-        if(listaPostagem.get(position).getUrlFotosPostagem().size() == 0){
+        if(listaPostagem.get(position).getUrlFotosPostagem() == null
+                || listaPostagem.get(position).getUrlFotosPostagem().size() == 0 ){
 
             holder.verMaisImg.setVisibility(View.GONE);
             holder.imagemPost.setVisibility(View.GONE);
@@ -96,24 +102,30 @@ public class AdapterPostagens extends RecyclerView.Adapter<AdapterPostagens.Adap
         }
 
 
-        /*holder.layout.setOnClickListener(new View.OnClickListener() {
+        holder.layout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(context, ActivityVisualizaPostagem.class);
-                intent.putExtra(Constantes.INTENT_POSTAGEM, listaPostagem.get(position));
+                intent.putExtra(Constantes.INTENT_POSTAGEM, listaPostagem.get(holder.getAdapterPosition()));
                 context.startActivity(intent);
             }
         });
+
 
 
         holder.imagemPost.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(context, ActivityVisualizarFotos.class);
-                intent.putExtra("LISTA_FOTOS", (Serializable) listaPostagem.get(position));
+                intent.putExtra("LISTA_FOTOS", (Serializable) listaPostagem.get(holder.getAdapterPosition()));
                 context.startActivity(intent);
             }
-        });*/
+        });
+
+    }
+
+    @Subscribe
+    public void onEventClick(){
 
     }
 
@@ -139,14 +151,8 @@ public class AdapterPostagens extends RecyclerView.Adapter<AdapterPostagens.Adap
         private ImageView imagemPost;
         private TextView verMaisImg;
 
-        private AppCompatActivity context;
-
-        private List<Postagem> listaPostagem;
-
-        public AdapterPostagensViewHolder(View itemView, AppCompatActivity context, List<Postagem> listaPostagem) {
+        public AdapterPostagensViewHolder(View itemView) {
             super(itemView);
-            this.context = context;
-            this.listaPostagem = listaPostagem;
             layout = (RelativeLayout) itemView.findViewById(R.id.menu_inicial_layout_adapter);
             imagemPerfil = (CircleImageView) itemView.findViewById(R.id.menu_inicial_img_foto_usuario);
             titulo = (TextView) itemView.findViewById(R.id.menu_inicial_txv_titulo_postagem);
@@ -155,40 +161,21 @@ public class AdapterPostagens extends RecyclerView.Adapter<AdapterPostagens.Adap
             nome = (TextView) itemView.findViewById(R.id.menu_inicial_txv_nome_usuario_postagem);
             imagemPost = (ImageView) itemView.findViewById(R.id.menu_inicial_img_foto_postagem);
             verMaisImg = (TextView) itemView.findViewById(R.id.menu_inicial_txv_foto_postagem);
-
-
-            //TODO Testar notify data set changed...
-            layout.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    Intent intent = new Intent(AdapterPostagensViewHolder.this.context, ActivityVisualizaPostagem.class);
-                    intent.putExtra(Constantes.INTENT_POSTAGEM, (Serializable) AdapterPostagensViewHolder.this.listaPostagem.get(getAdapterPosition()));
-                    AdapterPostagensViewHolder.this.context.startActivity(intent);
-                }
-            });
-
-
-            imagemPost.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Intent intent = new Intent(AdapterPostagensViewHolder.this.context, ActivityVisualizarFotos.class);
-                    intent.putExtra("LISTA_FOTOS", (Serializable) AdapterPostagensViewHolder.this.listaPostagem.get(getAdapterPosition()));
-                    AdapterPostagensViewHolder.this.context.startActivity(intent);
-                }
-            });
         }
+    }
+
+
+    // PARA FINS DE TESTE UNICAMENTE
+    @Subscribe
+    public void onEventInseriuPostagem(Eventos.InseriuPostagemMockPostagem postagem){
+        this.listaPostagem.add(0, postagem.getP());
+        this.notifyDataSetChanged();
     }
 
 
 }
 
-
-// TODO - VALIDAÇÃO LOGIN
-// TODO - VALIDAÇÃO CADASTRO (INSERIR FOTO DO USUÁRIO)
-// TODO - TELA DE POSTAGEM (E SUA VALIDAÇÃO) (E INSERIR UMAS FOTOS NA POSTAGEM)
-// TODO - TELA VISUALIZAÇÃO POSTAGEM
-
-
+// TODO MAIS IMPORTANTE AGORA: DEIFNIÇÃO DAS CATEGORIAS
 // TODO FILTRAGEM PELOS BAIRROS
 
 
