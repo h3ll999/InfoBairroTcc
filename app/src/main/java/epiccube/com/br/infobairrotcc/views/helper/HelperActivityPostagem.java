@@ -1,6 +1,5 @@
 package epiccube.com.br.infobairrotcc.views.helper;
 
-import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
@@ -9,7 +8,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
-import android.view.inputmethod.InputMethodManager;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
@@ -17,7 +15,6 @@ import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.Spinner;
-import android.widget.Toast;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -27,10 +24,8 @@ import java.util.ArrayList;
 import epiccube.com.br.infobairrotcc.R;
 import epiccube.com.br.infobairrotcc.eventos.Eventos;
 import epiccube.com.br.infobairrotcc.models.entities.Postagem;
-import epiccube.com.br.infobairrotcc.models.singleton.SingletonUsuario;
+import epiccube.com.br.infobairrotcc.models.singleton.UsuarioLogado;
 import epiccube.com.br.infobairrotcc.views.adapter.AdapterPostagemFotos;
-
-import static android.content.Context.INPUT_METHOD_SERVICE;
 
 /**
  * Created by abadari on 14/10/2016.
@@ -124,12 +119,15 @@ public class HelperActivityPostagem {
         p = new Postagem();
         p.setTitulo(titulo.getText().toString().trim());
         p.setConteudo(conteudo.getText().toString().trim());
-        p.setUsuario(SingletonUsuario.getInstancia().getUsuario());
+        p.setUsuario(UsuarioLogado.getInstancia().getUsuario());
         p.setUrlFotosPostagem(imagens);
+
     }
+
 
     @Subscribe
     public void onEventSelecionarFotos(Eventos.PostagemMultiplasImagens imagens){
+
         for(Uri u: imagens.getFotos()){
             Log.e("CHEGOU A FOTO", u.getPath());
         }

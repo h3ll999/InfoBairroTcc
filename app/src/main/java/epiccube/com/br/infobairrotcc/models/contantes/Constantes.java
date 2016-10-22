@@ -8,6 +8,8 @@ public class Constantes {
 
     public static final String INTENT_POSTAGEM = "INTENT_POSTAGEM";
 
+    public static final String LISTA_FOTOS = "LISTA_FOTOS";
+
     public static final String USUARIO = "USUARIO";
     public static final String PERFIL = "PERFIL";
 

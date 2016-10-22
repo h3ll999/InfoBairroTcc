@@ -28,7 +28,7 @@ import epiccube.com.br.infobairrotcc.R;
 import epiccube.com.br.infobairrotcc.models.contantes.Constantes;
 import epiccube.com.br.infobairrotcc.models.entities.Usuario;
 import epiccube.com.br.infobairrotcc.models.mock.Mock;
-import epiccube.com.br.infobairrotcc.models.singleton.SingletonUsuario;
+import epiccube.com.br.infobairrotcc.models.singleton.UsuarioLogado;
 import epiccube.com.br.infobairrotcc.views.activity.ActivityCadastro;
 import epiccube.com.br.infobairrotcc.views.activity.ActivityMenuInicial;
 
@@ -86,7 +86,7 @@ public class HelperActivityLogin {
 
                 //firebase();
 
-                SingletonUsuario.getInstancia().setUsuario(Mock.usuario());
+                UsuarioLogado.getInstancia().setUsuario(Mock.usuario());
                 //Troca de tela
                 Intent i = new Intent(context, ActivityMenuInicial.class);
                 context.startActivity(i);
@@ -149,7 +149,7 @@ public class HelperActivityLogin {
                 u.setPerfilUrl(a.get("perfilUrl"));
 
                 //Salva o usuário numa variavel estática
-                SingletonUsuario.getInstancia().setUsuario(Mock.usuario());// vai salvar o u no futuro...
+                UsuarioLogado.getInstancia().setUsuario(Mock.usuario());// vai salvar o u no futuro...
 
                 //Troca de tela
                 Intent i = new Intent(context, ActivityMenuInicial.class);

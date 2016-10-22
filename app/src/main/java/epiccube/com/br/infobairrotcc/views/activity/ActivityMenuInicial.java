@@ -30,8 +30,7 @@ import de.hdodenhof.circleimageview.CircleImageView;
 import epiccube.com.br.infobairrotcc.R;
 import epiccube.com.br.infobairrotcc.eventos.Eventos;
 import epiccube.com.br.infobairrotcc.models.entities.Postagem;
-import epiccube.com.br.infobairrotcc.models.mock.Mock;
-import epiccube.com.br.infobairrotcc.models.singleton.SingletonUsuario;
+import epiccube.com.br.infobairrotcc.models.singleton.UsuarioLogado;
 import epiccube.com.br.infobairrotcc.views.adapter.AdapterPostagens;
 import epiccube.com.br.infobairrotcc.views.asynctask.AsynkTaskMockPostagem;
 import epiccube.com.br.infobairrotcc.views.dialogs.DialogPostagem;
@@ -116,20 +115,20 @@ public class ActivityMenuInicial extends AppCompatActivity
         TextView nomeUser = (TextView) v.findViewById(R.id.activity_menuinicial_txv_nome_usuario);
 
         //Valoriza
-        Glide.with(this).load(SingletonUsuario.getInstancia().getUsuario().getPerfilUrl())
+        Glide.with(this).load(UsuarioLogado.getInstancia().getUsuario().getPerfilUrl())
                 //.bitmapTransform(new CropCircleTransformation(this))
                 .diskCacheStrategy(DiskCacheStrategy.SOURCE)
                 .placeholder(R.drawable.placeholder)
                 .into(imgUser);
 
-        nomeUser.setText(SingletonUsuario.getInstancia().getUsuario().getNome());
+        nomeUser.setText(UsuarioLogado.getInstancia().getUsuario().getNome());
 
         //Cliques
         imgUser.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Toast.makeText(ActivityMenuInicial.this,
-                        SingletonUsuario.getInstancia().getUsuario().getNome(), Toast.LENGTH_SHORT).show();
+                        UsuarioLogado.getInstancia().getUsuario().getNome(), Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -192,6 +191,7 @@ public class ActivityMenuInicial extends AppCompatActivity
         int id = item.getItemId();
 
         if (id == R.id.menu_categoria_todas) {
+
             Toast.makeText(this,"query todas", Toast.LENGTH_SHORT).show();
         } else if (id == R.id.menu_categoria_evento) {
             Toast.makeText(this,"query evento", Toast.LENGTH_SHORT).show();

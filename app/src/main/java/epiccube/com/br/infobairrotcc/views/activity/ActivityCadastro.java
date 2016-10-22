@@ -12,6 +12,7 @@ import org.greenrobot.eventbus.EventBus;
 
 import epiccube.com.br.infobairrotcc.R;
 import epiccube.com.br.infobairrotcc.eventos.Eventos;
+import epiccube.com.br.infobairrotcc.models.singleton.UsuarioLogado;
 import epiccube.com.br.infobairrotcc.views.helper.HelperActivityCadastro;
 
 /**
@@ -41,7 +42,8 @@ public class ActivityCadastro  extends AppCompatActivity{
         if(resultCode != Activity.RESULT_CANCELED) {
             if (requestCode == 1) {
                 Uri perfilSelecionado = data.getData();
-                //DÁ UM "GRITO" E JOGA O OBJETO PARA O "ALÉM" E ESPERA QUE ALGUÉM OUÇA...QUEM VAI OUVIR É QUEM TIVER O @Subscribe como annotation e quem receber o parâmetro do mesmo tipo
+                //DÁ UM "GRITO" E JOGA O OBJETO PARA O "ALÉM" E ESPERA QUE ALGUÉM OUÇA...
+                // QUEM VAI OUVIR É QUEM TIVER O @Subscribe como annotation e quem receber o parâmetro do mesmo tipo
                 EventBus.getDefault().post(new Eventos.SelecionaImagemSelecionada(perfilSelecionado));
             }
         }
@@ -55,3 +57,9 @@ public class ActivityCadastro  extends AppCompatActivity{
         return super.onOptionsItemSelected(item);
     }
 }
+
+//                                    CADASTRO
+ // > Cadastrar no Auth (email+senha) //  FirebaseUser user = Auth.getInstance.getUser();
+ // > Pega os restos dos dados(nome+idade+bairro..) e joga no RealDatabase
+ // > Pega (nome+idade+bairro..) e insere num objeto estático (Usuário)
+//    UsuarioLogado.getInstancia().getUsuario();

@@ -7,6 +7,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
 
 import epiccube.com.br.infobairrotcc.R;
+import epiccube.com.br.infobairrotcc.models.contantes.Constantes;
 import epiccube.com.br.infobairrotcc.models.entities.Postagem;
 import epiccube.com.br.infobairrotcc.views.adapter.AdapterVisualizarFotosPostagem;
 
@@ -26,7 +27,7 @@ public class ActivityVisualizarFotos extends AppCompatActivity{
 
 
         // pega a postagem que foi passada
-        p = (Postagem) getIntent().getSerializableExtra("LISTA_FOTOS");
+        p = (Postagem) getIntent().getSerializableExtra(Constantes.LISTA_FOTOS);
 
         //getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         //getSupportActionBar().setElevation(0);

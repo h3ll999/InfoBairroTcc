@@ -6,17 +6,17 @@ import epiccube.com.br.infobairrotcc.models.entities.Usuario;
  * Created by abadari on 17/10/2016.
  */
 
-public class SingletonUsuario {
+public class UsuarioLogado {
 
-    public static SingletonUsuario instancia = null;
+    public static UsuarioLogado instancia = null;
     public Usuario usuario;
 
-    public SingletonUsuario() {
+    public UsuarioLogado() {
     }
 
-    public static SingletonUsuario getInstancia() {
+    public static UsuarioLogado getInstancia() {
         if (instancia == null)
-            instancia = new SingletonUsuario();
+            instancia = new UsuarioLogado();
         return instancia;
     }
 

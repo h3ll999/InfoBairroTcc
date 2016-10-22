@@ -31,8 +31,7 @@ import epiccube.com.br.infobairrotcc.R;
 import epiccube.com.br.infobairrotcc.eventos.Eventos;
 import epiccube.com.br.infobairrotcc.models.contantes.Constantes;
 import epiccube.com.br.infobairrotcc.models.entities.Usuario;
-import epiccube.com.br.infobairrotcc.models.mock.Mock;
-import epiccube.com.br.infobairrotcc.models.singleton.SingletonUsuario;
+import epiccube.com.br.infobairrotcc.models.singleton.UsuarioLogado;
 import epiccube.com.br.infobairrotcc.validator.Validar;
 import epiccube.com.br.infobairrotcc.views.activity.ActivityMenuInicial;
 import jp.wasabeef.glide.transformations.CropCircleTransformation;
@@ -121,7 +120,7 @@ public class HelperActivityCadastro {
                     usuario.setSenha(senha);
 
                     firebase();
-                    /*SingletonUsuario.getInstancia().setUsuario(Mock.usuario());
+                    /*UsuarioLogado.getInstancia().setUsuario(Mock.usuario());
 
                     Toast.makeText(context, "Cadastrado com sucesso!", Toast.LENGTH_SHORT).show();
 
@@ -170,7 +169,7 @@ public class HelperActivityCadastro {
                         progressDialog.dismiss();
 
                         //Cria usuário falso e o salva numa variavel estática
-                        SingletonUsuario.getInstancia().setUsuario(usuario);
+                        UsuarioLogado.getInstancia().setUsuario(usuario);
 
                         Toast.makeText(context, usuario.getNome()+", seu cadastrado foi realizado com sucesso!", Toast.LENGTH_SHORT).show();
 

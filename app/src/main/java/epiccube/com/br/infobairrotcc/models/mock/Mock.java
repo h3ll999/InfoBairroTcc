@@ -24,7 +24,7 @@ public class Mock {
 
     public static List<Postagem> postagens(){
         List<Postagem> postagens = new ArrayList<>();
-        for (int i = 0; i<2; i++){
+        for (int i = 0; i<40000; i++){
 
             if (i%2==0){ // com várias foto
                 Postagem p = new Postagem();
