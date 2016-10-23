@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical"
     android:id="@+id/activity_postar_linear_layout"
     android:layout_width="match_parent"
@@ -36,33 +37,32 @@
                 android:id="@+id/activity_postar_edt_conteudo"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/activity_postar_edt_titulo"
-                android:background="@android:color/transparent"
-                android:layout_marginTop="16dp"
+                android:background="#f1f1f1"
                 android:hint="Escreva algo..."
                 android:gravity="top|left"
                 android:inputType="textPersonName|textMultiLine"
                 android:maxLength="2000"
                 android:maxLines="15"
-                android:layout_alignParentBottom="true" />
+                android:layout_alignParentBottom="true"
+                android:layout_below="@+id/activity_postar_spn_selecionar_categoria" />
 
             <Button
                 android:text="CONCLUIR"
                 android:id="@+id/activity_postar_btn_concluir"
                 android:textColor="@color/colorPrimary"
                 style="?android:attr/borderlessButtonStyle"
-                android:layout_width="wrap_content"
+                android:layout_width="150dp"
                 android:layout_height="wrap_content"
                 android:layout_alignParentTop="true"
                 android:layout_alignParentEnd="true" />
 
             <Spinner
                 android:id="@+id/activity_postar_spn_selecionar_categoria"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
                 android:layout_below="@+id/activity_postar_btn_concluir"
                 android:layout_alignStart="@+id/activity_postar_btn_concluir"
-                android:layout_alignParentEnd="true"> </Spinner>
+                android:layout_alignParentEnd="true"
+                android:layout_width="wrap_content"
+                android:layout_height="40dp"> </Spinner>
         </RelativeLayout>
 
         <RelativeLayout
@@ -72,7 +72,8 @@
             android:background="@drawable/layout_postagem_fotos_selecionadas"
             android:layout_alignParentBottom="true"
             android:layout_alignParentStart="true"
-            android:gravity="center_vertical">
+            android:gravity="center_vertical"
+            android:backgroundTint="#fdfdfd">
 
             <GridView
                 android:id="@+id/activity_postar_grid_view"
@@ -82,7 +83,8 @@
                 android:verticalSpacing="1dp"
                 android:horizontalSpacing="1dp"
                 android:stretchMode="columnWidth"
-                android:gravity="center">
+                android:gravity="center"
+                android:background="#fdfdfd">
             </GridView>
 
             <ImageView
