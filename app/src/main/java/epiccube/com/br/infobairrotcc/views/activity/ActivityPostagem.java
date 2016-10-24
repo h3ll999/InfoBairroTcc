@@ -39,7 +39,7 @@ public class ActivityPostagem extends AppCompatActivity {
 
         setContentView(R.layout.activity_postagem);
 
-        HelperActivityPostagem.init(this).cast().onClick().configureSpn();
+        HelperActivityPostagem.init(this).cast().onClick();
 
 
     }

@@ -23,6 +23,7 @@ import java.util.List;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 import epiccube.com.br.infobairrotcc.R;
+import epiccube.com.br.infobairrotcc.eventos.EventoInseriuPostagemMockPostagem;
 import epiccube.com.br.infobairrotcc.eventos.Eventos;
 import epiccube.com.br.infobairrotcc.models.contantes.Constantes;
 import epiccube.com.br.infobairrotcc.models.entities.Postagem;
@@ -167,13 +168,12 @@ public class AdapterPostagens extends RecyclerView.Adapter<AdapterPostagens.Adap
 
     // PARA FINS DE TESTE UNICAMENTE
     @Subscribe
-    public void onEventInseriuPostagem(Eventos.InseriuPostagemMockPostagem postagem){
-        this.listaPostagem.add(0, postagem.getP());
-        this.notifyDataSetChanged();
+    public void onEventInseriuPostagem(EventoInseriuPostagemMockPostagem postagem){
+        this.listaPostagem.add(postagem.getP());
+        AdapterPostagens.this.notifyDataSetChanged();
     }
 }
 
-// TODO MAIS IMPORTANTE AGORA: DEIFNIÇÃO DAS CATEGORIAS
 // TODO FILTRAGEM PELOS BAIRROS
 // TODO Capturar o BAIRRO através do google api do maps...saber como que captura.
 

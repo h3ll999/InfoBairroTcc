@@ -61,19 +61,4 @@ public class Eventos {
         }
     }
 
-    public static class InseriuPostagemMockPostagem{
-        private Postagem p;
-        public InseriuPostagemMockPostagem(Postagem p) {
-            this.p = p;
-        }
-        public Postagem getP() {
-            return p;
-        }
-        public void setP(Postagem p) {
-            this.p = p;
-        }
-    }
-
-
-
 }

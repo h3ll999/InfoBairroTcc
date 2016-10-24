@@ -1,19 +1,16 @@
 <resources>
     <string name="app_name">LoremIpsum</string>
 
-    <string name="navigation_drawer_open">Open navigation drawer</string>
-    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="navigation_drawer_open">Abrir</string>
+    <string name="navigation_drawer_close">Fechar</string>
 
     <string name="action_settings">Settings</string>
 
-
     <string-array name="activity_postar_spinner">
+        <item>-</item>
+        <item>Notícia</item>
         <item>Evento</item>
-        <item>Atenção</item>
-        <item>Festival</item>
-        <item>A</item>
-        <item>B</item>
-        <item>C</item>
+        <item>Serviço</item>
     </string-array>
 
 </resources>

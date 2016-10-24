@@ -37,14 +37,15 @@
                 android:id="@+id/activity_postar_edt_conteudo"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="#f1f1f1"
+                android:background="#ffffff"
+                android:layout_marginTop="16dp"
                 android:hint="Escreva algo..."
                 android:gravity="top|left"
                 android:inputType="textPersonName|textMultiLine"
                 android:maxLength="2000"
                 android:maxLines="15"
                 android:layout_alignParentBottom="true"
-                android:layout_below="@+id/activity_postar_spn_selecionar_categoria" />
+                android:layout_below="@+id/activity_postar_edt_titulo" />
 
             <Button
                 android:text="CONCLUIR"
@@ -56,13 +57,7 @@
                 android:layout_alignParentTop="true"
                 android:layout_alignParentEnd="true" />
 
-            <Spinner
-                android:id="@+id/activity_postar_spn_selecionar_categoria"
-                android:layout_below="@+id/activity_postar_btn_concluir"
-                android:layout_alignStart="@+id/activity_postar_btn_concluir"
-                android:layout_alignParentEnd="true"
-                android:layout_width="wrap_content"
-                android:layout_height="40dp"> </Spinner>
+
         </RelativeLayout>
 
         <RelativeLayout
@@ -102,3 +97,16 @@
     </RelativeLayout>
 
 </LinearLayout>
+
+<!--
+
+<Spinner
+                android:id="@+id/activity_postar_spn_selecionar_categoria"
+                android:layout_below="@+id/activity_postar_btn_concluir"
+                android:layout_alignStart="@+id/activity_postar_btn_concluir"
+                android:layout_alignParentEnd="true"
+                android:layout_width="wrap_content"
+                android:layout_height="40dp"> </Spinner>
+
+
+-->
