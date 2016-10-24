@@ -20,15 +20,23 @@ import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 import epiccube.com.br.infobairrotcc.R;
 import epiccube.com.br.infobairrotcc.eventos.Eventos;
+import epiccube.com.br.infobairrotcc.models.contantes.Constantes;
 import epiccube.com.br.infobairrotcc.models.entities.Postagem;
 import epiccube.com.br.infobairrotcc.models.singleton.UsuarioLogado;
 import epiccube.com.br.infobairrotcc.views.adapter.AdapterPostagens;
@@ -43,6 +51,7 @@ public class ActivityMenuInicial extends AppCompatActivity
     private ProgressBar p;
 
     private DialogPostagem dialog;
+    private Object dataFromServer;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,16 +65,17 @@ public class ActivityMenuInicial extends AppCompatActivity
         setFAB();
         setDrawer();
         setNavView();
+        getDataFromFirebase(Constantes.POSTAGENS_SEM_FILTRO);
 
-        new AsynkTaskMockPostagem().execute(p);
+        //new AsynkTaskMockPostagem().execute(p);
 
     }
 
     // após o fim da requisição dos dados da asynctask, executa o método abaixo...
-    @Subscribe
+    /*@Subscribe
     public void onEventMockPostagens(Eventos.ResultadoAsyncTaskMockPostagem postagens){
         setRecyclerView(postagens.getPostagems());
-    }
+    }*/
 
     void setToolbar(){
         toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -134,9 +144,38 @@ public class ActivityMenuInicial extends AppCompatActivity
 
     }
 
+    public void getDataFromFirebase(String filtro) {
+        DatabaseReference ref = FirebaseDatabase.getInstance().getReference();
+
+        ref.child(filtro).addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                List<Postagem> listagemPostagens = new ArrayList<Postagem>();
+                HashMap<String, String> mapListagemPostagens = (HashMap<String, String>) dataSnapshot.getValue();
+
+                for (DataSnapshot postSnapshot: dataSnapshot.getChildren()) {
+                    Postagem p = postSnapshot.getValue(Postagem.class);
+
+                    p.setTitulo(mapListagemPostagens.get("titulo"));
+                    p.setConteudo(mapListagemPostagens.get("conteudo"));
+                    p.setCategoria(mapListagemPostagens.get("categoria"));
+                    //p.setUsuario(mapListagemPostagens.get("usuario"));
+                    listagemPostagens.add(p);
+                }
+
+                setRecyclerView(listagemPostagens);
+
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+    }
 
 
-    void setRecyclerView(ArrayList<Postagem> listagemPostagem){
+    void setRecyclerView(List<Postagem> listagemPostagem){
         RecyclerView recyclerView = (RecyclerView) findViewById(R.id.activity_menu_inicial_recycler_view);
 
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
@@ -191,19 +230,19 @@ public class ActivityMenuInicial extends AppCompatActivity
         int id = item.getItemId();
 
         if (id == R.id.menu_categoria_todas) {
-
-            Toast.makeText(this,"query todas", Toast.LENGTH_SHORT).show();
+            getDataFromFirebase(Constantes.POSTAGENS_SEM_FILTRO);
         } else if (id == R.id.menu_categoria_evento) {
-            Toast.makeText(this,"query evento", Toast.LENGTH_SHORT).show();
-        } else if (id == R.id.menu_categoria_atencao) {
-            Toast.makeText(this,"query atencao", Toast.LENGTH_SHORT).show();
-        } else if (id == R.id.menu_categoria_festival) {
-            Toast.makeText(this,"query festival", Toast.LENGTH_SHORT).show();
+            getDataFromFirebase(Constantes.POSTAGENS_EVENTO);
+        } else if (id == R.id.menu_categoria_noticia) {
+            getDataFromFirebase(Constantes.POSTAGENS_NOTICIA);
+        } else if (id == R.id.menu_categoria_servico) {
+            getDataFromFirebase(Constantes.POSTAGENS_SERVICO);
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }
+
 
 }

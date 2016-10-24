@@ -11,13 +11,13 @@
             android:icon="@drawable/ic_menu_gallery"
             android:title="Evento" />
         <item
-            android:id="@+id/menu_categoria_atencao"
+            android:id="@+id/menu_categoria_noticia"
             android:icon="@drawable/ic_menu_slideshow"
-            android:title="Atenção" />
+            android:title="Notícia" />
         <item
-            android:id="@+id/menu_categoria_festival"
+            android:id="@+id/menu_categoria_servico"
             android:icon="@drawable/ic_menu_manage"
-            android:title="Festival" />
+            android:title="Serviço" />
     </group>
 
    <!-- <item android:title="Communicate">
