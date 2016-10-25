@@ -5,6 +5,8 @@ import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 
+import com.google.firebase.auth.FirebaseAuth;
+
 import epiccube.com.br.infobairrotcc.R;
 import epiccube.com.br.infobairrotcc.views.helper.HelperActivityLogin;
 
@@ -22,11 +24,17 @@ public class ActivityLogin extends AppCompatActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_login);
+
         getSupportActionBar().hide();
 
-        HelperActivityLogin.init(this).cast().onClick();
-
+        if(FirebaseAuth.getInstance().getCurrentUser() != null){ // se já estiver logado no firebase >>
+            HelperActivityLogin helper = new HelperActivityLogin(this);
+            helper.autoLogin(this); // busca as informações no database
+        } else { // caso contrário, pede o login...
+            setContentView(R.layout.activity_login);
+            HelperActivityLogin helper = new HelperActivityLogin(this);
+            helper.cast().onClick();
+        }
     }
 
     @Override

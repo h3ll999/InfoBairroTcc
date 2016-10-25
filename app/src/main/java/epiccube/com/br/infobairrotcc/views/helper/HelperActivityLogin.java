@@ -1,5 +1,6 @@
 package epiccube.com.br.infobairrotcc.views.helper;
 
+import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.Color;
@@ -130,7 +131,7 @@ public class HelperActivityLogin {
         return this;
     }
 
-    void firebase(){
+    private void firebase(){
         progressDialog = ProgressDialog.show(context,"Entrando", "Aguarde...",true,false);
         //autentica
         autenticador.signInWithEmailAndPassword(email,senha)
@@ -150,7 +151,7 @@ public class HelperActivityLogin {
 
     }
 
-    void finalizaRequisicaoDados(){
+    private void finalizaRequisicaoDados(){
 
         database.child(Constantes.USUARIO).child(user.getUid()).child(Constantes.PERFIL)
                 .addListenerForSingleValueEvent(new ValueEventListener() {
@@ -179,8 +180,11 @@ public class HelperActivityLogin {
                 context.finish();
             }
         });
+    }
 
-
+    public void autoLogin(Activity activity){
+        progressDialog = ProgressDialog.show(activity, "Entrando", "Aguarde...", true,false);
+        finalizaRequisicaoDados();
     }
 
 }

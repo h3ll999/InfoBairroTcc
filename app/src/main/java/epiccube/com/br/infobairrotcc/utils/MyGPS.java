@@ -12,24 +12,28 @@ import android.util.Log;
 
 import java.util.Calendar;
 
+import epiccube.com.br.infobairrotcc.models.entities.Usuario;
+import epiccube.com.br.infobairrotcc.models.singleton.UsuarioLogado;
+
 /**
  * Created by abadari on 25/10/2016.
  */
 
-public class GPSUtils implements LocationListener {
+public class MyGPS implements LocationListener {
 
     private Context context;
     private LocationManager mLocationManager;
+    private Double[] coord;
 
+    //TODO Solicitar a Permissão ANTES de chamar essa classe...
     // http://stackoverflow.com/questions/10524381/gps-android-get-positioning-only-once
-    public GPSUtils(Context context) {
+    public MyGPS(Context context) {
         this.context = context;
     }
 
     public void init() {
         mLocationManager = (LocationManager) context.getSystemService(Context.LOCATION_SERVICE);
 
-        //TODO Solicitar a Permissão ANTES de chamar esse troço
         if (ActivityCompat.checkSelfPermission(context,
                 Manifest.permission.ACCESS_FINE_LOCATION) !=
                 PackageManager.PERMISSION_GRANTED &&
@@ -50,10 +54,15 @@ public class GPSUtils implements LocationListener {
     public void onLocationChanged(Location location) {
         if (location != null) {
 
-            //TODO location é o objeto com as coordenadas...
             Log.v("Location Changed", location.getLatitude() + " and " + location.getLongitude());
 
-            //TODO Solicitar a Permissão ANTES de chamar esse troço
+            coord = new Double[2];
+            coord[0] = location.getLatitude();
+            coord[1] = location.getLongitude();
+
+            //TODO transferir essa responsabilidade para outra coisa !!!!!!
+            /*UsuarioLogado.getInstancia().getUsuario().setLatitudeLongitude(local);*/
+
             if (ActivityCompat.checkSelfPermission(context,
                     Manifest.permission.ACCESS_FINE_LOCATION) !=
                     PackageManager.PERMISSION_GRANTED &&
@@ -79,4 +88,5 @@ public class GPSUtils implements LocationListener {
     public void onProviderDisabled(String s) {
 
     }
+
 }
