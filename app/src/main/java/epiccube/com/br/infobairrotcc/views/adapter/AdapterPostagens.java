@@ -43,7 +43,6 @@ public class AdapterPostagens extends RecyclerView.Adapter<AdapterPostagens.Adap
     public AdapterPostagens(List<Postagem> listaPostagem, AppCompatActivity context) {
         this.listaPostagem = listaPostagem;
         this.context = context;
-        EventBus.getDefault().register(this);
     }
 
 
@@ -125,11 +124,6 @@ public class AdapterPostagens extends RecyclerView.Adapter<AdapterPostagens.Adap
 
     }
 
-    @Subscribe
-    public void onEventClick(){
-
-    }
-
     @Override
     public int getItemCount() {
         return listaPostagem.size();
@@ -165,16 +159,8 @@ public class AdapterPostagens extends RecyclerView.Adapter<AdapterPostagens.Adap
         }
     }
 
-
-    // PARA FINS DE TESTE UNICAMENTE
-    @Subscribe
-    public void onEventInseriuPostagem(EventoInseriuPostagemMockPostagem postagem){
-        this.listaPostagem.add(postagem.getP());
-        AdapterPostagens.this.notifyDataSetChanged();
-    }
 }
 
-// TODO FILTRAGEM PELOS BAIRROS
 // TODO Capturar o BAIRRO através do google api do maps...saber como que captura.
 
 

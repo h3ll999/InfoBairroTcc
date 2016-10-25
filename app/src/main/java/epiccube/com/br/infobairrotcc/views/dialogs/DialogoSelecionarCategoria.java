@@ -3,6 +3,7 @@ package epiccube.com.br.infobairrotcc.views.dialogs;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.DialogFragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -58,6 +59,7 @@ public class DialogoSelecionarCategoria extends DialogFragment {
                     EventBus.getDefault().post(new EventoPegarCategoriaPostagem(selecao));
                     dismiss();
                     getActivity().finish();
+                    Log.e("APERTOU", "APERTOU");
                 } else {
                     selecionado = true;
                 }

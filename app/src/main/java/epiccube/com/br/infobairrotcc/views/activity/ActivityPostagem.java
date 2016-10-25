@@ -27,6 +27,8 @@ import epiccube.com.br.infobairrotcc.views.helper.HelperActivityPostagem;
 
 public class ActivityPostagem extends AppCompatActivity {
 
+    HelperActivityPostagem helper;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -39,7 +41,8 @@ public class ActivityPostagem extends AppCompatActivity {
 
         setContentView(R.layout.activity_postagem);
 
-        HelperActivityPostagem.init(this).cast().onClick();
+        helper = new HelperActivityPostagem(this);
+        helper.cast().onClick();
 
 
     }
@@ -90,6 +93,7 @@ public class ActivityPostagem extends AppCompatActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
+        helper.unregister();
     }
 
     @Override

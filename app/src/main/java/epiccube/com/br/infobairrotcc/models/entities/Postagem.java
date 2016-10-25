@@ -1,6 +1,7 @@
 package epiccube.com.br.infobairrotcc.models.entities;
 
 import java.io.Serializable;
+import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -15,6 +16,7 @@ public class Postagem implements Serializable{
     private String categoria;
     private Usuario usuario;
     private List<String> urlFotosPostagem;
+    private HashMap<String, String> urlFotosPostagens;
 
     public Postagem() {
     }
@@ -74,6 +76,14 @@ public class Postagem implements Serializable{
 
     public void setUrlFotosPostagem(List<String> urlFotosPostagem) {
         this.urlFotosPostagem = urlFotosPostagem;
+    }
+
+    public HashMap<String, String> getUrlFotosPostagens() {
+        return urlFotosPostagens;
+    }
+
+    public void setUrlFotosPostagens(HashMap<String, String> urlFotosPostagens) {
+        this.urlFotosPostagens = urlFotosPostagens;
     }
 
     @Override

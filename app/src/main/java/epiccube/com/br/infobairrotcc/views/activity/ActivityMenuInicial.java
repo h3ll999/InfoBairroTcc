@@ -30,6 +30,7 @@ import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 
@@ -38,6 +39,7 @@ import epiccube.com.br.infobairrotcc.R;
 import epiccube.com.br.infobairrotcc.eventos.Eventos;
 import epiccube.com.br.infobairrotcc.models.contantes.Constantes;
 import epiccube.com.br.infobairrotcc.models.entities.Postagem;
+import epiccube.com.br.infobairrotcc.models.entities.Usuario;
 import epiccube.com.br.infobairrotcc.models.singleton.UsuarioLogado;
 import epiccube.com.br.infobairrotcc.views.adapter.AdapterPostagens;
 import epiccube.com.br.infobairrotcc.views.asynctask.AsynkTaskMockPostagem;
@@ -58,7 +60,7 @@ public class ActivityMenuInicial extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_menu_inicial);
 
-        EventBus.getDefault().register(this);
+        //EventBus.getDefault().register(this);
 
         setLoading();
         setToolbar();
@@ -147,20 +149,20 @@ public class ActivityMenuInicial extends AppCompatActivity
     public void getDataFromFirebase(String filtro) {
         DatabaseReference ref = FirebaseDatabase.getInstance().getReference();
 
-        ref.child(filtro).addListenerForSingleValueEvent(new ValueEventListener() {
+        ref.child(filtro).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 List<Postagem> listagemPostagens = new ArrayList<Postagem>();
                 HashMap<String, String> mapListagemPostagens = (HashMap<String, String>) dataSnapshot.getValue();
 
-                for (DataSnapshot postSnapshot: dataSnapshot.getChildren()) {
-                    Postagem p = postSnapshot.getValue(Postagem.class);
+                    if(dataSnapshot.getChildrenCount()==0){//se tá vazio o banco
 
-                    p.setTitulo(mapListagemPostagens.get("titulo"));
-                    p.setConteudo(mapListagemPostagens.get("conteudo"));
-                    p.setCategoria(mapListagemPostagens.get("categoria"));
-                    //p.setUsuario(mapListagemPostagens.get("usuario"));
-                    listagemPostagens.add(p);
+                    }else{
+                        for (DataSnapshot postSnapshot: dataSnapshot.getChildren()) {
+                        Postagem p = postSnapshot.getValue(Postagem.class);
+                        listagemPostagens.add(p);
+                    }
+
                 }
 
                 setRecyclerView(listagemPostagens);
@@ -181,6 +183,8 @@ public class ActivityMenuInicial extends AppCompatActivity
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(linearLayoutManager);
         dismissLoading();
+
+        Collections.reverse(listagemPostagem);
 
         recyclerView.setAdapter(new AdapterPostagens(listagemPostagem, this));
 
@@ -232,11 +236,11 @@ public class ActivityMenuInicial extends AppCompatActivity
         if (id == R.id.menu_categoria_todas) {
             getDataFromFirebase(Constantes.POSTAGENS_SEM_FILTRO);
         } else if (id == R.id.menu_categoria_evento) {
-            getDataFromFirebase(Constantes.POSTAGENS_EVENTO);
+            getDataFromFirebase(Constantes.POSTAGENS_EVENTOS);
         } else if (id == R.id.menu_categoria_noticia) {
-            getDataFromFirebase(Constantes.POSTAGENS_NOTICIA);
+            getDataFromFirebase(Constantes.POSTAGENS_NOTICIAS);
         } else if (id == R.id.menu_categoria_servico) {
-            getDataFromFirebase(Constantes.POSTAGENS_SERVICO);
+            getDataFromFirebase(Constantes.POSTAGENS_SERVICOS);
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);

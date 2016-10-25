@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.net.Uri;
+import android.support.annotation.NonNull;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -16,6 +17,11 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 
@@ -27,6 +33,7 @@ import epiccube.com.br.infobairrotcc.eventos.Eventos;
 import epiccube.com.br.infobairrotcc.eventos.EventoPegarCategoriaPostagem;
 import epiccube.com.br.infobairrotcc.models.entities.Postagem;
 import epiccube.com.br.infobairrotcc.models.singleton.UsuarioLogado;
+import epiccube.com.br.infobairrotcc.utils.MyUtils;
 import epiccube.com.br.infobairrotcc.views.adapter.AdapterPostagemFotos;
 import epiccube.com.br.infobairrotcc.views.dialogs.DialogoSelecionarCategoria;
 
@@ -84,8 +91,6 @@ public class HelperActivityPostagem {
             @Override
             public void onClick(View v) {
 
-
-
                 //Fragmento
                 FragmentManager fm = context.getSupportFragmentManager();
                 DialogoSelecionarCategoria a =  new DialogoSelecionarCategoria();
@@ -121,9 +126,13 @@ public class HelperActivityPostagem {
         p.setTitulo(titulo.getText().toString().trim());
         p.setConteudo(conteudo.getText().toString().trim());
         p.setCategoria(categoria);
-        Log.e("SELECAO HGELPER", categoria);
         p.setUsuario(UsuarioLogado.getInstancia().getUsuario());
         p.setUrlFotosPostagem(imagens);
+        Log.e("POSTAGEM", "getData");
+    }
+
+    public void unregister(){
+        EventBus.getDefault().unregister(this);
     }
 
 
@@ -157,12 +166,33 @@ public class HelperActivityPostagem {
 
     // Chamado quando seleciona a categoria no popup
     @Subscribe
-    public void onEventSelecionouCategoria(EventoPegarCategoriaPostagem categoria){
-        getData(categoria.getCategoria());
+    public void onEventSelecionouCategoria(EventoPegarCategoriaPostagem categoriaPostagem){
+        getData(categoriaPostagem.getCategoria());
+
+        Log.e("POSTAGEM", "formata categoria");
+        //formata categoria...
+        String categoria = MyUtils.formatCategoria(categoriaPostagem.getCategoria());
 
         // firebase...
-        EventBus.getDefault().post(new EventoInseriuPostagemMockPostagem(p));
-        Toast.makeText(context, "Compartilhado", Toast.LENGTH_SHORT).show();
+        DatabaseReference ref = FirebaseDatabase.getInstance().getReference();
+        String primaryKey = ref.child(categoria).push().getKey();
+
+        ref.child(categoria).child(primaryKey).setValue(p)
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void aVoid) {
+                        Toast.makeText(context, "Compartilhado", Toast.LENGTH_SHORT).show();
+                        Log.e("POSTAGEM", "Compartilhado");
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Toast.makeText(context, "Erro "+e.getMessage(), Toast.LENGTH_SHORT).show();
+                    }
+                });
+
+
         context.finish();
     }
 
