@@ -1,10 +1,12 @@
 package epiccube.com.br.infobairrotcc.views.helper;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -29,6 +31,7 @@ import epiccube.com.br.infobairrotcc.models.contantes.Constantes;
 import epiccube.com.br.infobairrotcc.models.entities.Usuario;
 import epiccube.com.br.infobairrotcc.models.mock.Mock;
 import epiccube.com.br.infobairrotcc.models.singleton.UsuarioLogado;
+import epiccube.com.br.infobairrotcc.validator.Validar;
 import epiccube.com.br.infobairrotcc.views.activity.ActivityCadastro;
 import epiccube.com.br.infobairrotcc.views.activity.ActivityMenuInicial;
 
@@ -52,10 +55,25 @@ public class HelperActivityLogin {
 
     private DatabaseReference database;
     private FirebaseAuth autenticador;
+    private FirebaseAuth.AuthStateListener autenticadorOuvinte;
     private FirebaseUser user;
+
+    private ProgressDialog progressDialog;
 
     public HelperActivityLogin(AppCompatActivity context){
         this.context = context;
+        database = FirebaseDatabase.getInstance().getReference();
+        autenticador = FirebaseAuth.getInstance();
+        autenticadorOuvinte = new FirebaseAuth.AuthStateListener() {
+            @Override
+            public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
+                FirebaseUser u = autenticador.getCurrentUser();
+                if (u!=null){
+                    Log.e("FIREBASE_USER","Não logado");
+                }
+            }
+        };
+        autenticador.addAuthStateListener(autenticadorOuvinte);
     }
 
     public static HelperActivityLogin init(AppCompatActivity context){
@@ -81,21 +99,20 @@ public class HelperActivityLogin {
             @Override
             public void onClick(View v) {
 
+
                 email = login_edt_email.getText().toString().trim();
                 senha = login_edt_senha.getText().toString().trim();
 
-                //firebase();
-
-                UsuarioLogado.getInstancia().setUsuario(Mock.usuario());
-                //Troca de tela
-                Intent i = new Intent(context, ActivityMenuInicial.class);
-                context.startActivity(i);
-
-                /*if(Validar.LOGIN(email,senha)){
-
+                if(Validar.LOGIN(email,senha)){
+                    firebase();
                 } else {
                     Toast.makeText(context, "Insira os campos corretamente", Toast.LENGTH_SHORT).show();
-                }*/
+                }
+
+                /*UsuarioLogado.getInstancia().setUsuario(Mock.usuario());
+                //Troca de tela
+                Intent i = new Intent(context, ActivityMenuInicial.class);
+                context.startActivity(i);*/
 
             }
         });
@@ -114,7 +131,7 @@ public class HelperActivityLogin {
     }
 
     void firebase(){
-
+        progressDialog = ProgressDialog.show(context,"Entrando", "Aguarde...",true,false);
         //autentica
         autenticador.signInWithEmailAndPassword(email,senha)
                 .addOnSuccessListener(new OnSuccessListener<AuthResult>() {
@@ -134,12 +151,12 @@ public class HelperActivityLogin {
     }
 
     void finalizaRequisicaoDados(){
-        database = FirebaseDatabase.getInstance().getReference();
 
-        database.child(Constantes.USUARIO).child(user.getUid()).child(Constantes.PERFIL).addListenerForSingleValueEvent(new ValueEventListener() {
+        database.child(Constantes.USUARIO).child(user.getUid()).child(Constantes.PERFIL)
+                .addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-
+                progressDialog.dismiss();
                 HashMap<String, String> a = (HashMap<String, String>) dataSnapshot.getValue();
 
                 //Pega os dados que chegaram...
@@ -149,7 +166,7 @@ public class HelperActivityLogin {
                 u.setPerfilUrl(a.get("perfilUrl"));
 
                 //Salva o usuário numa variavel estática
-                UsuarioLogado.getInstancia().setUsuario(Mock.usuario());// vai salvar o u no futuro...
+                UsuarioLogado.getInstancia().setUsuario(u);
 
                 //Troca de tela
                 Intent i = new Intent(context, ActivityMenuInicial.class);

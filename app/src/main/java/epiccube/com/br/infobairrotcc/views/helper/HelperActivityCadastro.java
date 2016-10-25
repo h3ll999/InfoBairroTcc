@@ -113,7 +113,7 @@ public class HelperActivityCadastro {
                 senha = cadastro_edt_senha.getText().toString().trim();
 
                 if(Validar.CADASTRO(nome,email,senha)){
-
+                    cadastro_btn_cadastrar.setEnabled(false);
                     usuario = new Usuario();
                     usuario.setNome(nome);
                     usuario.setEmail(email);
