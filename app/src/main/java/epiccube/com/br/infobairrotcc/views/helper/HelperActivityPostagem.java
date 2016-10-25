@@ -127,8 +127,10 @@ public class HelperActivityPostagem {
         p.setConteudo(conteudo.getText().toString().trim());
         p.setCategoria(categoria);
         p.setUsuario(UsuarioLogado.getInstancia().getUsuario());
-        p.setUrlFotosPostagem(imagens);
-        Log.e("POSTAGEM", "getData");
+        p.setUrlFotosPostagem(new ArrayList<String>());
+        p.getUrlFotosPostagem().add("https://static.pexels.com/photos/36487/above-adventure-aerial-air.jpg");
+        p.getUrlFotosPostagem().add("http://www.intrawallpaper.com/static/images/eiffel-tower-wallpaper-18_TJ30uc8.jpg");
+        //p.setUrlFotosPostagem(imagens);
     }
 
     public void unregister(){

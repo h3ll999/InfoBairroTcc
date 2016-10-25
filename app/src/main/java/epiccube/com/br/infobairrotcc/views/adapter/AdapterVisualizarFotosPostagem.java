@@ -53,7 +53,7 @@ public class AdapterVisualizarFotosPostagem extends PagerAdapter{
 
         PhotoView imageView = (PhotoView)  item_view.findViewById(R.id.activity_visualizar_fotos_photo_view);
 
-        Glide.with(context).load(/*fotos.get(position)*/Mock.fotos().get(position))
+        Glide.with(context).load(fotos.get(position))
                 .crossFade()
                 //.placeholder(R.drawable.placeholder_img_vazia)
                 //.centerCrop()

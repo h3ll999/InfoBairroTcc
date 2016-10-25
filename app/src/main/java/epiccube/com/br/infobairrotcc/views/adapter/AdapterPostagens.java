@@ -79,7 +79,7 @@ public class AdapterPostagens extends RecyclerView.Adapter<AdapterPostagens.Adap
             holder.imagemPost.setVisibility(View.VISIBLE);
 
             Glide.with(context)
-                    .load(/*listaPostagem.get(position).getUrlFotosPostagem().get(0)*/R.drawable.wallpaper2)
+                    .load(listaPostagem.get(position).getUrlFotosPostagem().get(0))
                     .centerCrop()
                     .thumbnail(0.3f)
                     .placeholder(R.drawable.placeholder_img_vazia)
@@ -93,7 +93,7 @@ public class AdapterPostagens extends RecyclerView.Adapter<AdapterPostagens.Adap
             holder.verMaisImg.setText("[Mais "+(listaPostagem.get(position).getUrlFotosPostagem().size()-1)+" fotos]");
 
             Glide.with(context)
-                    .load(/*listaPostagem.get(position).getUrlFotosPostagem().get(0)*/R.drawable.wallpaper)
+                    .load(listaPostagem.get(position).getUrlFotosPostagem().get(0))
                     .centerCrop()
                     .thumbnail(0.3f)
                     .placeholder(R.drawable.placeholder_img_vazia)
