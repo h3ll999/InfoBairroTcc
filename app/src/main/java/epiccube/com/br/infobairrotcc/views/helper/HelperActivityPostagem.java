@@ -1,5 +1,6 @@
 package epiccube.com.br.infobairrotcc.views.helper;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
@@ -21,11 +22,16 @@ import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 
 import java.util.ArrayList;
+import java.util.List;
+import java.util.UUID;
 
 import epiccube.com.br.infobairrotcc.R;
 import epiccube.com.br.infobairrotcc.eventos.EventoInseriuPostagemMockPostagem;
@@ -37,6 +43,8 @@ import epiccube.com.br.infobairrotcc.utils.MyUtils;
 import epiccube.com.br.infobairrotcc.views.adapter.AdapterPostagemFotos;
 import epiccube.com.br.infobairrotcc.views.dialogs.DialogoSelecionarCategoria;
 
+import static epiccube.com.br.infobairrotcc.models.contantes.Constantes.REPOSITORIO_FOTOS;
+
 /**
  * Created by abadari on 14/10/2016.
  */
@@ -47,12 +55,17 @@ public class HelperActivityPostagem {
 
     private EditText titulo;
     private EditText conteudo;
-    private ImageView inserirFotos;
+    private ImageView inserirFotos; boolean adicionouFotos;
     private Button postar;
     //private Spinner categorias;
     private GridView fotos;
     private RelativeLayout layoutGrid;
     private ArrayList<String> imagens;
+    private List<Uri> imagensUri;
+    private List<UploadTask> listagemDeUpload;
+    private String categoriaSelecionada;
+
+    private ProgressDialog progressDialog;
 
     private Postagem p;
 
@@ -81,6 +94,8 @@ public class HelperActivityPostagem {
         fotos = (GridView) context.findViewById(R.id.activity_postar_grid_view);
         layoutGrid = (RelativeLayout) context.findViewById(R.id.activity_postar_relative2);
         imagens = new ArrayList<>();
+
+        adicionouFotos = false;
 
         return this;
     }
@@ -142,14 +157,13 @@ public class HelperActivityPostagem {
     @Subscribe
     public void onEventSelecionarFotos(Eventos.PostagemMultiplasImagens imagens){
 
-        //para fins de teste...
-        for(Uri u: imagens.getFotos()){
-            Log.e("CHEGOU A FOTO", u.getPath());
-        }
+        adicionouFotos = true;
 
         for(Uri u: imagens.getFotos()){
             this.imagens.add(u.getPath());
         }
+
+        imagensUri = imagens.getFotos();
 
         //mata a foto de chamar a galeria
         inserirFotos.setVisibility(View.GONE);
@@ -169,22 +183,71 @@ public class HelperActivityPostagem {
     // Chamado quando seleciona a categoria no popup
     @Subscribe
     public void onEventSelecionouCategoria(EventoPegarCategoriaPostagem categoriaPostagem){
+
+        progressDialog = ProgressDialog.show(context,"Adicionando foto", "Aguarde...", true, false);
         getData(categoriaPostagem.getCategoria());
 
-        Log.e("POSTAGEM", "formata categoria");
         //formata categoria...
-        String categoria = MyUtils.formatCategoria(categoriaPostagem.getCategoria());
+        categoriaSelecionada = MyUtils.formatCategoria(categoriaPostagem.getCategoria());
 
+        if(adicionouFotos){
+            subirFotos();
+        } else {
+            finalizar();
+        }
+
+
+    }
+
+    void subirFotos(){
+        FirebaseStorage storage = FirebaseStorage.getInstance();
+        StorageReference storageRef = storage.getReferenceFromUrl(REPOSITORIO_FOTOS);
+        StorageReference imagem = storageRef.child("POSTAGENS/"+ UUID.randomUUID()+".jpg");
+
+        gambiarraParaSubirVariosFotos(imagem);
+
+        uploadTask(listagemDeUpload.get(0));
+
+    }
+
+    //TODO....só com permissão...
+    void gambiarraParaSubirVariosFotos(StorageReference imagem){// hoje não é suportado multiplo upload...
+        listagemDeUpload = new ArrayList<>();
+
+        for(Uri uri : imagensUri){
+            UploadTask uploadTask = imagem.putFile(uri);
+            listagemDeUpload.add(uploadTask);
+        }
+    }
+
+    void uploadTask(UploadTask uploadTask){
+        uploadTask.addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+            @Override
+            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                listagemDeUpload.remove(0);
+                imagens.add(taskSnapshot.getDownloadUrl().toString());
+                if(listagemDeUpload.size()<=0){
+                    finalizar();
+                    return;
+                }else{
+                    uploadTask(listagemDeUpload.get(0));
+                }
+
+            }
+        });
+    }
+
+    void finalizar(){
         // firebase...
+        progressDialog.setTitle("Finalizando");
         DatabaseReference ref = FirebaseDatabase.getInstance().getReference();
-        String primaryKey = ref.child(categoria).push().getKey();
-
-        ref.child(categoria).child(primaryKey).setValue(p)
+        String primaryKey = ref.child(categoriaSelecionada).push().getKey();
+        ref.child(categoriaSelecionada).child(primaryKey).setValue(p)
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
                     public void onSuccess(Void aVoid) {
+                        progressDialog.dismiss();
                         Toast.makeText(context, "Compartilhado", Toast.LENGTH_SHORT).show();
-                        Log.e("POSTAGEM", "Compartilhado");
                     }
                 })
                 .addOnFailureListener(new OnFailureListener() {

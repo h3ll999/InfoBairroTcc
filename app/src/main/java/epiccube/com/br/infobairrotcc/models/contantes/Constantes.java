@@ -22,5 +22,7 @@ public class Constantes {
     public static final String EVENTOS = "Eventos";
     public static final String SERVICOS = "Serviços";
 
+    public static final String REPOSITORIO_FOTOS = "gs://infobairrotcc-fa6f9.appspot.com";
+
 
 }

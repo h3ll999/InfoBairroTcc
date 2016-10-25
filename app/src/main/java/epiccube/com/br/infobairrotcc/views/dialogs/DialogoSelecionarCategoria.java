@@ -58,8 +58,6 @@ public class DialogoSelecionarCategoria extends DialogFragment {
                     String selecao = categorias[i];
                     EventBus.getDefault().post(new EventoPegarCategoriaPostagem(selecao));
                     dismiss();
-                    getActivity().finish();
-                    Log.e("APERTOU", "APERTOU");
                 } else {
                     selecionado = true;
                 }
