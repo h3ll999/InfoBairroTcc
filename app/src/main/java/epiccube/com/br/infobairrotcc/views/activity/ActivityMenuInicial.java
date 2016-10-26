@@ -20,6 +20,7 @@ import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -51,6 +52,7 @@ public class ActivityMenuInicial extends AppCompatActivity
     private Toolbar toolbar;
     private FloatingActionButton fab;
     private ProgressBar p;
+    private RecyclerView recyclerView;
 
     private DialogPostagem dialog;
     private Object dataFromServer;
@@ -90,11 +92,6 @@ public class ActivityMenuInicial extends AppCompatActivity
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //FragmentManager fm = getSupportFragmentManager();
-                //dialog = new DialogPostagem(ActivityMenuInicial.this);
-                //dialog.show(fm, "DIALOG_FRAGMENT_POSTAGEM");
-
-
                 Intent intent = new Intent(ActivityMenuInicial.this, ActivityPostagem.class);
                 startActivity(intent);
                 overridePendingTransition(R.anim.anim_up_primeiro, R.anim.anim_up_segundo);
@@ -128,7 +125,6 @@ public class ActivityMenuInicial extends AppCompatActivity
 
         //Valoriza
         Glide.with(this).load(UsuarioLogado.getInstancia().getUsuario().getPerfilUrl())
-                //.bitmapTransform(new CropCircleTransformation(this))
                 .diskCacheStrategy(DiskCacheStrategy.SOURCE)
                 .placeholder(R.drawable.placeholder)
                 .into(imgUser);
@@ -147,6 +143,7 @@ public class ActivityMenuInicial extends AppCompatActivity
     }
 
     public void getDataFromFirebase(String filtro) {
+        startLoading();
         DatabaseReference ref = FirebaseDatabase.getInstance().getReference();
 
         ref.child(filtro).addValueEventListener(new ValueEventListener() {
@@ -162,11 +159,8 @@ public class ActivityMenuInicial extends AppCompatActivity
                         Postagem p = postSnapshot.getValue(Postagem.class);
                         listagemPostagens.add(p);
                     }
-
                 }
-
                 setRecyclerView(listagemPostagens);
-
             }
 
             @Override
@@ -178,7 +172,7 @@ public class ActivityMenuInicial extends AppCompatActivity
 
 
     void setRecyclerView(List<Postagem> listagemPostagem){
-        RecyclerView recyclerView = (RecyclerView) findViewById(R.id.activity_menu_inicial_recycler_view);
+        recyclerView = (RecyclerView) findViewById(R.id.activity_menu_inicial_recycler_view);
 
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(linearLayoutManager);
@@ -195,8 +189,14 @@ public class ActivityMenuInicial extends AppCompatActivity
         p = (ProgressBar) findViewById(R.id.progressBar1);
     }
 
+    void startLoading(){
+        recyclerView.setVisibility(View.INVISIBLE);
+        p.setVisibility(View.VISIBLE);
+    }
+
     void dismissLoading(){
-        p.setVisibility(View.GONE);
+        recyclerView.setVisibility(View.VISIBLE);
+        p.setVisibility(View.INVISIBLE);
     }
 
     @Override
@@ -222,6 +222,8 @@ public class ActivityMenuInicial extends AppCompatActivity
         int id = item.getItemId();
 
         if (id == R.id.action_settings) {
+            UsuarioLogado.getInstancia().clear();
+            FirebaseAuth.getInstance().signOut();
             finish();
         }
 
@@ -248,5 +250,9 @@ public class ActivityMenuInicial extends AppCompatActivity
         return true;
     }
 
-
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        Toast.makeText(this, "Saindo...", Toast.LENGTH_SHORT).show();
+    }
 }

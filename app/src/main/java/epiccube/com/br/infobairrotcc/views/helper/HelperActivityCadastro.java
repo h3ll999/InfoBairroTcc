@@ -23,9 +23,14 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
+
+import java.util.UUID;
 
 import epiccube.com.br.infobairrotcc.R;
 import epiccube.com.br.infobairrotcc.eventos.Eventos;
@@ -35,6 +40,8 @@ import epiccube.com.br.infobairrotcc.models.singleton.UsuarioLogado;
 import epiccube.com.br.infobairrotcc.validator.Validar;
 import epiccube.com.br.infobairrotcc.views.activity.ActivityMenuInicial;
 import jp.wasabeef.glide.transformations.CropCircleTransformation;
+
+import static epiccube.com.br.infobairrotcc.models.contantes.Constantes.REPOSITORIO_FOTOS;
 
 /**
  * Created by ivanc on 13/10/2016.
@@ -55,7 +62,7 @@ public class HelperActivityCadastro {
     private String email;
     private String senha;
     private Usuario usuario;
-    private Uri caminhoImagemSelecionada;
+    private Uri caminhoImagemSelecionada; boolean selecinouFoto;
 
     private FirebaseAuth autenticador;
     private FirebaseUser user;
@@ -81,6 +88,7 @@ public class HelperActivityCadastro {
         cadastro_btn_cadastrar.getBackground().setColorFilter(Color.parseColor("#ff4e43"), PorterDuff.Mode.SRC_ATOP); //TODO ARUMAR ESSA PORCARIA
 
         //autenticador = FirebaseAuth.getInstance();
+        selecinouFoto = false;
 
         return this;
     }
@@ -117,7 +125,7 @@ public class HelperActivityCadastro {
                     usuario = new Usuario();
                     usuario.setNome(nome);
                     usuario.setEmail(email);
-                    usuario.setSenha(senha);
+                    //usuario.setSenha(senha);
 
                     firebase();
                     /*UsuarioLogado.getInstancia().setUsuario(Mock.usuario());
@@ -148,13 +156,37 @@ public class HelperActivityCadastro {
                     public void onSuccess(AuthResult authResult) {
                         user = authResult.getUser();
                         usuario.setUid(user.getUid());
-                        finalizaInsercaoDados();
+                        if(selecinouFoto){// insere foto
+                            uploadFotoPerfil();
+                        } else {
+                            finalizaInsercaoDados();
+                        }
+
                     }
                 })
                 .addOnFailureListener(new OnFailureListener() {
                     @Override
                     public void onFailure(@NonNull Exception e) {
                         Toast.makeText(context, e.getMessage(), Toast.LENGTH_SHORT).show();
+                    }
+                });
+    }
+
+    private void uploadFotoPerfil(){
+        FirebaseStorage storage = FirebaseStorage.getInstance();
+        StorageReference storageRef = storage.getReferenceFromUrl(REPOSITORIO_FOTOS);
+        StorageReference imagem = storageRef.child("PERFIL").child(UUID.randomUUID()+".jpg");
+        UploadTask uploadTask = imagem.putFile(caminhoImagemSelecionada);
+        uploadTask.addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+            @Override
+            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                finalizaInsercaoDados();
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Toast.makeText(context,"Erro no envio da foto do perfil. Tente mais tarde", Toast.LENGTH_SHORT).show();
+                        finalizaInsercaoDados();
                     }
                 });
     }
@@ -168,10 +200,10 @@ public class HelperActivityCadastro {
                     public void onSuccess(Void aVoid) {
                         progressDialog.dismiss();
 
-                        //Cria usuário falso e o salva numa variavel estática
+                        //Salva user numa variavel estática
                         UsuarioLogado.getInstancia().setUsuario(usuario);
 
-                        Toast.makeText(context, usuario.getNome()+", seu cadastrado foi realizado com sucesso!", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(context, "Bem vindo, "+usuario.getNome(), Toast.LENGTH_SHORT).show();
 
                         Intent intent = new Intent(context, ActivityMenuInicial.class);
                         context.startActivity(intent);
@@ -190,6 +222,7 @@ public class HelperActivityCadastro {
     // MÉTODO PARA OUVIR A CHAMADA DO POST...RECEBE O PARÂMETRO DO EventBus.getDefault.post();
     @Subscribe
     public void abrirImagemSelecionada(Eventos.SelecionaImagemSelecionada imagemSelecionada){
+        selecinouFoto = true;
         caminhoImagemSelecionada = imagemSelecionada.getImagemSelecionada();
         Glide.get(context).clearMemory();
         Glide.with(context).load(caminhoImagemSelecionada)
