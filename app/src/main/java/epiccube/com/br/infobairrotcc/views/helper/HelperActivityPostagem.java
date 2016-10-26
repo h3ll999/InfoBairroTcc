@@ -204,15 +204,14 @@ public class HelperActivityPostagem {
         FirebaseStorage storage = FirebaseStorage.getInstance();
         StorageReference storageRef = storage.getReferenceFromUrl(REPOSITORIO_FOTOS);
 
-
-        gambiarraParaSubirVariosFotos(storageRef);
+        gambiarraParaSubirVariasFotos(storageRef);
 
         uploadTask(listagemDeUpload.get(0));
 
     }
 
-    //TODO....só com permissão...
-    void gambiarraParaSubirVariosFotos(StorageReference storageRef){// hoje não é suportado multiplo upload...
+    //TODO GAMBIARRA THE BEGINNING
+    void gambiarraParaSubirVariasFotos(StorageReference storageRef){// hoje não é suportado multiplo upload...
         listagemDeUpload = new ArrayList<>();
 
         for(Uri uri : imagensUri){
@@ -222,12 +221,12 @@ public class HelperActivityPostagem {
         }
     }
 
+    //TODO GAMBIARRA PT 2
     void uploadTask(UploadTask uploadTask){
 
         uploadTask.addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
             @Override
             public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                Log.e("contador",""+contador);
                 final int tam = imagensUri.size();
                 progressDialog.setTitle("Foto "+contador+"/"+tam);
                 listagemDeUpload.remove(0);
@@ -249,11 +248,9 @@ public class HelperActivityPostagem {
                 Log.e("ERRO", "ERRO");
             }
         });
-
-
-
     }
 
+    //TODO GAMBIARRA FINAL CHAPTER
     void finalizar(){
         // firebase...
         progressDialog.setTitle("Finalizando");
