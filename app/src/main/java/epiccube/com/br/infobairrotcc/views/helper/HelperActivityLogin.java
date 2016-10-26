@@ -153,6 +153,7 @@ public class HelperActivityLogin {
 
     private void finalizaRequisicaoDados(){
 
+        Log.e("HELPER_ACTIVITY_LOGIN",user.getUid());
         database.child(Constantes.USUARIO).child(user.getUid()).child(Constantes.PERFIL)
                 .addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
@@ -184,6 +185,9 @@ public class HelperActivityLogin {
 
     public void autoLogin(Activity activity){
         progressDialog = ProgressDialog.show(activity, "Entrando", "Aguarde...", true,false);
+        database = FirebaseDatabase.getInstance().getReference();;
+        autenticador = FirebaseAuth.getInstance();
+        user = FirebaseAuth.getInstance().getCurrentUser();
         finalizaRequisicaoDados();
     }
 

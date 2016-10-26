@@ -64,6 +64,7 @@ public class HelperActivityPostagem {
     private List<Uri> imagensUri;
     private List<UploadTask> listagemDeUpload;
     private String categoriaSelecionada;
+    private int contador;
 
     private ProgressDialog progressDialog;
 
@@ -96,6 +97,7 @@ public class HelperActivityPostagem {
         imagens = new ArrayList<>();
 
         adicionouFotos = false;
+        contador = 1;
 
         return this;
     }
@@ -143,9 +145,6 @@ public class HelperActivityPostagem {
         p.setCategoria(categoria);
         p.setUsuario(UsuarioLogado.getInstancia().getUsuario());
         p.setUrlFotosPostagem(new ArrayList<String>());
-        p.getUrlFotosPostagem().add("https://static.pexels.com/photos/36487/above-adventure-aerial-air.jpg");
-        p.getUrlFotosPostagem().add("http://www.intrawallpaper.com/static/images/eiffel-tower-wallpaper-18_TJ30uc8.jpg");
-        //p.setUrlFotosPostagem(imagens);
     }
 
     public void unregister(){
@@ -159,9 +158,9 @@ public class HelperActivityPostagem {
 
         adicionouFotos = true;
 
-        for(Uri u: imagens.getFotos()){
+        /*for(Uri u: imagens.getFotos()){
             this.imagens.add(u.getPath());
-        }
+        }*/
 
         imagensUri = imagens.getFotos();
 
@@ -184,7 +183,7 @@ public class HelperActivityPostagem {
     @Subscribe
     public void onEventSelecionouCategoria(EventoPegarCategoriaPostagem categoriaPostagem){
 
-        progressDialog = ProgressDialog.show(context,"Adicionando foto", "Aguarde...", true, false);
+        progressDialog = ProgressDialog.show(context,"Postando", "Aguarde...", true, false);
         getData(categoriaPostagem.getCategoria());
 
         //formata categoria...
@@ -198,6 +197,7 @@ public class HelperActivityPostagem {
 
 
     }
+
 
     void subirFotos(){
         FirebaseStorage storage = FirebaseStorage.getInstance();
@@ -221,15 +221,20 @@ public class HelperActivityPostagem {
     }
 
     void uploadTask(UploadTask uploadTask){
+
         uploadTask.addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
             @Override
             public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                contador = 1;
+                final int tam = imagensUri.size();
+                progressDialog.setTitle("Foto "+contador+"/"+tam);
                 listagemDeUpload.remove(0);
                 imagens.add(taskSnapshot.getDownloadUrl().toString());
                 if(listagemDeUpload.size()<=0){
+                    p.setUrlFotosPostagem(imagens);
                     finalizar();
-                    return;
                 }else{
+                    contador++;
                     uploadTask(listagemDeUpload.get(0));
                 }
 
@@ -248,6 +253,7 @@ public class HelperActivityPostagem {
                     public void onSuccess(Void aVoid) {
                         progressDialog.dismiss();
                         Toast.makeText(context, "Compartilhado", Toast.LENGTH_SHORT).show();
+                        context.finish();
                     }
                 })
                 .addOnFailureListener(new OnFailureListener() {
@@ -256,9 +262,6 @@ public class HelperActivityPostagem {
                         Toast.makeText(context, "Erro "+e.getMessage(), Toast.LENGTH_SHORT).show();
                     }
                 });
-
-
-        context.finish();
     }
 
 }
