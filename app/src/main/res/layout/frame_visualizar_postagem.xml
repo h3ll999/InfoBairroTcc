@@ -73,9 +73,39 @@
     </RelativeLayout>
 
     <View
+        android:id="@+id/activity_visualiza_postagem_v"
         android:layout_below="@+id/activity_visualiza_postagem_layout_1"
         android:layout_width="match_parent"
         android:layout_height="16dp"/>
+
+    <ImageView
+        android:id="@+id/activity_visualiza_postagem_img_foto_postagem"
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:scaleType="centerCrop"
+        android:layout_marginTop="16dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"
+        android:layout_below="@+id/activity_visualiza_postagem_v" />
+
+    <TextView
+        android:id="@+id/activity_visualiza_postagem_txv_foto_postagem"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingRight="3dp"
+        android:paddingLeft="3dp"
+        android:paddingTop="1dp"
+        android:paddingBottom="1dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginBottom="10dp"
+        android:elevation="10dp"
+        android:outlineProvider="bounds"
+        android:background="@drawable/layout_txv"
+        android:textColor="#ffffff"
+        android:layout_alignEnd="@+id/activity_visualiza_postagem_img_foto_postagem"
+        android:layout_alignBottom="@+id/activity_visualiza_postagem_img_foto_postagem"
+        android:gravity="right" />
 
 
 

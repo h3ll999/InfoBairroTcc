@@ -90,7 +90,7 @@ public class AdapterPostagens extends RecyclerView.Adapter<AdapterPostagens.Adap
 
             holder.verMaisImg.setVisibility(View.VISIBLE); //TODO FDP
             holder.imagemPost.setVisibility(View.VISIBLE); //TODO FDP
-            holder.verMaisImg.setText("[Mais "+(listaPostagem.get(position).getUrlFotosPostagem().size()-1)+" fotos]");
+            holder.verMaisImg.setText("[Mais "+(listaPostagem.get(position).getUrlFotosPostagem().size()-1)+" foto(s)]");
 
             Glide.with(context)
                     .load(listaPostagem.get(position).getUrlFotosPostagem().get(0))
