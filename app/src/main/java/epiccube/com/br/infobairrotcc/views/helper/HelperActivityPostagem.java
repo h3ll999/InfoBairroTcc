@@ -63,6 +63,7 @@ public class HelperActivityPostagem {
     private ArrayList<String> imagens;
     private List<Uri> imagensUri;
     private List<UploadTask> listagemDeUpload;
+    private StorageReference imagem;
     private String categoriaSelecionada;
     private int contador;
 
@@ -202,19 +203,20 @@ public class HelperActivityPostagem {
     void subirFotos(){
         FirebaseStorage storage = FirebaseStorage.getInstance();
         StorageReference storageRef = storage.getReferenceFromUrl(REPOSITORIO_FOTOS);
-        StorageReference imagem = storageRef.child("POSTAGENS/"+ UUID.randomUUID()+".jpg");
 
-        gambiarraParaSubirVariosFotos(imagem);
+
+        gambiarraParaSubirVariosFotos(storageRef);
 
         uploadTask(listagemDeUpload.get(0));
 
     }
 
     //TODO....só com permissão...
-    void gambiarraParaSubirVariosFotos(StorageReference imagem){// hoje não é suportado multiplo upload...
+    void gambiarraParaSubirVariosFotos(StorageReference storageRef){// hoje não é suportado multiplo upload...
         listagemDeUpload = new ArrayList<>();
 
         for(Uri uri : imagensUri){
+            imagem = storageRef.child("POSTAGENS").child(UUID.randomUUID()+".jpg");
             UploadTask uploadTask = imagem.putFile(uri);
             listagemDeUpload.add(uploadTask);
         }
@@ -225,11 +227,12 @@ public class HelperActivityPostagem {
         uploadTask.addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
             @Override
             public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                contador = 1;
+                Log.e("contador",""+contador);
                 final int tam = imagensUri.size();
                 progressDialog.setTitle("Foto "+contador+"/"+tam);
                 listagemDeUpload.remove(0);
                 imagens.add(taskSnapshot.getDownloadUrl().toString());
+                Log.e("DOWNLOADLINK",taskSnapshot.getDownloadUrl().toString());
                 if(listagemDeUpload.size()<=0){
                     p.setUrlFotosPostagem(imagens);
                     finalizar();
@@ -239,7 +242,16 @@ public class HelperActivityPostagem {
                 }
 
             }
+        })
+                .addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                Log.e("ERRO", "ERRO");
+            }
         });
+
+
+
     }
 
     void finalizar(){
