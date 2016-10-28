@@ -25,8 +25,6 @@ public class ActivityVisualizarFotos extends AppCompatActivity{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_visualizar_fotos);
 
-
-
         // pega a postagem que foi passada
         p = (Postagem) getIntent().getSerializableExtra(Constantes.LISTA_FOTOS);
 
