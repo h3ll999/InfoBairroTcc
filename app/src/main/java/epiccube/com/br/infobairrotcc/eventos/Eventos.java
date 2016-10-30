@@ -61,4 +61,8 @@ public class Eventos {
         }
     }
 
+    public static class AbrirGaleria{}
+
+    public static class Unregister{}
+
 }

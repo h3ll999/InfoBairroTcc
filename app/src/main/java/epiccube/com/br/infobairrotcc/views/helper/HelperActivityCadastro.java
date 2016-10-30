@@ -16,6 +16,7 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.AuthResult;
@@ -37,6 +38,7 @@ import epiccube.com.br.infobairrotcc.eventos.Eventos;
 import epiccube.com.br.infobairrotcc.models.contantes.Constantes;
 import epiccube.com.br.infobairrotcc.models.entities.Usuario;
 import epiccube.com.br.infobairrotcc.models.singleton.UsuarioLogado;
+import epiccube.com.br.infobairrotcc.utils.Permissions;
 import epiccube.com.br.infobairrotcc.validator.Validar;
 import epiccube.com.br.infobairrotcc.views.activity.ActivityMenuInicial;
 import jp.wasabeef.glide.transformations.CropCircleTransformation;
@@ -87,6 +89,12 @@ public class HelperActivityCadastro {
         cadastro_btn_cadastrar = (Button) context.findViewById(R.id.cadastro_btn_cadastrar);
         cadastro_btn_cadastrar.getBackground().setColorFilter(Color.parseColor("#ff4e43"), PorterDuff.Mode.SRC_ATOP); //TODO ARUMAR ESSA PORCARIA
 
+        Glide.with(context).load(R.drawable.placeholder)
+                .diskCacheStrategy(DiskCacheStrategy.SOURCE)
+                .centerCrop()
+                .crossFade()
+                .into(cadastro_img_perfil);
+
         //autenticador = FirebaseAuth.getInstance();
         selecinouFoto = false;
 
@@ -99,9 +107,15 @@ public class HelperActivityCadastro {
             @Override
             public void onClick(View v) {
 
-                Intent intentGaleria = new Intent(Intent.ACTION_PICK, MediaStore
-                .Images.Media.EXTERNAL_CONTENT_URI);
-                context.startActivityForResult(intentGaleria, 1);
+                if (!Permissions.EXTERNAL_STORAGE.temPermissao(context)){
+                    Permissions.EXTERNAL_STORAGE.solicitaPermissao(context);
+                } else {
+                    Intent intentGaleria = new Intent(Intent.ACTION_PICK, MediaStore
+                            .Images.Media.EXTERNAL_CONTENT_URI);
+                    context.startActivityForResult(intentGaleria, 1);
+                }
+
+
 
                 // TODO pegar imagem e subir no firebase // SÓMENTE POR ÚLTIMO
 
@@ -230,4 +244,17 @@ public class HelperActivityCadastro {
                 .into(cadastro_img_perfil);
 
     }
+
+    @Subscribe
+    public void onEventAbrirGaleria(Eventos.AbrirGaleria galeria){
+        Intent intentGaleria = new Intent(Intent.ACTION_PICK, MediaStore
+                .Images.Media.EXTERNAL_CONTENT_URI);
+        context.startActivityForResult(intentGaleria, 1);
+    }
+
+    @Subscribe
+    public void onEventUnregister(Eventos.Unregister unregister){
+        EventBus.getDefault().unregister(this);
+    }
+
 }

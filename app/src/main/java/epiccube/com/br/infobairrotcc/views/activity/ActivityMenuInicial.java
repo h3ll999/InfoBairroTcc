@@ -42,6 +42,7 @@ import epiccube.com.br.infobairrotcc.models.contantes.Constantes;
 import epiccube.com.br.infobairrotcc.models.entities.Postagem;
 import epiccube.com.br.infobairrotcc.models.entities.Usuario;
 import epiccube.com.br.infobairrotcc.models.singleton.UsuarioLogado;
+import epiccube.com.br.infobairrotcc.utils.Permissions;
 import epiccube.com.br.infobairrotcc.views.adapter.AdapterPostagens;
 import epiccube.com.br.infobairrotcc.views.asynctask.AsynkTaskMockPostagem;
 import epiccube.com.br.infobairrotcc.views.dialogs.DialogPostagem;
@@ -192,6 +193,8 @@ public class ActivityMenuInicial extends AppCompatActivity
     void startLoading(){
         recyclerView.setVisibility(View.INVISIBLE);
         p.setVisibility(View.VISIBLE);
+        Permissions permissions = new Permissions();
+
     }
 
     void dismissLoading(){

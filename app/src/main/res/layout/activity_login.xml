@@ -16,7 +16,7 @@
         <ImageView
             android:layout_width="200dp"
             android:layout_height="match_parent"
-            android:background="@drawable/logo"
+            android:background="@drawable/logo3"
             android:layout_alignParentTop="true"
             android:layout_centerHorizontal="true" />
 

@@ -2,11 +2,14 @@ package epiccube.com.br.infobairrotcc.views.activity;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
+import android.widget.Toast;
 
 import org.greenrobot.eventbus.EventBus;
 
@@ -56,7 +59,31 @@ public class ActivityCadastro  extends AppCompatActivity{
         }
         return super.onOptionsItemSelected(item);
     }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode,
+                                           String permissions[], int[] grantResults) {
+        switch (requestCode) {
+            case 1: {
+                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+
+                    EventBus.getDefault().post(new Eventos.AbrirGaleria());
+
+                } else {
+                    Toast.makeText(this, "Permissão necessária para acessar a galeria", Toast.LENGTH_SHORT).show();
+                }
+                return;
+            }
+        }
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        EventBus.getDefault().post(new Eventos.Unregister());
+    }
 }
+
 
 //                                    CADASTRO
  // > Cadastrar no Auth (email+senha) //  FirebaseUser user = Auth.getInstance.getUser();

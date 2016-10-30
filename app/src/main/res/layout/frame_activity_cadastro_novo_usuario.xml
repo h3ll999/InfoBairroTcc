@@ -15,7 +15,6 @@
 
             <de.hdodenhof.circleimageview.CircleImageView
                 android:layout_height="150dp"
-                app:srcCompat="@drawable/placeholder"
                 android:id="@+id/cadastro_img_perfil"
                 android:layout_width="150dp"
                 android:layout_centerVertical="true"
