@@ -255,6 +255,7 @@ public class HelperActivityPostagem {
 
     //TODO GAMBIARRA FINAL CHAPTER
     void finalizar(){
+
         // firebase...
         progressDialog.setTitle("Finalizando");
         DatabaseReference ref = FirebaseDatabase.getInstance().getReference();

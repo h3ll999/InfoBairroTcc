@@ -47,6 +47,7 @@ import epiccube.com.br.infobairrotcc.models.entities.Usuario;
 import epiccube.com.br.infobairrotcc.models.singleton.UsuarioLogado;
 import epiccube.com.br.infobairrotcc.utils.LocationUtils;
 import epiccube.com.br.infobairrotcc.utils.MyGPS;
+import epiccube.com.br.infobairrotcc.utils.MyUtils;
 import epiccube.com.br.infobairrotcc.utils.Permissions;
 import epiccube.com.br.infobairrotcc.views.adapter.AdapterPostagens;
 import epiccube.com.br.infobairrotcc.views.asynctask.AsynkTaskMockPostagem;
@@ -163,7 +164,11 @@ public class ActivityMenuInicial extends AppCompatActivity
         startLoading();
         DatabaseReference ref = FirebaseDatabase.getInstance().getReference();
 
-        ref.child(filtro).addValueEventListener(new ValueEventListener() {
+        // pega os dados com base no no estado+cidade+bairro+categoria
+        ref.child(MyUtils.removeAcentosEspacos(UsuarioLogado.getInstancia().getUsuario().getEstadoAtualId()))
+                .child(MyUtils.removeAcentosEspacos(UsuarioLogado.getInstancia().getUsuario().getCidadeAtualId()))
+                .child(MyUtils.removeAcentosEspacos(UsuarioLogado.getInstancia().getUsuario().getBairroAtualId()))
+                .child(filtro).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 List<Postagem> listagemPostagens = new ArrayList<Postagem>();
@@ -178,6 +183,7 @@ public class ActivityMenuInicial extends AppCompatActivity
                         setRecyclerView(listagemPostagens);
                     } else {
                         dismissLoading();
+                        setRecyclerView(listagemPostagens);
                         //setContentView(R.layout.empty_database);/// todo AAAAAAAAAAAAAA
                     }
             }
@@ -234,7 +240,7 @@ public class ActivityMenuInicial extends AppCompatActivity
             UsuarioLogado.getInstancia().getUsuario().setCidadeAtualId(locais[1]);
             UsuarioLogado.getInstancia().getUsuario().setBairroAtualId(locais[2]);
 
-            getDataFromFirebase(Constantes.formataPostagens(locais, Constantes.POSTAGENS_SEM_FILTRO));
+            getDataFromFirebase(Constantes.EVENTOS);// TODO POR QUESTÕES DE TESTEEEEEEEEEEEEEEEE
 
         } catch (IOException e) {
             //TODO TRATAR ISSO MELHOR...SEI LÁ...
