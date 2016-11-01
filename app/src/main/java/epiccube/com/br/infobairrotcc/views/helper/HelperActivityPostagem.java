@@ -37,6 +37,7 @@ import epiccube.com.br.infobairrotcc.R;
 import epiccube.com.br.infobairrotcc.eventos.EventoInseriuPostagemMockPostagem;
 import epiccube.com.br.infobairrotcc.eventos.Eventos;
 import epiccube.com.br.infobairrotcc.eventos.EventoPegarCategoriaPostagem;
+import epiccube.com.br.infobairrotcc.models.contantes.Constantes;
 import epiccube.com.br.infobairrotcc.models.entities.Postagem;
 import epiccube.com.br.infobairrotcc.models.singleton.UsuarioLogado;
 import epiccube.com.br.infobairrotcc.utils.MyUtils;
@@ -148,7 +149,8 @@ public class HelperActivityPostagem {
         p.setUrlFotosPostagem(new ArrayList<String>());
     }
 
-    public void unregister(){
+    @Subscribe
+    public void onEventUnregister(Eventos.Unregister unregister){
         EventBus.getDefault().unregister(this);
     }
 
@@ -255,8 +257,19 @@ public class HelperActivityPostagem {
         // firebase...
         progressDialog.setTitle("Finalizando");
         DatabaseReference ref = FirebaseDatabase.getInstance().getReference();
-        String primaryKey = ref.child(categoriaSelecionada).push().getKey();
-        ref.child(categoriaSelecionada).child(primaryKey).setValue(p)
+
+        String primaryKey = ref
+                .child(UsuarioLogado.getInstancia().getUsuario().getEstadoAtualId())
+                .child(UsuarioLogado.getInstancia().getUsuario().getCidadeAtualId())
+                .child(UsuarioLogado.getInstancia().getUsuario().getBairroAtualId())
+                .child(categoriaSelecionada).push().getKey();
+
+        ref.child(UsuarioLogado.getInstancia().getUsuario().getEstadoAtualId())
+                .child(UsuarioLogado.getInstancia().getUsuario().getCidadeAtualId())
+                .child(UsuarioLogado.getInstancia().getUsuario().getBairroAtualId())
+                .child(categoriaSelecionada)
+                .child(primaryKey)
+                .setValue(p)
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
                     public void onSuccess(Void aVoid) {
@@ -272,5 +285,7 @@ public class HelperActivityPostagem {
                     }
                 });
     }
+
+
 
 }

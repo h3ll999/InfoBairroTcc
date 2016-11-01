@@ -219,24 +219,36 @@ public class ActivityMenuInicial extends AppCompatActivity
         p.setVisibility(View.INVISIBLE);
     }
 
-    public void cidade(Double[] a){
-        LocationUtils l = new LocationUtils();
+    public void locais(){
+
+        // já está salvo as coords nesse momento...
+        Double[] coords = UsuarioLogado.getInstancia().getUsuario().getLatitudeLongitude();
+
         try {
-            String[] locais = l.getCityName(this, a);
-            Toast.makeText(this, locais[1],Toast.LENGTH_SHORT).show();
             progressDialog.dismiss();
-            getDataFromFirebase(Constantes.POSTAGENS+"/"+locais[0]+"/"+locais[1]+"/");
-            // exemplo do filtro: POSTAGENS/São Paulo/Centro/postagembla bla bla
+
+            LocationUtils l = new LocationUtils();
+            String[] locais = l.getLocais(this, coords);
+
+            UsuarioLogado.getInstancia().getUsuario().setEstadoAtualId(locais[0]);
+            UsuarioLogado.getInstancia().getUsuario().setCidadeAtualId(locais[1]);
+            UsuarioLogado.getInstancia().getUsuario().setBairroAtualId(locais[2]);
+
+            getDataFromFirebase(Constantes.formataPostagens(locais, Constantes.POSTAGENS_SEM_FILTRO));
+
         } catch (IOException e) {
-            e.printStackTrace();
+            //TODO TRATAR ISSO MELHOR...SEI LÁ...
+            Toast.makeText(this, "ERRO "+e.getMessage(), Toast.LENGTH_SHORT).show();
         }
     }
 
     @Subscribe
     public void pegaCoordenada(Eventos.PegaCoordenada coordenada){
         Double [] coord = coordenada.getCood();
-        //Toast.makeText(this, "Lat: "+coord[0]+" | Long "+coord[1],Toast.LENGTH_SHORT).show();
-        cidade(coord);
+
+        // já está salvo as coords nesse momento...
+        UsuarioLogado.getInstancia().getUsuario().setLatitudeLongitude(coord);
+        locais();
     }
 
     @Override

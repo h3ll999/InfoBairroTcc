@@ -1,5 +1,7 @@
 package epiccube.com.br.infobairrotcc.models.entities;
 
+import com.google.firebase.database.Exclude;
+
 import java.io.Serializable;
 import java.util.List;
 
@@ -17,6 +19,12 @@ public class Usuario implements Serializable {
     private List<String> postagensId;
     private String bairroAtualId;
     private String bairroOrigemId;
+    private String cidadeAtualId;
+    private String cidadeOrigemId;
+    private String estadoAtualId;
+    private String estadoOrigemId;
+
+    @Exclude
     private Double[] latitudeLongitude;
 
 
@@ -84,10 +92,44 @@ public class Usuario implements Serializable {
         this.bairroOrigemId = bairroOrigemId;
     }
 
+    public String getCidadeAtualId() {
+        return cidadeAtualId;
+    }
+
+    public void setCidadeAtualId(String cidadeAtualId) {
+        this.cidadeAtualId = cidadeAtualId;
+    }
+
+    public String getCidadeOrigemId() {
+        return cidadeOrigemId;
+    }
+
+    public void setCidadeOrigemId(String cidadeOrigemId) {
+        this.cidadeOrigemId = cidadeOrigemId;
+    }
+
+    public String getEstadoAtualId() {
+        return estadoAtualId;
+    }
+
+    public void setEstadoAtualId(String estadoAtualId) {
+        this.estadoAtualId = estadoAtualId;
+    }
+
+    public String getEstadoOrigemId() {
+        return estadoOrigemId;
+    }
+
+    public void setEstadoOrigemId(String estadoOrigemId) {
+        this.estadoOrigemId = estadoOrigemId;
+    }
+
+    @Exclude
     public Double[] getLatitudeLongitude() {
         return latitudeLongitude;
     }
 
+    @Exclude
     public void setLatitudeLongitude(Double[] latitudeLongitude) {
         this.latitudeLongitude = latitudeLongitude;
     }

@@ -93,7 +93,7 @@ public class ActivityPostagem extends AppCompatActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        helper.unregister();
+        EventBus.getDefault().post(new Eventos.Unregister());
     }
 
     @Override
