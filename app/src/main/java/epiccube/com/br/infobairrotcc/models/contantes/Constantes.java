@@ -13,6 +13,7 @@ public class Constantes {
     public static final String USUARIO = "USUARIO";
     public static final String PERFIL = "PERFIL";
 
+    public static final String POSTAGENS = "POSTAGENS";
     public static final String POSTAGENS_SEM_FILTRO = "POSTAGENS_SEM_FILTRO";
     public static final String POSTAGENS_NOTICIAS = "POSTAGENS_NOTICIAS";
     public static final String POSTAGENS_EVENTOS = "POSTAGENS_EVENTOS";

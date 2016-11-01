@@ -82,8 +82,6 @@ public class ActivityMenuInicial extends AppCompatActivity
 
     }
 
-
-
     // após o fim da requisição dos dados da asynctask, executa o método abaixo...
     /*@Subscribe
     public void onEventMockPostagens(Eventos.ResultadoAsyncTaskMockPostagem postagens){
@@ -157,7 +155,8 @@ public class ActivityMenuInicial extends AppCompatActivity
     }
 
     private void setProgressBar() {
-        progressDialog = ProgressDialog.show(this, "calculo bairro", "aguarde...", true, false);
+        progressDialog = ProgressDialog.show(this, getString(R.string.progress_search),
+                getString(R.string.progress_wait), true, false);
     }
 
     public void getDataFromFirebase(String filtro) {
@@ -223,8 +222,11 @@ public class ActivityMenuInicial extends AppCompatActivity
     public void cidade(Double[] a){
         LocationUtils l = new LocationUtils();
         try {
-            String nome = l.getCityName(this, a);
-            Toast.makeText(this, nome,Toast.LENGTH_SHORT).show();
+            String[] locais = l.getCityName(this, a);
+            Toast.makeText(this, locais[1],Toast.LENGTH_SHORT).show();
+            progressDialog.dismiss();
+            getDataFromFirebase(Constantes.POSTAGENS+"/"+locais[0]+"/"+locais[1]+"/");
+            // exemplo do filtro: POSTAGENS/São Paulo/Centro/postagembla bla bla
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -232,7 +234,6 @@ public class ActivityMenuInicial extends AppCompatActivity
 
     @Subscribe
     public void pegaCoordenada(Eventos.PegaCoordenada coordenada){
-        progressDialog.dismiss();
         Double [] coord = coordenada.getCood();
         //Toast.makeText(this, "Lat: "+coord[0]+" | Long "+coord[1],Toast.LENGTH_SHORT).show();
         cidade(coord);
@@ -268,11 +269,17 @@ public class ActivityMenuInicial extends AppCompatActivity
                 break;
             case R.id.action_location:
                 //TODO PERMISSÃO DA LOCALIZAÇÃO
-                Log.e("onOptionsItemSelected","action_location");
+                /*if(!Permissions.FINE_LOCATION.temPermissao(this)){
+                    Permissions.FINE_LOCATION.solicitaPermissao(this);
+                }*/
+                progressDialog = ProgressDialog.show(this, getString(R.string.progress_search),
+                        getString(R.string.progress_wait), true, false);
                 MyGPS myGPS = new MyGPS(this);
                 myGPS.init();
                 break;
-            default: break;
+            default:
+                Toast.makeText(this, "Aconteceu um milagre...", Toast.LENGTH_SHORT).show();
+                break;
         }
         return super.onOptionsItemSelected(item);
     }

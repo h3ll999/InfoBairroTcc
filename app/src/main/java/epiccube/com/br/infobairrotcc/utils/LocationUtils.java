@@ -15,20 +15,17 @@ import java.util.Locale;
 
 public class LocationUtils {
 
-    // TODO Obviamente rodará em asynctask...
-    public String getCityName(Activity activity, Double[] coord) throws IOException {
+    public String[] getCityName(Activity activity, Double[] coord) throws IOException {
         Geocoder gcd = new Geocoder(activity, Locale.getDefault());
         List<Address> addresses = gcd.getFromLocation(coord[0], coord[1], 1);
         if (addresses.size() > 0){
-            Log.e("getLocality", addresses.get(0).getLocality());
-            Log.e("getCountryName", addresses.get(0).getCountryName());
-            Log.e("getSubLocality", addresses.get(0).getSubLocality());
-            return addresses.get(0).getLocality()+" | "+addresses.get(0).getCountryName()+" | "+addresses.get(0).getSubLocality();
+            String [] locais = new String[2]; // cidade - bairro
+            locais[0] = addresses.get(0).getLocality();
+            locais[1] = addresses.get(0).getSubLocality();
+            return locais;
         } else {
-            return "Não foi possível localizar...(TODO)";
-            // São Paulo | Brasil | Centro
+            return null; //TODO ESSA COISA
+            // São Paulo | Centro
         }
-
     }
-
 }
