@@ -2,6 +2,8 @@ package epiccube.com.br.infobairrotcc.utils;
 
 import android.app.Activity;
 
+import java.text.Normalizer;
+
 import epiccube.com.br.infobairrotcc.R;
 import epiccube.com.br.infobairrotcc.models.contantes.Constantes;
 
@@ -39,5 +41,15 @@ public class MyUtils {
 
         return categoria;
     }
+
+    private static String removeAcentosEspacosP(String input){
+        return Normalizer.normalize(input, Normalizer.Form.NFD).replaceAll("[^\\p{ASCII}]", "").replaceAll("\\s","").toUpperCase();
+    }
+
+    public static String removeAcentosEspacos(String input){
+        return removeAcentosEspacosP(input);
+    }
+
+
 
 }

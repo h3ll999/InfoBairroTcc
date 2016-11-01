@@ -29,6 +29,7 @@ import com.google.firebase.storage.UploadTask;
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 
+import java.text.Normalizer;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
@@ -259,14 +260,14 @@ public class HelperActivityPostagem {
         DatabaseReference ref = FirebaseDatabase.getInstance().getReference();
 
         String primaryKey = ref
-                .child(UsuarioLogado.getInstancia().getUsuario().getEstadoAtualId())
-                .child(UsuarioLogado.getInstancia().getUsuario().getCidadeAtualId())
-                .child(UsuarioLogado.getInstancia().getUsuario().getBairroAtualId())
+                .child(MyUtils.removeAcentosEspacos(UsuarioLogado.getInstancia().getUsuario().getEstadoAtualId()))
+                .child(MyUtils.removeAcentosEspacos(UsuarioLogado.getInstancia().getUsuario().getCidadeAtualId()))
+                .child(MyUtils.removeAcentosEspacos(UsuarioLogado.getInstancia().getUsuario().getBairroAtualId()))
                 .child(categoriaSelecionada).push().getKey();
 
-        ref.child(UsuarioLogado.getInstancia().getUsuario().getEstadoAtualId())
-                .child(UsuarioLogado.getInstancia().getUsuario().getCidadeAtualId())
-                .child(UsuarioLogado.getInstancia().getUsuario().getBairroAtualId())
+        ref.child(MyUtils.removeAcentosEspacos(UsuarioLogado.getInstancia().getUsuario().getEstadoAtualId()))
+                .child(MyUtils.removeAcentosEspacos(UsuarioLogado.getInstancia().getUsuario().getCidadeAtualId()))
+                .child(MyUtils.removeAcentosEspacos(UsuarioLogado.getInstancia().getUsuario().getBairroAtualId()))
                 .child(categoriaSelecionada)
                 .child(primaryKey)
                 .setValue(p)
