@@ -6,4 +6,11 @@
         android:orderInCategory="100"
         android:title="Sair"
         app:showAsAction="never" />
+
+    <item
+        android:id="@+id/action_location"
+        android:orderInCategory="100"
+        android:title="Local(temp)"
+        app:showAsAction="never" />
+
 </menu>

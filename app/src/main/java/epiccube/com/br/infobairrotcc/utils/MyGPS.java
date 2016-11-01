@@ -10,8 +10,11 @@ import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
 import android.util.Log;
 
+import org.greenrobot.eventbus.EventBus;
+
 import java.util.Calendar;
 
+import epiccube.com.br.infobairrotcc.eventos.Eventos;
 import epiccube.com.br.infobairrotcc.models.entities.Usuario;
 import epiccube.com.br.infobairrotcc.models.singleton.UsuarioLogado;
 
@@ -47,6 +50,7 @@ public class MyGPS implements LocationListener {
             //TODO caso faz 2 minutos que pegou o local, pega o último local.
         } else {
             mLocationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, this);
+            mLocationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 0, 0, this);
         }
     }
 
@@ -54,11 +58,14 @@ public class MyGPS implements LocationListener {
     public void onLocationChanged(Location location) {
         if (location != null) {
 
-            Log.v("Location Changed", location.getLatitude() + " and " + location.getLongitude());
-
             coord = new Double[2];
             coord[0] = location.getLatitude();
             coord[1] = location.getLongitude();
+
+            Log.e("MyGps","Lat: "+coord[0]+" | Long "+coord[1]);
+
+            // TODO cagada...
+            EventBus.getDefault().post(new Eventos.PegaCoordenada(coord));
 
             //TODO transferir essa responsabilidade para outra coisa !!!!!!
             /*UsuarioLogado.getInstancia().getUsuario().setLatitudeLongitude(local);*/

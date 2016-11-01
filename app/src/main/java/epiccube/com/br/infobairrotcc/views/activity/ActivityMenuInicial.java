@@ -1,5 +1,6 @@
 package epiccube.com.br.infobairrotcc.views.activity;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -11,6 +12,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -30,6 +32,7 @@ import com.google.firebase.database.ValueEventListener;
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
@@ -42,6 +45,8 @@ import epiccube.com.br.infobairrotcc.models.contantes.Constantes;
 import epiccube.com.br.infobairrotcc.models.entities.Postagem;
 import epiccube.com.br.infobairrotcc.models.entities.Usuario;
 import epiccube.com.br.infobairrotcc.models.singleton.UsuarioLogado;
+import epiccube.com.br.infobairrotcc.utils.LocationUtils;
+import epiccube.com.br.infobairrotcc.utils.MyGPS;
 import epiccube.com.br.infobairrotcc.utils.Permissions;
 import epiccube.com.br.infobairrotcc.views.adapter.AdapterPostagens;
 import epiccube.com.br.infobairrotcc.views.asynctask.AsynkTaskMockPostagem;
@@ -55,26 +60,29 @@ public class ActivityMenuInicial extends AppCompatActivity
     private ProgressBar p;
     private RecyclerView recyclerView;
 
-    private DialogPostagem dialog;
-    private Object dataFromServer;
+    private ProgressDialog progressDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_menu_inicial);
 
-        //EventBus.getDefault().register(this);
+        EventBus.getDefault().register(this);
 
         setLoading();
         setToolbar();
         setFAB();
         setDrawer();
         setNavView();
-        getDataFromFirebase(Constantes.POSTAGENS_SEM_FILTRO);
+        setProgressBar();
+        initGps();
+        //getDataFromFirebase(Constantes.POSTAGENS_SEM_FILTRO);
 
         //new AsynkTaskMockPostagem().execute(p);
 
     }
+
+
 
     // após o fim da requisição dos dados da asynctask, executa o método abaixo...
     /*@Subscribe
@@ -143,6 +151,15 @@ public class ActivityMenuInicial extends AppCompatActivity
 
     }
 
+    private void initGps() {
+        MyGPS myGPS = new MyGPS(this);
+        myGPS.init();
+    }
+
+    private void setProgressBar() {
+        progressDialog = ProgressDialog.show(this, "calculo bairro", "aguarde...", true, false);
+    }
+
     public void getDataFromFirebase(String filtro) {
         startLoading();
         DatabaseReference ref = FirebaseDatabase.getInstance().getReference();
@@ -153,15 +170,17 @@ public class ActivityMenuInicial extends AppCompatActivity
                 List<Postagem> listagemPostagens = new ArrayList<Postagem>();
                 HashMap<String, String> mapListagemPostagens = (HashMap<String, String>) dataSnapshot.getValue();
 
-                    if(dataSnapshot.getChildrenCount()==0){//se tá vazio o banco
-
-                    }else{
+                    if(dataSnapshot.getChildrenCount()!=0){//se NÃO está vazio o banco
                         for (DataSnapshot postSnapshot: dataSnapshot.getChildren()) {
-                        Postagem p = postSnapshot.getValue(Postagem.class);
-                        listagemPostagens.add(p);
+                            Postagem p = postSnapshot.getValue(Postagem.class);
+                            listagemPostagens.add(p);
+                        }
+                        dismissLoading();
+                        setRecyclerView(listagemPostagens);
+                    } else {
+                        dismissLoading();
+                        //setContentView(R.layout.empty_database);/// todo AAAAAAAAAAAAAA
                     }
-                }
-                setRecyclerView(listagemPostagens);
             }
 
             @Override
@@ -173,11 +192,10 @@ public class ActivityMenuInicial extends AppCompatActivity
 
 
     void setRecyclerView(List<Postagem> listagemPostagem){
-        recyclerView = (RecyclerView) findViewById(R.id.activity_menu_inicial_recycler_view);
+
 
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(linearLayoutManager);
-        dismissLoading();
 
         Collections.reverse(listagemPostagem);
 
@@ -187,14 +205,14 @@ public class ActivityMenuInicial extends AppCompatActivity
     }
 
     void setLoading(){
+        recyclerView = (RecyclerView) findViewById(R.id.activity_menu_inicial_recycler_view); // todo recycler view castado antes...
         p = (ProgressBar) findViewById(R.id.progressBar1);
+        p.setVisibility(View.INVISIBLE);
     }
 
     void startLoading(){
         recyclerView.setVisibility(View.INVISIBLE);
         p.setVisibility(View.VISIBLE);
-        Permissions permissions = new Permissions();
-
     }
 
     void dismissLoading(){
@@ -202,14 +220,32 @@ public class ActivityMenuInicial extends AppCompatActivity
         p.setVisibility(View.INVISIBLE);
     }
 
+    public void cidade(Double[] a){
+        LocationUtils l = new LocationUtils();
+        try {
+            String nome = l.getCityName(this, a);
+            Toast.makeText(this, nome,Toast.LENGTH_SHORT).show();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Subscribe
+    public void pegaCoordenada(Eventos.PegaCoordenada coordenada){
+        progressDialog.dismiss();
+        Double [] coord = coordenada.getCood();
+        //Toast.makeText(this, "Lat: "+coord[0]+" | Long "+coord[1],Toast.LENGTH_SHORT).show();
+        cidade(coord);
+    }
+
     @Override
     public void onBackPressed() {
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
-        } else if(dialog!=null){
+        } /*else if(dialog!=null){
             EventBus.getDefault().post(new Eventos.FechaDialogoPostagem());
-        } else {
+        }*/ else {
             super.onBackPressed();
         }
     }
@@ -224,12 +260,20 @@ public class ActivityMenuInicial extends AppCompatActivity
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
 
-        if (id == R.id.action_settings) {
-            UsuarioLogado.getInstancia().clear();
-            FirebaseAuth.getInstance().signOut();
-            finish();
+        switch (id){
+            case R.id.action_settings:
+                UsuarioLogado.getInstancia().clear();
+                FirebaseAuth.getInstance().signOut();
+                finish();
+                break;
+            case R.id.action_location:
+                //TODO PERMISSÃO DA LOCALIZAÇÃO
+                Log.e("onOptionsItemSelected","action_location");
+                MyGPS myGPS = new MyGPS(this);
+                myGPS.init();
+                break;
+            default: break;
         }
-
         return super.onOptionsItemSelected(item);
     }
 
@@ -256,6 +300,7 @@ public class ActivityMenuInicial extends AppCompatActivity
     @Override
     protected void onDestroy() {
         super.onDestroy();
+        EventBus.getDefault().unregister(this);
         Toast.makeText(this, "Saindo...", Toast.LENGTH_SHORT).show();
     }
 }

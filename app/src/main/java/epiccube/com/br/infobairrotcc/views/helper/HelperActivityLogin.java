@@ -146,6 +146,7 @@ public class HelperActivityLogin {
                     @Override
                     public void onFailure(@NonNull Exception e) {
                         Toast.makeText(context, e.getMessage(), Toast.LENGTH_SHORT).show();
+                        progressDialog.dismiss();
                     }
                 });
 

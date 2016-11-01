@@ -23,8 +23,12 @@ public class LocationUtils {
             Log.e("getLocality", addresses.get(0).getLocality());
             Log.e("getCountryName", addresses.get(0).getCountryName());
             Log.e("getSubLocality", addresses.get(0).getSubLocality());
+            return addresses.get(0).getLocality()+" | "+addresses.get(0).getCountryName()+" | "+addresses.get(0).getSubLocality();
+        } else {
+            return "Não foi possível localizar...(TODO)";
+            // São Paulo | Brasil | Centro
         }
-        return "a";
+
     }
 
 }
