@@ -15,8 +15,10 @@ public class UsuarioLogado {
     }
 
     public static UsuarioLogado getInstancia() {
-        if (instancia == null)
+        if (instancia == null){
             instancia = new UsuarioLogado();
+
+        }
         return instancia;
     }
 

@@ -47,9 +47,15 @@ public class MyGPS implements LocationListener {
 
         Location location = mLocationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
         if (location != null && location.getTime() > Calendar.getInstance().getTimeInMillis() - 2 * 60 * 1000) {
-            //TODO caso faz 2 minutos que pegou o local, pega o último local.
+            //TODO caso faz 2 minutos que pegou o local, pega o último local...
+            coord = new Double[2];
+            coord[0] = location.getLatitude();
+            coord[1] = location.getLongitude();
+            Log.e("MyGps--getLastKnownLoca","Lat: "+coord[0]+" | Long "+coord[1]);
+            mLocationManager.removeUpdates(this);
+            EventBus.getDefault().post(new Eventos.PegaCoordenada(coord));
         } else {
-            mLocationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, this);
+            //mLocationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, this);
             mLocationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 0, 0, this);
         }
     }
@@ -62,22 +68,16 @@ public class MyGPS implements LocationListener {
             coord[0] = location.getLatitude();
             coord[1] = location.getLongitude();
 
-            Log.e("MyGps","Lat: "+coord[0]+" | Long "+coord[1]);
+            Log.e("MyGps--onLocationChange","Lat: "+coord[0]+" | Long "+coord[1]);
 
-            // TODO cagada...
+            try{
+                mLocationManager.removeUpdates(this);
+            }catch (SecurityException e){
+                Log.e("MyGps--getLastKnownLoca",e.getMessage());
+            }
+            // TODO cagada...?!?!?!?
             EventBus.getDefault().post(new Eventos.PegaCoordenada(coord));
 
-            //TODO transferir essa responsabilidade para outra coisa !!!!!!
-            /*UsuarioLogado.getInstancia().getUsuario().setLatitudeLongitude(local);*/
-
-            if (ActivityCompat.checkSelfPermission(context,
-                    Manifest.permission.ACCESS_FINE_LOCATION) !=
-                    PackageManager.PERMISSION_GRANTED &&
-                    ActivityCompat.checkSelfPermission(context, Manifest.permission.ACCESS_COARSE_LOCATION) !=
-                            PackageManager.PERMISSION_GRANTED) {
-                return;
-            }
-            mLocationManager.removeUpdates(this);
         }
     }
 

@@ -1,5 +1,6 @@
 package epiccube.com.br.infobairrotcc.models.entities;
 
+import com.google.android.gms.common.api.BooleanResult;
 import com.google.firebase.database.Exclude;
 
 import java.io.Serializable;
@@ -16,6 +17,7 @@ public class Usuario implements Serializable {
     private String email;
     private String senha;
     private String perfilUrl;
+    private Boolean permissaoPostagem;
     private List<String> postagensId;
     private String bairroAtualId;
     private String bairroOrigemId;
@@ -66,6 +68,14 @@ public class Usuario implements Serializable {
 
     public void setPerfilUrl(String perfilUrl) {
         this.perfilUrl = perfilUrl;
+    }
+
+    public Boolean getPermissaoPostagem() {
+        return permissaoPostagem;
+    }
+
+    public void setPermissaoPostagem(Boolean permissaoPostagem) {
+        this.permissaoPostagem = permissaoPostagem;
     }
 
     public List<String> getPostagensId() {

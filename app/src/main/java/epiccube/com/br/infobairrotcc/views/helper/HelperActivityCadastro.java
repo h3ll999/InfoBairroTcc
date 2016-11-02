@@ -1,6 +1,7 @@
 package epiccube.com.br.infobairrotcc.views.helper;
 
 import android.app.ProgressDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
@@ -8,6 +9,7 @@ import android.net.Uri;
 import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
@@ -15,6 +17,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.blitzk01.androidbeginnersutillibrary.main.ABU;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -31,6 +34,7 @@ import com.google.firebase.storage.UploadTask;
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 
+import java.io.IOException;
 import java.util.UUID;
 
 import epiccube.com.br.infobairrotcc.R;
@@ -38,7 +42,10 @@ import epiccube.com.br.infobairrotcc.eventos.Eventos;
 import epiccube.com.br.infobairrotcc.models.contantes.Constantes;
 import epiccube.com.br.infobairrotcc.models.entities.Usuario;
 import epiccube.com.br.infobairrotcc.models.singleton.UsuarioLogado;
+import epiccube.com.br.infobairrotcc.utils.LocationUtils;
+import epiccube.com.br.infobairrotcc.utils.MyGPS;
 import epiccube.com.br.infobairrotcc.utils.Permissions;
+import epiccube.com.br.infobairrotcc.utils.ViewUtil;
 import epiccube.com.br.infobairrotcc.validator.Validar;
 import epiccube.com.br.infobairrotcc.views.activity.ActivityMenuInicial;
 import jp.wasabeef.glide.transformations.CropCircleTransformation;
@@ -212,16 +219,8 @@ public class HelperActivityCadastro {
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
                     public void onSuccess(Void aVoid) {
-                        progressDialog.dismiss();
-
-                        //Salva user numa variavel estática
                         UsuarioLogado.getInstancia().setUsuario(usuario);
-
-                        Toast.makeText(context, "Bem vindo, "+usuario.getNome(), Toast.LENGTH_SHORT).show();
-
-                        Intent intent = new Intent(context, ActivityMenuInicial.class);
-                        context.startActivity(intent);
-                        context.finish();
+                        location();
                     }
                 })
                 .addOnFailureListener(new OnFailureListener() {
@@ -232,6 +231,73 @@ public class HelperActivityCadastro {
                 });
 
     }
+
+    void location(){
+        MyGPS myGPS = new MyGPS(context);
+        myGPS.init();
+    }
+
+    @Subscribe
+    public void pegaCoordenada(Eventos.PegaCoordenada coordenada){
+        Double [] coord = coordenada.getCood();
+
+        UsuarioLogado.getInstancia().getUsuario().setLatitudeLongitude(coord);
+        locais();
+    }
+
+
+    void locais(){
+
+        Double[] coords = UsuarioLogado.getInstancia().getUsuario().getLatitudeLongitude();
+
+        try {
+
+            LocationUtils l = new LocationUtils();
+            String[] locais = l.getLocais(context, coords);
+
+            UsuarioLogado.getInstancia().getUsuario().setEstadoAtualId(locais[0]);
+            UsuarioLogado.getInstancia().getUsuario().setCidadeAtualId(locais[1]);
+            UsuarioLogado.getInstancia().getUsuario().setBairroAtualId(locais[2]);
+
+            pergunta();
+
+
+        } catch (IOException e) {
+            Toast.makeText(context, "Erro "+e.getMessage(), Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    void pergunta(){
+        // pergunta se é o bairro residencial
+        ViewUtil.init(context).showDialog(new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                // TODO se sim, então prosseguir (salvar o local no banco...)
+                UsuarioLogado.getInstancia().getUsuario().setPermissaoPostagem(true);
+                prosseguir();
+            }
+        }, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                // se não, prosseguir e não pode postar -- só visualizar...pergunta(); até ter o bairro de origem no banco...
+                UsuarioLogado.getInstancia().getUsuario().setPermissaoPostagem(false);
+                prosseguir();
+            }
+        });
+
+
+
+    }
+
+    void prosseguir(){
+        progressDialog.dismiss();
+
+        Intent intent = new Intent(context, ActivityMenuInicial.class);
+        context.startActivity(intent);
+        context.finish();
+    }
+
+
 
     // MÉTODO PARA OUVIR A CHAMADA DO POST...RECEBE O PARÂMETRO DO EventBus.getDefault.post();
     @Subscribe

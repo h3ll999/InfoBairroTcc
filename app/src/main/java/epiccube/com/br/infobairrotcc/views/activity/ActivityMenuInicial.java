@@ -70,13 +70,22 @@ public class ActivityMenuInicial extends AppCompatActivity
 
         EventBus.getDefault().register(this);
 
+        Toast.makeText(this, "Bem vindo, "+UsuarioLogado.getInstancia().getUsuario().getNome(), Toast.LENGTH_SHORT).show();
+
         setLoading();
         setToolbar();
         setFAB();
         setDrawer();
         setNavView();
         setProgressBar();
-        initGps();
+
+        if(UsuarioLogado.getInstancia().getUsuario().getLatitudeLongitude()==null){
+            //se não pegou a posicao no cadastro, pega no login
+            initGps();
+        } else {
+            getDataFromFirebase(Constantes.EVENTOS);// TODO POR QUESTÕES DE TESTEEEEEEEEEEEEEEEE
+        }
+
         //getDataFromFirebase(Constantes.POSTAGENS_SEM_FILTRO);
 
         //new AsynkTaskMockPostagem().execute(p);
@@ -296,7 +305,7 @@ public class ActivityMenuInicial extends AppCompatActivity
                 myGPS.init();
                 break;
             default:
-                Toast.makeText(this, "Aconteceu um milagre...", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, "Aconteceu um erro...", Toast.LENGTH_SHORT).show();
                 break;
         }
         return super.onOptionsItemSelected(item);
