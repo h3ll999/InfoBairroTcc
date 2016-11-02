@@ -233,6 +233,7 @@ public class HelperActivityCadastro {
     }
 
     void location(){
+        progressDialog.setTitle("Localização");
         MyGPS myGPS = new MyGPS(context);
         myGPS.init();
     }
