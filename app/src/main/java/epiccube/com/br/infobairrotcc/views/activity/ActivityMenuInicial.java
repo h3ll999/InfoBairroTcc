@@ -76,15 +76,12 @@ public class ActivityMenuInicial extends AppCompatActivity
 
         Toast.makeText(this, "Bem vindo, "+UsuarioLogado.getInstancia().getUsuario().toString(), Toast.LENGTH_SHORT).show();
 
-
-
         setFlipper();
         setLoading();
         setToolbar();
         setFAB();
         setDrawer();
         setNavView();
-
 
         //se não tiver origem...
         if(UsuarioLogado.getInstancia().getUsuario().getEstadoOrigemId() == null){
