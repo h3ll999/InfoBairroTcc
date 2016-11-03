@@ -74,7 +74,9 @@ public class ActivityMenuInicial extends AppCompatActivity
 
         EventBus.getDefault().register(this);
 
-        Toast.makeText(this, "Bem vindo, "+UsuarioLogado.getInstancia().getUsuario().getNome(), Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, "Bem vindo, "+UsuarioLogado.getInstancia().getUsuario().toString(), Toast.LENGTH_SHORT).show();
+
+
 
         setFlipper();
         setLoading();
@@ -82,21 +84,50 @@ public class ActivityMenuInicial extends AppCompatActivity
         setFAB();
         setDrawer();
         setNavView();
-        setProgressBar();
-        //setFlipper();
 
-        if(UsuarioLogado.getInstancia().getUsuario().getLatitudeLongitude()==null){
-            //se não pegou a posicao no cadastro, pega no login
-            Log.e("onCreate", "null - Login");
-            initGps();
+
+        //se não tiver origem...
+        if(UsuarioLogado.getInstancia().getUsuario().getEstadoOrigemId() == null){
+            pergunta();
         } else {
-            Log.e("onCreate", "not null - Cadastro");
-            getDataFromFirebase(Constantes.EVENTOS);// TODO POR QUESTÕES DE TESTEEEEEEEEEEEEEEEE
+            checagemInicial();
         }
 
-        //getDataFromFirebase(Constantes.POSTAGENS_SEM_FILTRO);
+    }
 
-        //new AsynkTaskMockPostagem().execute(p);
+
+    void checagemInicial(){
+        if(UsuarioLogado.getInstancia().getUsuario().getLatitudeLongitude()==null){
+            //se não pegou a posicao no cadastro, pega no login
+            Log.e("onCreate", "veio do Login");
+            setProgressBar();
+            initGps();
+        } else {
+            Log.e("onCreate", "veio do Cadastro");
+            getDataFromFirebase(Constantes.EVENTOS); //TODO POR QUESTÕES DE TESTEEEEEEEEEEEEEEEE
+        }
+    }
+
+    void pergunta(){
+        // pergunta se é o bairro residencial
+        ViewUtil.init(this).showDialog(new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                // TODO se sim, então prosseguir (salvar o local no banco...)
+                /*usuario.setPermissaoPostagem(true);
+                usuario.setEstadoOrigemId(locais[0]);
+                usuario.setCidadeOrigemId(locais[1]);
+                usuario.setBairroOrigemId(locais[2]);
+                firebase();*/
+                dialog.dismiss();
+            }
+        }, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                // se não, prosseguir e não pode postar -- só visualizar...pergunta(); até ter o bairro de origem no banco...
+                dialog.dismiss();
+            }
+        });
 
     }
 

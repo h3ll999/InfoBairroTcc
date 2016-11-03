@@ -160,13 +160,17 @@ public class HelperActivityLogin {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 progressDialog.dismiss();
-                HashMap<String, String> a = (HashMap<String, String>) dataSnapshot.getValue();
+                /*HashMap<String, String> a = (HashMap<String, String>) dataSnapshot.getValue();
 
                 //Pega os dados que chegaram...
                 Usuario u = new Usuario();
                 u.setNome(a.get("nome"));
                 u.setEmail(a.get("email"));
                 u.setPerfilUrl(a.get("perfilUrl"));
+                u.setPermissaoPostagem("permissaoPostagem");*/
+
+                //Pega TODOS OS dados que chegaram...
+                Usuario u = dataSnapshot.getValue(Usuario.class);
 
                 //Salva o usuário numa variavel estática
                 UsuarioLogado.getInstancia().setUsuario(u);

@@ -149,6 +149,14 @@ public class Usuario implements Serializable {
         return "Usuario{" +
                 "nome='" + nome + '\'' +
                 ", email='" + email + '\'' +
+                ", perfilUrl='" + perfilUrl + '\'' +
+                ", permissaoPostagem=" + permissaoPostagem +
+                ", bairroAtualId='" + bairroAtualId + '\'' +
+                ", bairroOrigemId='" + bairroOrigemId + '\'' +
+                ", cidadeAtualId='" + cidadeAtualId + '\'' +
+                ", cidadeOrigemId='" + cidadeOrigemId + '\'' +
+                ", estadoAtualId='" + estadoAtualId + '\'' +
+                ", estadoOrigemId='" + estadoOrigemId + '\'' +
                 '}';
     }
 }

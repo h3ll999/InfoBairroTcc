@@ -26,7 +26,6 @@ public class LocationUtils {
             return locais;
         } else {
             return null; //TODO ESSA COISA
-            // São Paulo | Centro
         }
     }
 }
