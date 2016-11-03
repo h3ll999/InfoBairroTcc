@@ -19,6 +19,7 @@ import android.view.View;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.widget.ViewFlipper;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
@@ -60,6 +61,7 @@ public class ActivityMenuInicial extends AppCompatActivity
     private FloatingActionButton fab;
     private ProgressBar p;
     private RecyclerView recyclerView;
+    private ViewFlipper viewFlipper;
 
     private ProgressDialog progressDialog;
 
@@ -72,12 +74,14 @@ public class ActivityMenuInicial extends AppCompatActivity
 
         Toast.makeText(this, "Bem vindo, "+UsuarioLogado.getInstancia().getUsuario().getNome(), Toast.LENGTH_SHORT).show();
 
+        setFlipper();
         setLoading();
         setToolbar();
         setFAB();
         setDrawer();
         setNavView();
         setProgressBar();
+        //setFlipper();
 
         if(UsuarioLogado.getInstancia().getUsuario().getLatitudeLongitude()==null){
             //se não pegou a posicao no cadastro, pega no login
@@ -91,6 +95,8 @@ public class ActivityMenuInicial extends AppCompatActivity
         //new AsynkTaskMockPostagem().execute(p);
 
     }
+
+
 
     // após o fim da requisição dos dados da asynctask, executa o método abaixo...
     /*@Subscribe
@@ -159,6 +165,12 @@ public class ActivityMenuInicial extends AppCompatActivity
 
     }
 
+    private void setFlipper() {
+        viewFlipper = (ViewFlipper) findViewById(R.id.activity_menu_inicial_flipper);
+        viewFlipper.setDisplayedChild(0);
+        Log.e("setFlipper", viewFlipper.getDisplayedChild()+"");
+    }
+
     private void initGps() {
         MyGPS myGPS = new MyGPS(this);
         myGPS.init();
@@ -190,10 +202,12 @@ public class ActivityMenuInicial extends AppCompatActivity
                         }
                         dismissLoading();
                         setRecyclerView(listagemPostagens);
+                        Log.e("getDataFromFire--ALGO", viewFlipper.getDisplayedChild()+"");
                     } else {
                         dismissLoading();
                         setRecyclerView(listagemPostagens);
-                        //setContentView(R.layout.empty_database);/// todo AAAAAAAAAAAAAA
+                        viewFlipper.setDisplayedChild(1);// BANCO VAZIO MOSTRA LAYOUT COM MENSAGEM
+                        Log.e("getDataFromFire--EMPTY", viewFlipper.getDisplayedChild()+"");
                     }
             }
 
@@ -317,12 +331,26 @@ public class ActivityMenuInicial extends AppCompatActivity
         int id = item.getItemId();
 
         if (id == R.id.menu_categoria_todas) {
+            if(viewFlipper.getDisplayedChild()==1){
+                viewFlipper.setDisplayedChild(0);
+            }
+            Log.e("onNavigationItemSelecte", viewFlipper.getDisplayedChild()+"");
             getDataFromFirebase(Constantes.POSTAGENS_SEM_FILTRO);
         } else if (id == R.id.menu_categoria_evento) {
+            if(viewFlipper.getDisplayedChild()==1){
+                viewFlipper.setDisplayedChild(0);
+            }
+            Log.e("onNavigationItemSelecte", viewFlipper.getDisplayedChild()+"");
             getDataFromFirebase(Constantes.POSTAGENS_EVENTOS);
         } else if (id == R.id.menu_categoria_noticia) {
+            if(viewFlipper.getDisplayedChild()==1){
+                viewFlipper.setDisplayedChild(0);
+            }
             getDataFromFirebase(Constantes.POSTAGENS_NOTICIAS);
         } else if (id == R.id.menu_categoria_servico) {
+            if(viewFlipper.getDisplayedChild()==1){
+                viewFlipper.setDisplayedChild(0);
+            }
             getDataFromFirebase(Constantes.POSTAGENS_SERVICOS);
         }
 
