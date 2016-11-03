@@ -30,4 +30,13 @@ public class ViewUtil {
                 .show();
     }
 
+    public void showDialog(DialogInterface.OnClickListener positive, String msg){
+        AlertDialog.Builder alert = new AlertDialog.Builder(appCompatActivity);
+        alert.setTitle("Alerta")
+                .setCancelable(false)
+                .setMessage(msg)
+                .setPositiveButton("OK", positive)
+                .show();
+    }
+
 }

@@ -77,6 +77,9 @@ public class HelperActivityCadastro {
     private FirebaseUser user;
     private DatabaseReference database;
 
+    private Double [] coord;
+    private String[] locais;
+
     public HelperActivityCadastro(AppCompatActivity context){
         this.context=context;
         EventBus.getDefault().register(this); // REGISTRA NA CLASSE O OUVINTE
@@ -148,7 +151,8 @@ public class HelperActivityCadastro {
                     usuario.setEmail(email);
                     //usuario.setSenha(senha);
 
-                    firebase();
+                    //firebase();
+                    location();
                     /*UsuarioLogado.getInstancia().setUsuario(Mock.usuario());
 
                     Toast.makeText(context, "Cadastrado com sucesso!", Toast.LENGTH_SHORT).show();
@@ -170,6 +174,7 @@ public class HelperActivityCadastro {
     }
 
     private void firebase() {
+        progressDialog = ProgressDialog.show(context,"Finalizando", "Aguarde...", true, false);
         autenticador = FirebaseAuth.getInstance();
         autenticador.createUserWithEmailAndPassword(email, senha)
                 .addOnSuccessListener(new OnSuccessListener<AuthResult>() {
@@ -220,7 +225,7 @@ public class HelperActivityCadastro {
                     @Override
                     public void onSuccess(Void aVoid) {
                         UsuarioLogado.getInstancia().setUsuario(usuario);
-                        location();
+                        prosseguir();
                     }
                 })
                 .addOnFailureListener(new OnFailureListener() {
@@ -240,31 +245,34 @@ public class HelperActivityCadastro {
 
     @Subscribe
     public void pegaCoordenada(Eventos.PegaCoordenada coordenada){
-        Double [] coord = coordenada.getCood();
-
-        UsuarioLogado.getInstancia().getUsuario().setLatitudeLongitude(coord);
+        coord = coordenada.getCood();
+        usuario.setLatitudeLongitude(coord);
         locais();
     }
 
 
     void locais(){
 
-        Double[] coords = UsuarioLogado.getInstancia().getUsuario().getLatitudeLongitude();
-
         try {
 
             LocationUtils l = new LocationUtils();
-            String[] locais = l.getLocais(context, coords);
+            locais = l.getLocais(context, coord);
 
-            UsuarioLogado.getInstancia().getUsuario().setEstadoAtualId(locais[0]);
-            UsuarioLogado.getInstancia().getUsuario().setCidadeAtualId(locais[1]);
-            UsuarioLogado.getInstancia().getUsuario().setBairroAtualId(locais[2]);
+            progressDialog.dismiss();
+
+            usuario.setEstadoAtualId(locais[0]);
+            usuario.setCidadeAtualId(locais[1]);
+            usuario.setBairroAtualId(locais[2]);
+
+            if(locais[0]==null&&locais[1]==null&&locais[2]==null){
+                throw new Exception("Erro: "); //TODO
+            }
 
             pergunta();
 
-
-        } catch (IOException e) {
-            Toast.makeText(context, "Erro "+e.getMessage(), Toast.LENGTH_SHORT).show();
+        } catch (Exception e) {
+            Toast.makeText(context, "Erro(remover esse toast): "+e.getMessage(), Toast.LENGTH_SHORT).show();
+            locais();// caso dá erro, chama de novo...
         }
     }
 
@@ -274,23 +282,25 @@ public class HelperActivityCadastro {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 // TODO se sim, então prosseguir (salvar o local no banco...)
-                UsuarioLogado.getInstancia().getUsuario().setPermissaoPostagem(true);
-                prosseguir();
+                usuario.setPermissaoPostagem(true);
+                usuario.setEstadoOrigemId(locais[0]);
+                usuario.setCidadeOrigemId(locais[1]);
+                usuario.setBairroOrigemId(locais[2]);
+                firebase();
             }
         }, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 // se não, prosseguir e não pode postar -- só visualizar...pergunta(); até ter o bairro de origem no banco...
-                UsuarioLogado.getInstancia().getUsuario().setPermissaoPostagem(false);
-                prosseguir();
+                usuario.setPermissaoPostagem(false);
+                firebase();
             }
         });
-
-
 
     }
 
     void prosseguir(){
+
         progressDialog.dismiss();
 
         Intent intent = new Intent(context, ActivityMenuInicial.class);

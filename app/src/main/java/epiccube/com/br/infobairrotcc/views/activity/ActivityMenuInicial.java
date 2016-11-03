@@ -1,6 +1,7 @@
 package epiccube.com.br.infobairrotcc.views.activity;
 
 import android.app.ProgressDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -50,6 +51,7 @@ import epiccube.com.br.infobairrotcc.utils.LocationUtils;
 import epiccube.com.br.infobairrotcc.utils.MyGPS;
 import epiccube.com.br.infobairrotcc.utils.MyUtils;
 import epiccube.com.br.infobairrotcc.utils.Permissions;
+import epiccube.com.br.infobairrotcc.utils.ViewUtil;
 import epiccube.com.br.infobairrotcc.views.adapter.AdapterPostagens;
 import epiccube.com.br.infobairrotcc.views.asynctask.AsynkTaskMockPostagem;
 import epiccube.com.br.infobairrotcc.views.dialogs.DialogPostagem;
@@ -85,8 +87,10 @@ public class ActivityMenuInicial extends AppCompatActivity
 
         if(UsuarioLogado.getInstancia().getUsuario().getLatitudeLongitude()==null){
             //se não pegou a posicao no cadastro, pega no login
+            Log.e("onCreate", "null - Login");
             initGps();
         } else {
+            Log.e("onCreate", "not null - Cadastro");
             getDataFromFirebase(Constantes.EVENTOS);// TODO POR QUESTÕES DE TESTEEEEEEEEEEEEEEEE
         }
 
@@ -115,9 +119,19 @@ public class ActivityMenuInicial extends AppCompatActivity
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(ActivityMenuInicial.this, ActivityPostagem.class);
-                startActivity(intent);
-                overridePendingTransition(R.anim.anim_up_primeiro, R.anim.anim_up_segundo);
+                if(UsuarioLogado.getInstancia().getUsuario().getPermissaoPostagem()){
+                    Intent intent = new Intent(ActivityMenuInicial.this, ActivityPostagem.class);
+                    startActivity(intent);
+                    overridePendingTransition(R.anim.anim_up_primeiro, R.anim.anim_up_segundo);
+                } else {
+                    ViewUtil.init(ActivityMenuInicial.this).showDialog(new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+                            dialogInterface.dismiss();
+                        }
+                    }, getString(R.string.location_nao_bairro_origem));
+                }
+
             }
         });
     }
@@ -168,7 +182,6 @@ public class ActivityMenuInicial extends AppCompatActivity
     private void setFlipper() {
         viewFlipper = (ViewFlipper) findViewById(R.id.activity_menu_inicial_flipper);
         viewFlipper.setDisplayedChild(0);
-        Log.e("setFlipper", viewFlipper.getDisplayedChild()+"");
     }
 
     private void initGps() {
@@ -202,12 +215,10 @@ public class ActivityMenuInicial extends AppCompatActivity
                         }
                         dismissLoading();
                         setRecyclerView(listagemPostagens);
-                        Log.e("getDataFromFire--ALGO", viewFlipper.getDisplayedChild()+"");
                     } else {
                         dismissLoading();
                         setRecyclerView(listagemPostagens);
                         viewFlipper.setDisplayedChild(1);// BANCO VAZIO MOSTRA LAYOUT COM MENSAGEM
-                        Log.e("getDataFromFire--EMPTY", viewFlipper.getDisplayedChild()+"");
                     }
             }
 
@@ -233,7 +244,7 @@ public class ActivityMenuInicial extends AppCompatActivity
     }
 
     void setLoading(){
-        recyclerView = (RecyclerView) findViewById(R.id.activity_menu_inicial_recycler_view); // todo recycler view castado antes...
+        recyclerView = (RecyclerView) findViewById(R.id.activity_menu_inicial_recycler_view); // recycler view castado antes...
         p = (ProgressBar) findViewById(R.id.progressBar1);
         p.setVisibility(View.INVISIBLE);
     }
@@ -319,7 +330,7 @@ public class ActivityMenuInicial extends AppCompatActivity
                 myGPS.init();
                 break;
             default:
-                Toast.makeText(this, "Aconteceu um erro...", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, getString(R.string.error), Toast.LENGTH_SHORT).show();
                 break;
         }
         return super.onOptionsItemSelected(item);
@@ -334,13 +345,11 @@ public class ActivityMenuInicial extends AppCompatActivity
             if(viewFlipper.getDisplayedChild()==1){
                 viewFlipper.setDisplayedChild(0);
             }
-            Log.e("onNavigationItemSelecte", viewFlipper.getDisplayedChild()+"");
             getDataFromFirebase(Constantes.POSTAGENS_SEM_FILTRO);
         } else if (id == R.id.menu_categoria_evento) {
             if(viewFlipper.getDisplayedChild()==1){
                 viewFlipper.setDisplayedChild(0);
             }
-            Log.e("onNavigationItemSelecte", viewFlipper.getDisplayedChild()+"");
             getDataFromFirebase(Constantes.POSTAGENS_EVENTOS);
         } else if (id == R.id.menu_categoria_noticia) {
             if(viewFlipper.getDisplayedChild()==1){
@@ -363,6 +372,6 @@ public class ActivityMenuInicial extends AppCompatActivity
     protected void onDestroy() {
         super.onDestroy();
         EventBus.getDefault().unregister(this);
-        Toast.makeText(this, "Saindo...", Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, getString(R.string.exiting), Toast.LENGTH_SHORT).show();
     }
 }
