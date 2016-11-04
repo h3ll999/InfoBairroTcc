@@ -5,14 +5,14 @@
     <string name="navigation_drawer_close">Fechar</string>
 
     <string name="action_settings">Settings</string>
-    <string name="exiting">Saindo...</string>
+    <string name="exiting">Saindo…</string>
 
-    <string name="progress_wait">Aguarde...</string>
+    <string name="progress_wait">Aguarde…</string>
     <string name="progress_search">Localizando bairro</string>
 
-    <string name="location_nao_bairro_origem">Voce não está no seu bairro de origem</string>
+    <string name="location_nao_bairro_origem">Voce não está no seu bairro de origem. Sua permissão é apenas para postar</string>
 
-    <string name="error">Ocorreu um erro...</string>
+    <string name="error">Ocorreu um erro</string>
 
     <string-array name="activity_postar_spinner">
         <item>-</item>

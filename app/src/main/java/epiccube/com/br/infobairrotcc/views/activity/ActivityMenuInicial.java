@@ -4,6 +4,7 @@ import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -24,7 +25,10 @@ import android.widget.ViewFlipper;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -72,9 +76,9 @@ public class ActivityMenuInicial extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_menu_inicial);
 
-        EventBus.getDefault().register(this);
-
         Toast.makeText(this, "Bem vindo, "+UsuarioLogado.getInstancia().getUsuario().toString(), Toast.LENGTH_SHORT).show();
+
+        EventBus.getDefault().register(this);
 
         setFlipper();
         setLoading();
@@ -83,18 +87,17 @@ public class ActivityMenuInicial extends AppCompatActivity
         setDrawer();
         setNavView();
 
-        //se não tiver origem...
+        //se não tiver local de origem...
         if(UsuarioLogado.getInstancia().getUsuario().getEstadoOrigemId() == null){
             pergunta();
         } else {
             checagemInicial();
         }
-
     }
 
 
     void checagemInicial(){
-        if(UsuarioLogado.getInstancia().getUsuario().getLatitudeLongitude()==null){
+        if(UsuarioLogado.getInstancia().getUsuario().getLatitudeLongitude()==null){// TODO ver melhor modo de verificar isso
             //se não pegou a posicao no cadastro, pega no login
             Log.e("onCreate", "veio do Login");
             setProgressBar();
@@ -110,13 +113,20 @@ public class ActivityMenuInicial extends AppCompatActivity
         ViewUtil.init(this).showDialog(new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                // TODO se sim, então prosseguir (salvar o local no banco...)
-                /*usuario.setPermissaoPostagem(true);
-                usuario.setEstadoOrigemId(locais[0]);
-                usuario.setCidadeOrigemId(locais[1]);
-                usuario.setBairroOrigemId(locais[2]);
-                firebase();*/
+                UsuarioLogado.getInstancia().getUsuario().setPermissaoPostagem(true);
+                //seta o estado/cidade/bairro de origem o mesmo que o atual...
+                UsuarioLogado.getInstancia()
+                        .getUsuario().setEstadoOrigemId(UsuarioLogado.getInstancia().getUsuario().getEstadoAtualId());
+                UsuarioLogado.getInstancia()
+                        .getUsuario().setCidadeOrigemId(UsuarioLogado.getInstancia().getUsuario().getCidadeAtualId());
+                UsuarioLogado.getInstancia()
+                        .getUsuario().setBairroOrigemId(UsuarioLogado.getInstancia().getUsuario().getBairroAtualId());
+
                 dialog.dismiss();
+                // banco pra atualizar com TRUE o usuário...
+
+                updateUsuario();
+
             }
         }, new DialogInterface.OnClickListener() {
             @Override
@@ -257,6 +267,42 @@ public class ActivityMenuInicial extends AppCompatActivity
         });
     }
 
+    private void updateUsuario(){
+        progressDialog = ProgressDialog.show(this,"Atualizando", "Aguarde...", true, false);
+
+        DatabaseReference ref = FirebaseDatabase.getInstance().getReference();
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+
+        Usuario u = UsuarioLogado.getInstancia().getUsuario();
+        ref.child(Constantes.USUARIO).child(user.getUid()).child(Constantes.PERFIL).setValue(u)
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void aVoid) {
+                        progressDialog.dismiss();
+                        Toast.makeText(ActivityMenuInicial.this, "Atualizado", Toast.LENGTH_SHORT).show();
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        // se der erro, RESETA como estava antes...
+                        //TODO melhor tratamento a isso
+
+                        UsuarioLogado.getInstancia().getUsuario().setPermissaoPostagem(false);
+                        UsuarioLogado.getInstancia()
+                                .getUsuario().setEstadoOrigemId(null);
+                        UsuarioLogado.getInstancia()
+                                .getUsuario().setCidadeOrigemId(null);
+                        UsuarioLogado.getInstancia()
+                                .getUsuario().setBairroOrigemId(null);
+
+                        progressDialog.dismiss();
+                        Toast.makeText(ActivityMenuInicial.this, "Erro: "+e.getMessage(), Toast.LENGTH_SHORT).show();
+                    }
+                });
+
+    }
+
 
     void setRecyclerView(List<Postagem> listagemPostagem){
 
@@ -369,12 +415,14 @@ public class ActivityMenuInicial extends AppCompatActivity
     public boolean onNavigationItemSelected(MenuItem item) {
         int id = item.getItemId();
 
-        if (id == R.id.menu_categoria_todas) {
+        /*if (id == R.id.menu_categoria_todas) {
             if(viewFlipper.getDisplayedChild()==1){
                 viewFlipper.setDisplayedChild(0);
             }
             getDataFromFirebase(Constantes.POSTAGENS_SEM_FILTRO);
-        } else if (id == R.id.menu_categoria_evento) {
+        } else */
+
+        if (id == R.id.menu_categoria_evento) {
             if(viewFlipper.getDisplayedChild()==1){
                 viewFlipper.setDisplayedChild(0);
             }
