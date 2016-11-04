@@ -311,11 +311,13 @@ public class ActivityMenuInicial extends AppCompatActivity
     }
 
     void startLoading(){
+        fab.setEnabled(false);
         recyclerView.setVisibility(View.INVISIBLE);
         p.setVisibility(View.VISIBLE);
     }
 
     void dismissLoading(){
+        fab.setEnabled(true);
         recyclerView.setVisibility(View.VISIBLE);
         p.setVisibility(View.INVISIBLE);
     }
