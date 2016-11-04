@@ -6,6 +6,7 @@ import java.text.Normalizer;
 
 import epiccube.com.br.infobairrotcc.R;
 import epiccube.com.br.infobairrotcc.models.contantes.Constantes;
+import epiccube.com.br.infobairrotcc.models.singleton.UsuarioLogado;
 
 import static epiccube.com.br.infobairrotcc.models.contantes.Constantes.EVENTOS;
 import static epiccube.com.br.infobairrotcc.models.contantes.Constantes.NOTICIAS;
@@ -47,7 +48,32 @@ public class MyUtils {
     }
 
     public static String removeAcentosEspacos(String input){
-        return removeAcentosEspacosP(input);
+        if (input==null) {
+            return "";// senão CRASHA o próximo método...
+        }
+        else {
+            return removeAcentosEspacosP(input);
+        }
+    }
+
+    public static String concatenaCaminhoAtual(){
+
+        String caminho =
+                MyUtils.removeAcentosEspacos(UsuarioLogado.getInstancia().getUsuario().getEstadoAtualId())+"/"+
+                        MyUtils.removeAcentosEspacos(UsuarioLogado.getInstancia().getUsuario().getCidadeAtualId())+"/"+
+                            MyUtils.removeAcentosEspacos(UsuarioLogado.getInstancia().getUsuario().getBairroAtualId());
+
+        return caminho;
+
+    }
+
+    public static String concatenaCaminhoOrigem(){
+        String caminho =
+                MyUtils.removeAcentosEspacos(UsuarioLogado.getInstancia().getUsuario().getEstadoOrigemId())+"/"+
+                        MyUtils.removeAcentosEspacos(UsuarioLogado.getInstancia().getUsuario().getCidadeOrigemId())+"/"+
+                            MyUtils.removeAcentosEspacos(UsuarioLogado.getInstancia().getUsuario().getBairroOrigemId());
+
+        return caminho;
     }
 
 

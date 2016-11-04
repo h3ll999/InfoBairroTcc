@@ -87,56 +87,30 @@ public class ActivityMenuInicial extends AppCompatActivity
         setDrawer();
         setNavView();
 
-        //se não tiver local de origem...
+        //se user se cadastrou mas afirmou que não estava no local de origem, pergunta novamente.
         if(UsuarioLogado.getInstancia().getUsuario().getEstadoOrigemId() == null){
             pergunta();
         } else {
+            // caso contrário, segue fluxo.
             checagemInicial();
         }
     }
 
 
     void checagemInicial(){
-        if(UsuarioLogado.getInstancia().getUsuario().getLatitudeLongitude()==null){// TODO ver melhor modo de verificar isso
-            //se não pegou a posicao no cadastro, pega no login
-            Log.e("onCreate", "veio do Login");
+        if(UsuarioLogado.getInstancia().getUsuario().getLatitudeLongitude()==null){// TODO ver melhor modo de verificar isso (INTENT)
+            //se não pegou a posicao do GPS no cadastro, pega no login
+            Log.e("onCreate", "veio do Login"); // login não roda o GPS, por isso precisei fazer assim.
             setProgressBar();
             initGps();
         } else {
-            Log.e("onCreate", "veio do Cadastro");
-            getDataFromFirebase(Constantes.EVENTOS); //TODO POR QUESTÕES DE TESTEEEEEEEEEEEEEEEE
+            Log.e("onCreate", "veio do Cadastro"); // cadastro roda o GPS de qualquer forma, então ele já vai pra cá...
+
+            getDataFromFirebase(Constantes.EVENTOS); //TODO POR QUESTÕES DE TESTE
         }
     }
 
-    void pergunta(){
-        // pergunta se é o bairro residencial
-        ViewUtil.init(this).showDialog(new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                UsuarioLogado.getInstancia().getUsuario().setPermissaoPostagem(true);
-                //seta o estado/cidade/bairro de origem o mesmo que o atual...
-                UsuarioLogado.getInstancia()
-                        .getUsuario().setEstadoOrigemId(UsuarioLogado.getInstancia().getUsuario().getEstadoAtualId());
-                UsuarioLogado.getInstancia()
-                        .getUsuario().setCidadeOrigemId(UsuarioLogado.getInstancia().getUsuario().getCidadeAtualId());
-                UsuarioLogado.getInstancia()
-                        .getUsuario().setBairroOrigemId(UsuarioLogado.getInstancia().getUsuario().getBairroAtualId());
 
-                dialog.dismiss();
-                // banco pra atualizar com TRUE o usuário...
-
-                updateUsuario();
-
-            }
-        }, new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                // se não, prosseguir e não pode postar -- só visualizar...pergunta(); até ter o bairro de origem no banco...
-                dialog.dismiss();
-            }
-        });
-
-    }
 
 
 
@@ -255,16 +229,28 @@ public class ActivityMenuInicial extends AppCompatActivity
                         setRecyclerView(listagemPostagens);
                     } else {
                         dismissLoading();
-                        setRecyclerView(listagemPostagens);
+                        //setRecyclerView(listagemPostagens);
                         viewFlipper.setDisplayedChild(1);// BANCO VAZIO MOSTRA LAYOUT COM MENSAGEM
                     }
+
+                // verificação para permissão de postagens...
+                verificaPermissao();
             }
 
             @Override
             public void onCancelled(DatabaseError databaseError) {
-
+                Toast.makeText(ActivityMenuInicial.this, "Cancelado", Toast.LENGTH_SHORT).show();
             }
         });
+    }
+
+    private void verificaPermissao() {
+        // SE ATUAL == ORIGEM...
+        if(MyUtils.concatenaCaminhoAtual().equals(MyUtils.concatenaCaminhoOrigem())){
+            UsuarioLogado.getInstancia().getUsuario().setPermissaoPostagem(true);
+        } else {
+            UsuarioLogado.getInstancia().getUsuario().setPermissaoPostagem(false);
+        }
     }
 
     private void updateUsuario(){
@@ -279,6 +265,7 @@ public class ActivityMenuInicial extends AppCompatActivity
                     @Override
                     public void onSuccess(Void aVoid) {
                         progressDialog.dismiss();
+                        // TODO precisa desse toast?
                         Toast.makeText(ActivityMenuInicial.this, "Atualizado", Toast.LENGTH_SHORT).show();
                     }
                 })
@@ -333,6 +320,35 @@ public class ActivityMenuInicial extends AppCompatActivity
         p.setVisibility(View.INVISIBLE);
     }
 
+    void pergunta(){
+        // pergunta se é o bairro residencial
+        ViewUtil.init(this).showDialog(new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                UsuarioLogado.getInstancia().getUsuario().setPermissaoPostagem(true);
+                //seta o estado/cidade/bairro de origem o mesmo que o atual...
+                UsuarioLogado.getInstancia()
+                        .getUsuario().setEstadoOrigemId(UsuarioLogado.getInstancia().getUsuario().getEstadoAtualId());
+                UsuarioLogado.getInstancia()
+                        .getUsuario().setCidadeOrigemId(UsuarioLogado.getInstancia().getUsuario().getCidadeAtualId());
+                UsuarioLogado.getInstancia()
+                        .getUsuario().setBairroOrigemId(UsuarioLogado.getInstancia().getUsuario().getBairroAtualId());
+
+                dialog.dismiss();
+
+                // banco pra atualizar com TRUE o usuário...
+                updateUsuario();
+
+            }
+        }, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
+            }
+        });
+
+    }
+
     public void locais(){
 
         // já está salvo as coords nesse momento...
@@ -348,13 +364,15 @@ public class ActivityMenuInicial extends AppCompatActivity
             UsuarioLogado.getInstancia().getUsuario().setCidadeAtualId(locais[1]);
             UsuarioLogado.getInstancia().getUsuario().setBairroAtualId(locais[2]);
 
-            getDataFromFirebase(Constantes.EVENTOS);// TODO POR QUESTÕES DE TESTEEEEEEEEEEEEEEEE
+            getDataFromFirebase(Constantes.EVENTOS); // TODO Eventos é a categoria padrão? Se tiver TODAS, vai precisar programar mais...
 
         } catch (IOException e) {
-            //TODO TRATAR ISSO MELHOR...SEI LÁ...
-            Toast.makeText(this, "ERRO "+e.getMessage(), Toast.LENGTH_SHORT).show();
+            Log.e("MenuInicial - Locais", e.getMessage());
+            locais(); // chama ele mesmo em caso de erro...
         }
     }
+
+
 
     @Subscribe
     public void pegaCoordenada(Eventos.PegaCoordenada coordenada){

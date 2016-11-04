@@ -17,6 +17,7 @@ public class Usuario implements Serializable {
     private String email;
     private String senha;
     private String perfilUrl;
+    @Exclude
     private Boolean permissaoPostagem;
     private List<String> postagensId;
     private String bairroAtualId;
@@ -25,7 +26,6 @@ public class Usuario implements Serializable {
     private String cidadeOrigemId;
     private String estadoAtualId;
     private String estadoOrigemId;
-
     @Exclude
     private Double[] latitudeLongitude;
 
