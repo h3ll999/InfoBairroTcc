@@ -10,7 +10,7 @@
     <string name="progress_wait">Aguarde…</string>
     <string name="progress_search">Localizando bairro</string>
 
-    <string name="location_nao_bairro_origem">Voce não está no seu bairro de origem. Sua permissão é apenas para postar</string>
+    <string name="location_nao_bairro_origem">Voce não está no seu bairro de origem. Você só pode postar no bairro onde reside</string>
 
     <string name="error">Ocorreu um erro</string>
 
