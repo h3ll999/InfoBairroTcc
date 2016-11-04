@@ -16,8 +16,8 @@
 
     <string-array name="activity_postar_spinner">
         <item>-</item>
-        <item>Notícias</item>
         <item>Eventos</item>
+        <item>Notícias</item>
         <item>Serviços</item>
     </string-array>
 
