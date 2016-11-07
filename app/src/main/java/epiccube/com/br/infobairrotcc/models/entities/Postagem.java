@@ -14,6 +14,7 @@ public class Postagem implements Serializable{
     private String titulo;
     private String conteudo;
     private String categoria;
+    private Integer curtidas;
     private Usuario usuario;
     private List<String> urlFotosPostagem;
     private HashMap<String, String> urlFotosPostagens;
@@ -60,6 +61,14 @@ public class Postagem implements Serializable{
 
     public void setCategoria(String categoria) {
         this.categoria = categoria;
+    }
+
+    public Integer getCurtidas() {
+        return curtidas;
+    }
+
+    public void setCurtidas(Integer curtidas) {
+        this.curtidas = curtidas;
     }
 
     public Usuario getUsuario() {
