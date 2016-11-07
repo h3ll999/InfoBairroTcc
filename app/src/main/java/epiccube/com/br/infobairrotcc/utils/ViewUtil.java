@@ -39,4 +39,18 @@ public class ViewUtil {
                 .show();
     }
 
+    public void showCancelDialogLocation(){
+        AlertDialog.Builder alert = new AlertDialog.Builder(appCompatActivity);
+        alert.setTitle("Alerta")
+                .setCancelable(false)
+                .setMessage("Você somente pode trocar de localidade após um período mínimo de 3 dias")
+                .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        dialogInterface.dismiss();
+                    }
+                })
+                .show();
+    }
+
 }

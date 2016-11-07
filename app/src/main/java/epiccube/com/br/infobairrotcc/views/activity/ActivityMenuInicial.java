@@ -10,6 +10,7 @@ import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -44,6 +45,7 @@ import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 import epiccube.com.br.infobairrotcc.R;
@@ -375,6 +377,29 @@ public class ActivityMenuInicial extends AppCompatActivity
         }
     }
 
+    void checkMenuButton(){// TODO verificar melhor lugar pra esse troço
+        // TODO se data do user logado + 3 dias for menos que a data atual, então troca
+
+
+        // TEORICAMENTE FUNCIONA ESSE NEGÓCIO
+        if(UsuarioLogado.getInstancia().getUsuario().getUltimaTrocaLocal()==null){// se nunca tiver trocado, pode trocar
+            progressDialog = ProgressDialog.show(this, getString(R.string.progress_search),
+                    getString(R.string.progress_wait), true, false);
+            MyGPS myGPS = new MyGPS(this);
+            myGPS.init();
+
+        } else if(UsuarioLogado.getInstancia().getUsuario().getUltimaTrocaLocal().getTime()// lógica normal
+                +TimeUnit.DAYS.toMillis(3)<new Date().getTime()) {
+            progressDialog = ProgressDialog.show(this, getString(R.string.progress_search),
+                    getString(R.string.progress_wait), true, false);
+            MyGPS myGPS = new MyGPS(this);
+            myGPS.init();
+
+        } else {
+            ViewUtil.init(this).showCancelDialogLocation();// caso contrário, nega a troca
+        }
+    }
+
 
 
     @Subscribe
@@ -419,15 +444,7 @@ public class ActivityMenuInicial extends AppCompatActivity
                 /*if(!Permissions.FINE_LOCATION.temPermissao(this)){
                     Permissions.FINE_LOCATION.solicitaPermissao(this);
                 }*/
-                // TODO check se já se passaram 3 dias desde a ultima alteração de bairro ((ultimaAlteracao+3)>diaAtual)? segue:block
-                progressDialog = ProgressDialog.show(this, getString(R.string.progress_search),
-                        getString(R.string.progress_wait), true, false);
-
-                //Todo Ultima data nova
-                //UsuarioLogado.getInstancia().getUsuario().setUltimaTrocaLocal(new Date());
-
-                MyGPS myGPS = new MyGPS(this);
-                myGPS.init();
+                checkMenuButton();
                 break;
             default:
                 Toast.makeText(this, getString(R.string.error), Toast.LENGTH_SHORT).show();
