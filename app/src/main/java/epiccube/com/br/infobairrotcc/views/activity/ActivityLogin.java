@@ -25,6 +25,12 @@ public class ActivityLogin extends AppCompatActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
         getSupportActionBar().hide();
 
         if(FirebaseAuth.getInstance().getCurrentUser() != null){ // se já estiver logado no firebase >>
@@ -35,11 +41,6 @@ public class ActivityLogin extends AppCompatActivity {
             HelperActivityLogin helper = new HelperActivityLogin(this);
             helper.cast().onClick();
         }
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
     }
 
     @Override
