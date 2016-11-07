@@ -76,7 +76,7 @@ public class ActivityMenuInicial extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_menu_inicial);
 
-        Toast.makeText(this, "Bem vindo, "+UsuarioLogado.getInstancia().getUsuario().toString(), Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, "Bem vindo, "+UsuarioLogado.getInstancia().getUsuario().getNome(), Toast.LENGTH_SHORT).show();
 
         EventBus.getDefault().register(this);
 

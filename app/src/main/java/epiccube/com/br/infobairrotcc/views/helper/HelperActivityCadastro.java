@@ -136,9 +136,9 @@ public class HelperActivityCadastro {
             @Override
             public void onClick(View v) {
 
-                cadastro_btn_cadastrar.setEnabled(false);
-
                 progressDialog = ProgressDialog.show(context,"Cadastrando","Aguarde...", true, false);
+
+                cadastro_btn_cadastrar.setEnabled(false);
 
                 nome = cadastro_edt_nome.getText().toString().trim();
                 email = cadastro_edt_email.getText().toString().trim();
@@ -247,6 +247,7 @@ public class HelperActivityCadastro {
     public void pegaCoordenada(Eventos.PegaCoordenada coordenada){
         coord = coordenada.getCood();
         usuario.setLatitudeLongitude(coord);
+        Log.e("pegaCoordenada","HelperActivityCadastro");
         locais();
     }
 

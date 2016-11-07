@@ -32,11 +32,11 @@ public class MyGPS implements LocationListener {
     // http://stackoverflow.com/questions/10524381/gps-android-get-positioning-only-once
     public MyGPS(Context context) {
         this.context = context;
+
     }
 
     public void init() {
         mLocationManager = (LocationManager) context.getSystemService(Context.LOCATION_SERVICE);
-
         if (ActivityCompat.checkSelfPermission(context,
                 Manifest.permission.ACCESS_FINE_LOCATION) !=
                 PackageManager.PERMISSION_GRANTED &&
@@ -55,7 +55,7 @@ public class MyGPS implements LocationListener {
             mLocationManager.removeUpdates(this);
             EventBus.getDefault().post(new Eventos.PegaCoordenada(coord));
         } else {
-            //mLocationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, this);
+            mLocationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, this);
             mLocationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 0, 0, this);
         }
     }
@@ -63,7 +63,6 @@ public class MyGPS implements LocationListener {
     @Override
     public void onLocationChanged(Location location) {
         if (location != null) {
-
             coord = new Double[2];
             coord[0] = location.getLatitude();
             coord[1] = location.getLongitude();
