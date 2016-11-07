@@ -206,6 +206,7 @@ public class HelperActivityCadastro {
         uploadTask.addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
             @Override
             public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                usuario.setPerfilUrl(taskSnapshot.getDownloadUrl().toString());
                 finalizaInsercaoDados();
             }
         }).addOnFailureListener(new OnFailureListener() {

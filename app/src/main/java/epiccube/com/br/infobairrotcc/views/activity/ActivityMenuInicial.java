@@ -41,6 +41,7 @@ import org.greenrobot.eventbus.Subscribe;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 
@@ -418,8 +419,13 @@ public class ActivityMenuInicial extends AppCompatActivity
                 /*if(!Permissions.FINE_LOCATION.temPermissao(this)){
                     Permissions.FINE_LOCATION.solicitaPermissao(this);
                 }*/
+                // TODO check se já se passaram 3 dias desde a ultima alteração de bairro ((ultimaAlteracao+3)>diaAtual)? segue:block
                 progressDialog = ProgressDialog.show(this, getString(R.string.progress_search),
                         getString(R.string.progress_wait), true, false);
+
+                //Todo Ultima data nova
+                //UsuarioLogado.getInstancia().getUsuario().setUltimaTrocaLocal(new Date());
+
                 MyGPS myGPS = new MyGPS(this);
                 myGPS.init();
                 break;

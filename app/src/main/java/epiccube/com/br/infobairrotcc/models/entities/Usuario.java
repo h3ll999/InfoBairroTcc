@@ -4,6 +4,7 @@ import com.google.android.gms.common.api.BooleanResult;
 import com.google.firebase.database.Exclude;
 
 import java.io.Serializable;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -20,12 +21,16 @@ public class Usuario implements Serializable {
     @Exclude
     private Boolean permissaoPostagem;
     private List<String> postagensId;
+    @Exclude
     private String bairroAtualId;
     private String bairroOrigemId;
+    @Exclude
     private String cidadeAtualId;
     private String cidadeOrigemId;
+    @Exclude
     private String estadoAtualId;
     private String estadoOrigemId;
+    private Date ultimaTrocaLocal;
     @Exclude
     private Double[] latitudeLongitude;
 
@@ -86,10 +91,12 @@ public class Usuario implements Serializable {
         this.postagensId = postagensId;
     }
 
+    @Exclude
     public String getBairroAtualId() {
         return bairroAtualId;
     }
 
+    @Exclude
     public void setBairroAtualId(String bairroAtualId) {
         this.bairroAtualId = bairroAtualId;
     }
@@ -102,10 +109,12 @@ public class Usuario implements Serializable {
         this.bairroOrigemId = bairroOrigemId;
     }
 
+    @Exclude
     public String getCidadeAtualId() {
         return cidadeAtualId;
     }
 
+    @Exclude
     public void setCidadeAtualId(String cidadeAtualId) {
         this.cidadeAtualId = cidadeAtualId;
     }
@@ -118,10 +127,12 @@ public class Usuario implements Serializable {
         this.cidadeOrigemId = cidadeOrigemId;
     }
 
+    @Exclude
     public String getEstadoAtualId() {
         return estadoAtualId;
     }
 
+    @Exclude
     public void setEstadoAtualId(String estadoAtualId) {
         this.estadoAtualId = estadoAtualId;
     }
@@ -132,6 +143,14 @@ public class Usuario implements Serializable {
 
     public void setEstadoOrigemId(String estadoOrigemId) {
         this.estadoOrigemId = estadoOrigemId;
+    }
+
+    public Date getUltimaTrocaLocal() {
+        return ultimaTrocaLocal;
+    }
+
+    public void setUltimaTrocaLocal(Date ultimaTrocaLocal) {
+        this.ultimaTrocaLocal = ultimaTrocaLocal;
     }
 
     @Exclude
