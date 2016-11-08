@@ -66,9 +66,25 @@ public class Eventos {
     public static class Unregister{}
 
     public static class PegaCoordenada{
-        Double[] cood;
+        private Double[] cood;
 
         public PegaCoordenada(Double[] cood) {
+            this.cood = cood;
+        }
+
+        public Double[] getCood() {
+            return cood;
+        }
+
+        public void setCood(Double[] cood) {
+            this.cood = cood;
+        }
+    }
+
+    public static class PegaNovaCoordenada{
+        private Double[] cood;
+
+        public PegaNovaCoordenada(Double[] cood) {
             this.cood = cood;
         }
 

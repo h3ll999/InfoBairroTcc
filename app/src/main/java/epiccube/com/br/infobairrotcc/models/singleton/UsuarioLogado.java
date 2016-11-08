@@ -8,8 +8,8 @@ import epiccube.com.br.infobairrotcc.models.entities.Usuario;
 
 public class UsuarioLogado {
 
-    public static UsuarioLogado instancia = null;
-    public Usuario usuario;
+    private static UsuarioLogado instancia = null;
+    private Usuario usuario;
 
     public UsuarioLogado() {
     }

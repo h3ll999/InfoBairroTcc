@@ -369,6 +369,7 @@ public class ActivityMenuInicial extends AppCompatActivity
             UsuarioLogado.getInstancia().getUsuario().setCidadeAtualId(locais[1]);
             UsuarioLogado.getInstancia().getUsuario().setBairroAtualId(locais[2]);
 
+            // TODO remover isso daqui;;.... reutilização
             getDataFromFirebase(Constantes.EVENTOS); // TODO Eventos é a categoria padrão? Se tiver TODAS, vai precisar programar mais...
 
         } catch (IOException e) {
@@ -379,7 +380,6 @@ public class ActivityMenuInicial extends AppCompatActivity
 
     void checkMenuButton(){// TODO verificar melhor lugar pra esse troço
         // TODO se data do user logado + 3 dias for menos que a data atual, então troca
-
 
         // TEORICAMENTE FUNCIONA ESSE NEGÓCIO
         if(UsuarioLogado.getInstancia().getUsuario().getUltimaTrocaLocal()==null){// se nunca tiver trocado, pode trocar
@@ -400,14 +400,23 @@ public class ActivityMenuInicial extends AppCompatActivity
         }
     }
 
-
-
     @Subscribe
     public void pegaCoordenada(Eventos.PegaCoordenada coordenada){
         Double [] coord = coordenada.getCood();
 
         // já está salvo as coords nesse momento...
         UsuarioLogado.getInstancia().getUsuario().setLatitudeLongitude(coord);
+        //UsuarioLogado.getInstancia().getUsuario().setUltimaTrocaLocal(new Date());
+        locais();
+    }
+
+    @Subscribe
+    public void pegaNovaCoordenada(Eventos.PegaNovaCoordenada novaCoordenada){
+        Double [] coord = novaCoordenada.getCood();
+
+        UsuarioLogado.getInstancia().getUsuario().setLatitudeLongitude(coord);
+        UsuarioLogado.getInstancia().getUsuario().setUltimaTrocaLocal(new Date());
+
         locais();
     }
 
