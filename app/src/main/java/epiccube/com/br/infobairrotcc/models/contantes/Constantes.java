@@ -25,8 +25,6 @@ public class Constantes {
 
     public static final String REPOSITORIO_FOTOS = "gs://infobairrotcc-fa6f9.appspot.com";
 
-    // TODO exemplo do filtro: POSTAGENS/São Paulo/Centro/postagembla bla bla
-    //TODO FORMATAR ESSE TROÇO REMOVER CHARACTERES E ESPAÇOS
     public static String formataPostagens(String[] locais, String filtro){
         return Constantes.POSTAGENS+"/"+locais[0]+"/"+locais[1]+"/"+locais[2]+"/"+filtro;
     }

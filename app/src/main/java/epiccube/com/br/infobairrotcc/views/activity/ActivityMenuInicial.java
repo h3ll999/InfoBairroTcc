@@ -101,7 +101,8 @@ public class ActivityMenuInicial extends AppCompatActivity
 
 
     void checagemInicial(){
-        if(UsuarioLogado.getInstancia().getUsuario().getLatitudeLongitude()==null){// TODO ver melhor modo de verificar isso (INTENT)
+        if(UsuarioLogado.getInstancia().getUsuario().getLatitudeLongitude() == null){
+            // TODO ver melhor modo de verificar isso (INTENT)
             //se não pegou a posicao do GPS no cadastro, pega no login
             Log.e("onCreate", "veio do Login"); // login não roda o GPS, por isso precisei fazer assim.
             setProgressBar();
@@ -268,8 +269,7 @@ public class ActivityMenuInicial extends AppCompatActivity
                     @Override
                     public void onSuccess(Void aVoid) {
                         progressDialog.dismiss();
-                        // TODO precisa desse toast?
-                        Toast.makeText(ActivityMenuInicial.this, "Atualizado", Toast.LENGTH_SHORT).show();
+                        //Toast.makeText(ActivityMenuInicial.this, "Atualizado", Toast.LENGTH_SHORT).show();
                     }
                 })
                 .addOnFailureListener(new OnFailureListener() {
@@ -378,9 +378,10 @@ public class ActivityMenuInicial extends AppCompatActivity
         }
     }
 
-    void checkMenuButton(){// TODO verificar melhor lugar pra esse troço
-        // TODO se data do user logado + 3 dias for menos que a data atual, então troca
+    void checkMenuButton(){
+        // TODO verificar melhor lugar pra esse troço
 
+        //se data do user logado + 3 dias for menos que a data atual, então troca
         // TEORICAMENTE FUNCIONA ESSE NEGÓCIO
         if(UsuarioLogado.getInstancia().getUsuario().getUltimaTrocaLocal()==null){// se nunca tiver trocado, pode trocar
             progressDialog = ProgressDialog.show(this, getString(R.string.progress_search),

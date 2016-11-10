@@ -47,7 +47,7 @@ public class MyGPS implements LocationListener {
 
         Location location = mLocationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
         if (location != null && location.getTime() > Calendar.getInstance().getTimeInMillis() - 2 * 60 * 1000) {
-            //TODO caso faz 2 minutos que pegou o local, pega o último local...
+            // caso faz 2 minutos que pegou o local, pega o último local...
             coord = new Double[2];
             coord[0] = location.getLatitude();
             coord[1] = location.getLongitude();
@@ -74,7 +74,7 @@ public class MyGPS implements LocationListener {
             }catch (SecurityException e){
                 Log.e("MyGps--getLastKnownLoca",e.getMessage());
             }
-            // TODO cagada...?!?!?!?
+            // cagada...?!?!?!?
             EventBus.getDefault().post(new Eventos.PegaCoordenada(coord));
 
         }

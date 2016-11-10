@@ -25,7 +25,7 @@ public class LocationUtils {
             locais[2] = addresses.get(0).getSubLocality(); // bairro
             return locais;
         } else {
-            return null; //TODO ESSA COISA
+            return null;
         }
     }
 }
