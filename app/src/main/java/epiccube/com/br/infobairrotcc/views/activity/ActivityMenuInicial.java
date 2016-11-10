@@ -370,7 +370,8 @@ public class ActivityMenuInicial extends AppCompatActivity
             UsuarioLogado.getInstancia().getUsuario().setBairroAtualId(locais[2]);
 
             // TODO remover isso daqui;;.... reutilização
-            getDataFromFirebase(Constantes.EVENTOS); // TODO Eventos é a categoria padrão? Se tiver TODAS, vai precisar programar mais...
+            getDataFromFirebase(Constantes.EVENTOS);
+            // TODO Eventos é a categoria padrão? Se tiver TODAS, vai precisar programar mais...
 
         } catch (IOException e) {
             Log.e("MenuInicial - Locais", e.getMessage());
@@ -379,8 +380,6 @@ public class ActivityMenuInicial extends AppCompatActivity
     }
 
     void checkMenuButton(){
-        // TODO verificar melhor lugar pra esse troço
-
         //se data do user logado + 3 dias for menos que a data atual, então troca
         // TEORICAMENTE FUNCIONA ESSE NEGÓCIO
         if(UsuarioLogado.getInstancia().getUsuario().getUltimaTrocaLocal()==null){// se nunca tiver trocado, pode trocar

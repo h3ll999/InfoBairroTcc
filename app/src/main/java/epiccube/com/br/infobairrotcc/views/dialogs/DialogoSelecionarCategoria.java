@@ -54,7 +54,7 @@ public class DialogoSelecionarCategoria extends DialogFragment {
         spn.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                if(selecionado){ //TODO BUGADO DO KARAI
+                if(selecionado){ // BUGADO DO KARAI
                     String selecao = categorias[i];
                     EventBus.getDefault().post(new EventoPegarCategoriaPostagem(selecao));
                     dismiss();

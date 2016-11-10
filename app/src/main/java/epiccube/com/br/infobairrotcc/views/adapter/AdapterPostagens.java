@@ -82,8 +82,8 @@ public class AdapterPostagens extends RecyclerView.Adapter<AdapterPostagens.Adap
 
         } else {
 
-            holder.verMaisImg.setVisibility(View.VISIBLE); //TODO FDP
-            holder.imagemPost.setVisibility(View.VISIBLE); //TODO FDP
+            holder.verMaisImg.setVisibility(View.VISIBLE);
+            holder.imagemPost.setVisibility(View.VISIBLE);
             holder.verMaisImg.setText("[Mais "+(listaPostagem.get(position).getUrlFotosPostagem().size()-1)+" foto(s)]");
 
             Glide.with(context)
@@ -152,11 +152,4 @@ public class AdapterPostagens extends RecyclerView.Adapter<AdapterPostagens.Adap
             verMaisImg = (TextView) itemView.findViewById(R.id.menu_inicial_txv_foto_postagem);
         }
     }
-
 }
-
-// TODO Capturar o BAIRRO através do google api do maps...saber como que captura.
-
-
-
-

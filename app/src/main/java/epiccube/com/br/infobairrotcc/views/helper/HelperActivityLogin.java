@@ -86,7 +86,7 @@ public class HelperActivityLogin {
         login_edt_email = (EditText) context.findViewById(R.id.login_edt_email);
         login_edt_senha = (EditText) context.findViewById(R.id.login_edt_senha);
         login_btn_login = (Button) context.findViewById(R.id.login_btn_login);
-        login_btn_login.getBackground().setColorFilter(Color.parseColor("#ff4e43"), PorterDuff.Mode.SRC_ATOP); //TODO ARUMAR ESSA PORCARIA
+        login_btn_login.getBackground().setColorFilter(Color.parseColor("#ff4e43"), PorterDuff.Mode.SRC_ATOP);
         login_btn_cadastrar = (TextView) context.findViewById(R.id.login_btn_cadastrar);
 
         //autenticador = FirebaseAuth.getInstance();// liga o autenticador

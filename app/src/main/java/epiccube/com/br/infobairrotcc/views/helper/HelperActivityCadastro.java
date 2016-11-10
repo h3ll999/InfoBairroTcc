@@ -97,7 +97,7 @@ public class HelperActivityCadastro {
         cadastro_edt_email = (EditText) context.findViewById(R.id.cadastro_edt_email);
         cadastro_edt_senha = (EditText) context.findViewById(R.id.cadastro_edt_senha);
         cadastro_btn_cadastrar = (Button) context.findViewById(R.id.cadastro_btn_cadastrar);
-        cadastro_btn_cadastrar.getBackground().setColorFilter(Color.parseColor("#ff4e43"), PorterDuff.Mode.SRC_ATOP); //TODO ARUMAR ESSA PORCARIA
+        cadastro_btn_cadastrar.getBackground().setColorFilter(Color.parseColor("#ff4e43"), PorterDuff.Mode.SRC_ATOP);
 
         Glide.with(context).load(R.drawable.placeholder)
                 .diskCacheStrategy(DiskCacheStrategy.SOURCE)
@@ -124,11 +124,6 @@ public class HelperActivityCadastro {
                             .Images.Media.EXTERNAL_CONTENT_URI);
                     context.startActivityForResult(intentGaleria, 1);
                 }
-
-
-
-                // TODO pegar imagem e subir no firebase // SÓMENTE POR ÚLTIMO
-
             }
         });
 
@@ -267,7 +262,7 @@ public class HelperActivityCadastro {
             usuario.setBairroAtualId(locais[2]);
 
             if(locais[0]==null&&locais[1]==null&&locais[2]==null){
-                throw new Exception("Erro: "); //TODO
+                throw new Exception("Erro: ");
             }
 
             pergunta();
@@ -283,7 +278,7 @@ public class HelperActivityCadastro {
         ViewUtil.init(context).showDialog(new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                // TODO se sim, então prosseguir (salvar o local no banco...)
+                // se sim, então prosseguir (salvar o local no banco...)
                 usuario.setPermissaoPostagem(true);
                 usuario.setEstadoOrigemId(locais[0]);
                 usuario.setCidadeOrigemId(locais[1]);

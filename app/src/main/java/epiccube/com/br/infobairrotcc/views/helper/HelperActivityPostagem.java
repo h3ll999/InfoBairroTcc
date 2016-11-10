@@ -210,7 +210,7 @@ public class HelperActivityPostagem {
 
     }
 
-    //TODO GAMBIARRA THE BEGINNING
+    //GAMBIARRA THE BEGINNING
     void gambiarraParaSubirVariasFotos(StorageReference storageRef){// hoje não é suportado multiplo upload...
         listagemDeUpload = new ArrayList<>();
 
@@ -221,7 +221,7 @@ public class HelperActivityPostagem {
         }
     }
 
-    //TODO GAMBIARRA PT 2
+    //GAMBIARRA PT 2
     void uploadTask(UploadTask uploadTask){
 
         uploadTask.addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
@@ -250,7 +250,7 @@ public class HelperActivityPostagem {
         });
     }
 
-    //TODO GAMBIARRA FINAL CHAPTER
+    // GAMBIARRA FINAL CHAPTER
     void finalizar(){
 
         // firebase...
