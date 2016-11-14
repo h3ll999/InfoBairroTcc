@@ -18,6 +18,10 @@
             android:id="@+id/menu_categoria_servico"
             android:icon="@drawable/ic_menu_manage"
             android:title="Serviço" />
+        <item
+            android:id="@+id/menu_categoria_origem"
+            android:icon="@drawable/ic_menu_send"
+            android:title="Lugar de origem" />
     </group>
 
    <!-- <item android:title="Communicate">

@@ -4,7 +4,11 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.MenuItem;
+import android.view.MotionEvent;
+import android.view.View;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import epiccube.com.br.infobairrotcc.R;
@@ -17,6 +21,9 @@ import epiccube.com.br.infobairrotcc.views.adapter.AdapterVisualizarFotosPostage
  */
 
 public class ActivityVisualizarFotos extends AppCompatActivity{
+
+    private ViewPager viewPager;
+    private TextView textView;
 
     private Postagem p;
 
@@ -36,15 +43,16 @@ public class ActivityVisualizarFotos extends AppCompatActivity{
 
         setViewPager();
         setTextInsidePager();
+
     }
 
     void setViewPager(){
-        ViewPager viewPager = (ViewPager) findViewById(R.id.activity_visualizar_fotos_view_pager);
+        viewPager = (ViewPager) findViewById(R.id.activity_visualizar_fotos_view_pager);
         viewPager.setAdapter(new AdapterVisualizarFotosPostagem(p.getUrlFotosPostagem(), this));
     }
 
     void setTextInsidePager(){
-        TextView textView = (TextView) findViewById(R.id.activity_visualizar_fotos_txv_view_pager);
+        textView = (TextView) findViewById(R.id.activity_visualizar_fotos_txv_view_pager);
         textView.setText(p.getConteudo());
     }
 

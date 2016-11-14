@@ -71,14 +71,14 @@
             android:layout_height="0.8dp"
             android:layout_marginTop="16dp"
             android:background="#bcbcbc"
-            android:layout_below="@+id/activity_visualiza_postagem_txv_postagem_conteudo"
+            android:layout_below="@+id/activity_visualiza_postagem_img_foto_postagem"
             />
 
         <!-- #FF6666 -->
         <com.sackcentury.shinebuttonlib.ShineButton
             android:layout_width="40dp"
             android:layout_height="40dp"
-            android:layout_below="@+id/activity_visualiza_postagem_img_foto_postagem"
+            android:layout_below="@+id/activity_visualiza_postagem_separator"
             android:layout_marginTop="5dp"
             android:src="@android:color/darker_gray"
             android:id="@+id/po_image1"

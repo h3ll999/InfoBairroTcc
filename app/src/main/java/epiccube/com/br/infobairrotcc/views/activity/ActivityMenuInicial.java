@@ -110,7 +110,7 @@ public class ActivityMenuInicial extends AppCompatActivity
         } else {
             Log.e("onCreate", "veio do Cadastro"); // cadastro roda o GPS de qualquer forma, então ele já vai pra cá...
 
-            getDataFromFirebase(Constantes.EVENTOS); //TODO POR QUESTÕES DE TESTE
+            getDataFromFirebase(Constantes.POSTAGENS_EVENTOS()); //TODO POR QUESTÕES DE TESTE
         }
     }
 
@@ -211,14 +211,12 @@ public class ActivityMenuInicial extends AppCompatActivity
     }
 
     public void getDataFromFirebase(String filtro) {
+        Log.e("getDataFromFirebase",filtro);
         startLoading();
         DatabaseReference ref = FirebaseDatabase.getInstance().getReference();
 
         // pega os dados com base no no estado+cidade+bairro+categoria
-        ref.child(MyUtils.removeAcentosEspacos(UsuarioLogado.getInstancia().getUsuario().getEstadoAtualId()))
-                .child(MyUtils.removeAcentosEspacos(UsuarioLogado.getInstancia().getUsuario().getCidadeAtualId()))
-                .child(MyUtils.removeAcentosEspacos(UsuarioLogado.getInstancia().getUsuario().getBairroAtualId()))
-                .child(filtro).addValueEventListener(new ValueEventListener() {
+        ref.child(filtro).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 List<Postagem> listagemPostagens = new ArrayList<Postagem>();
@@ -296,7 +294,6 @@ public class ActivityMenuInicial extends AppCompatActivity
 
     void setRecyclerView(List<Postagem> listagemPostagem){
 
-
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(linearLayoutManager);
 
@@ -370,8 +367,8 @@ public class ActivityMenuInicial extends AppCompatActivity
             UsuarioLogado.getInstancia().getUsuario().setBairroAtualId(locais[2]);
 
             // TODO remover isso daqui;;.... reutilização
-            getDataFromFirebase(Constantes.EVENTOS);
-            // TODO Eventos é a categoria padrão? Se tiver TODAS, vai precisar programar mais...
+            getDataFromFirebase(Constantes.POSTAGENS_EVENTOS());
+            // TODO POSTAGENS_ORIGEM é a categoria padrão? Se tiver TODAS, vai precisar programar mais...
 
         } catch (IOException e) {
             Log.e("MenuInicial - Locais", e.getMessage());
@@ -382,14 +379,14 @@ public class ActivityMenuInicial extends AppCompatActivity
     void checkMenuButton(){
         //se data do user logado + 3 dias for menos que a data atual, então troca
         // TEORICAMENTE FUNCIONA ESSE NEGÓCIO
-        if(UsuarioLogado.getInstancia().getUsuario().getUltimaTrocaLocal()==null){// se nunca tiver trocado, pode trocar
+        if(UsuarioLogado.getInstancia().getUsuario().getUltimaTrocaLocal() == null){// se nunca tiver trocado, pode trocar
             progressDialog = ProgressDialog.show(this, getString(R.string.progress_search),
                     getString(R.string.progress_wait), true, false);
             MyGPS myGPS = new MyGPS(this);
             myGPS.init();
 
         } else if(UsuarioLogado.getInstancia().getUsuario().getUltimaTrocaLocal().getTime()// lógica normal
-                +TimeUnit.DAYS.toMillis(3)<new Date().getTime()) {
+                +TimeUnit.DAYS.toMillis(3) < new Date().getTime()) {
             progressDialog = ProgressDialog.show(this, getString(R.string.progress_search),
                     getString(R.string.progress_wait), true, false);
             MyGPS myGPS = new MyGPS(this);
@@ -478,17 +475,26 @@ public class ActivityMenuInicial extends AppCompatActivity
             if(viewFlipper.getDisplayedChild()==1){
                 viewFlipper.setDisplayedChild(0);
             }
-            getDataFromFirebase(Constantes.POSTAGENS_EVENTOS);
+            getDataFromFirebase(Constantes.POSTAGENS_EVENTOS());
+
         } else if (id == R.id.menu_categoria_noticia) {
             if(viewFlipper.getDisplayedChild()==1){
                 viewFlipper.setDisplayedChild(0);
             }
-            getDataFromFirebase(Constantes.POSTAGENS_NOTICIAS);
+            getDataFromFirebase(Constantes.POSTAGENS_NOTICIAS());
+
         } else if (id == R.id.menu_categoria_servico) {
             if(viewFlipper.getDisplayedChild()==1){
                 viewFlipper.setDisplayedChild(0);
             }
-            getDataFromFirebase(Constantes.POSTAGENS_SERVICOS);
+            getDataFromFirebase(Constantes.POSTAGENS_SERVICOS());
+
+        } else if(id == R.id.menu_categoria_origem){
+            Toast.makeText(this, "Não implementado ainda", Toast.LENGTH_SHORT).show();
+            /*if(viewFlipper.getDisplayedChild()==1){
+                viewFlipper.setDisplayedChild(0);
+            }
+            getDataFromFirebase(Constantes.POSTAGENS_ORIGEM());*/
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);

@@ -239,7 +239,6 @@ public class HelperActivityPostagem {
                     contador++;
                     uploadTask(listagemDeUpload.get(0));
                 }
-
             }
         })
                 .addOnFailureListener(new OnFailureListener() {

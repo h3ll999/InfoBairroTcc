@@ -45,6 +45,7 @@ public class MyUtils {
 
     private static String removeAcentosEspacosP(String input){
         return Normalizer.normalize(input, Normalizer.Form.NFD).replaceAll("[^\\p{ASCII}]", "").replaceAll("\\s","").toUpperCase();
+        // String era "São Paulo" e agora ficou "SAOPAULO"
     }
 
     public static String removeAcentosEspacos(String input){

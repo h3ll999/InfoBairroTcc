@@ -21,7 +21,6 @@ public class AsynkTaskMockPostagem extends AsyncTask<ProgressBar, Integer, Array
     private ArrayList<Postagem> listagemPostagem;
     private ProgressBar p;
 
-
     @Override
     protected ArrayList<Postagem> doInBackground(ProgressBar... objects) {
         this.p = objects[0];
@@ -39,4 +38,5 @@ public class AsynkTaskMockPostagem extends AsyncTask<ProgressBar, Integer, Array
     protected void onPostExecute(ArrayList<Postagem> postagems) {
         EventBus.getDefault().post(new Eventos.ResultadoAsyncTaskMockPostagem(postagems));
     }
+
 }
