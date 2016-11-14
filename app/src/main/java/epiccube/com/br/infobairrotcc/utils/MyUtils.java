@@ -60,7 +60,7 @@ public class MyUtils {
 
     public static String primeiroNome(String nome){
         char[] nomeChar = nome.toCharArray();
-        char[] primeiroNome = new char[nome.length()];
+        char[] primeiroNome = new char[nome.length()]; // todo tamanho está tosco
 
         for(int i = 0; i < nomeChar.length; i++){
             if (nomeChar[i] == ' '){
@@ -68,6 +68,9 @@ public class MyUtils {
             }
             primeiroNome[i] = nomeChar[i];
         }
+
+        // todo implementar pra pegar a primeira letra do sobrenome
+
         Log.e("primeiroNome",new String(primeiroNome));
         return new String(primeiroNome).trim();
 
