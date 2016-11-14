@@ -1,6 +1,7 @@
 package epiccube.com.br.infobairrotcc.utils;
 
 import android.app.Activity;
+import android.util.Log;
 
 import java.text.Normalizer;
 
@@ -55,6 +56,21 @@ public class MyUtils {
         else {
             return removeAcentosEspacosP(input);
         }
+    }
+
+    public static String primeiroNome(String nome){
+        char[] nomeChar = nome.toCharArray();
+        char[] primeiroNome = new char[nome.length()];
+
+        for(int i = 0; i < nomeChar.length; i++){
+            if (nomeChar[i] == ' '){
+                break;
+            }
+            primeiroNome[i] = nomeChar[i];
+        }
+        Log.e("primeiroNome",new String(primeiroNome));
+        return new String(primeiroNome).trim();
+
     }
 
     public static String concatenaCaminhoAtual(){

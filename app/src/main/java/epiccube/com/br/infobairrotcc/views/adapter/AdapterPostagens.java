@@ -59,7 +59,7 @@ public class AdapterPostagens extends RecyclerView.Adapter<AdapterPostagens.Adap
         holder.titulo.setText(listaPostagem.get(position).getTitulo());
         holder.conteudo.setText(MyUtils.verificaFormatacaoPostagem(listaPostagem.get(position).getConteudo()));
         holder.categoria.setText(listaPostagem.get(position).getCategoria());
-        holder.nome.setText(listaPostagem.get(position).getUsuario().getNome());
+        holder.nome.setText(MyUtils.primeiroNome(listaPostagem.get(position).getUsuario().getNome()));
 
         if(listaPostagem.get(position).getUrlFotosPostagem() == null
                 || listaPostagem.get(position).getUrlFotosPostagem().size() == 0 ){
