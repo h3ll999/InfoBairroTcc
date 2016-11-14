@@ -366,7 +366,8 @@ public class ActivityMenuInicial extends AppCompatActivity
             UsuarioLogado.getInstancia().getUsuario().setCidadeAtualId(locais[1]);
             UsuarioLogado.getInstancia().getUsuario().setBairroAtualId(locais[2]);
 
-            // TODO remover isso daqui;;.... reutilização
+            // TODO remover isso daqui...reutilizar corretamente...
+            // Este método está sendo chamado quando entra no app e quando clica no trocar localidade...
             getDataFromFirebase(Constantes.POSTAGENS_EVENTOS());
             // TODO POSTAGENS_ORIGEM é a categoria padrão? Se tiver TODAS, vai precisar programar mais...
 
@@ -380,6 +381,7 @@ public class ActivityMenuInicial extends AppCompatActivity
         //se data do user logado + 3 dias for menos que a data atual, então troca
         // TEORICAMENTE FUNCIONA ESSE NEGÓCIO
         if(UsuarioLogado.getInstancia().getUsuario().getUltimaTrocaLocal() == null){// se nunca tiver trocado, pode trocar
+            Log.e("checkMenuButton","se nunca tiver trocado, pode trocar");
             progressDialog = ProgressDialog.show(this, getString(R.string.progress_search),
                     getString(R.string.progress_wait), true, false);
             MyGPS myGPS = new MyGPS(this);
@@ -387,6 +389,7 @@ public class ActivityMenuInicial extends AppCompatActivity
 
         } else if(UsuarioLogado.getInstancia().getUsuario().getUltimaTrocaLocal().getTime()// lógica normal
                 +TimeUnit.DAYS.toMillis(3) < new Date().getTime()) {
+            Log.e("checkMenuButton","lógica normal");
             progressDialog = ProgressDialog.show(this, getString(R.string.progress_search),
                     getString(R.string.progress_wait), true, false);
             MyGPS myGPS = new MyGPS(this);
@@ -394,6 +397,7 @@ public class ActivityMenuInicial extends AppCompatActivity
 
         } else {
             ViewUtil.init(this).showCancelDialogLocation();// caso contrário, nega a troca
+            Log.e("checkMenuButton","else");
         }
     }
 
@@ -504,8 +508,9 @@ public class ActivityMenuInicial extends AppCompatActivity
 
     @Override
     protected void onDestroy() {
-        super.onDestroy();
         EventBus.getDefault().unregister(this);
         Toast.makeText(this, getString(R.string.exiting), Toast.LENGTH_SHORT).show();
+
+        super.onDestroy();
     }
 }
