@@ -18,14 +18,14 @@ public class Constantes {
 
     public static final String POSTAGENS = "POSTAGENS";
     public static final String POSTAGENS_SEM_FILTRO = "POSTAGENS_SEM_FILTRO";
-
     public static final String POSTAGENS_EVENTOS = "POSTAGENS_EVENTOS";
     public static final String POSTAGENS_NOTICIAS = "POSTAGENS_NOTICIAS";
     public static final String POSTAGENS_SERVICOS = "POSTAGENS_SERVICOS";
-    public static final String POSTAGENS_ORIGEM(){
-        return MyUtils.concatenaCaminhoOrigem();
-    }
 
+
+    public static final String POSTAGENS_ORIGEM(){
+        return MyUtils.concatenaCaminhoOrigem()+"/"+POSTAGENS_SEM_FILTRO;
+    }
     public static final String POSTAGENS_EVENTOS(){
         return MyUtils.concatenaCaminhoAtual()+"/"+POSTAGENS_EVENTOS;
     }

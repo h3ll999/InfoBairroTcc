@@ -34,7 +34,11 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.GenericTypeIndicator;
 import com.google.firebase.database.ValueEventListener;
+import com.google.gson.Gson;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonParser;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -45,6 +49,7 @@ import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
 import de.hdodenhof.circleimageview.CircleImageView;
@@ -210,7 +215,7 @@ public class ActivityMenuInicial extends AppCompatActivity
                 getString(R.string.progress_wait), true, false);
     }
 
-    public void getDataFromFirebase(String filtro) {
+    public void getDataFromFirebase(final String filtro) {
         Log.e("getDataFromFirebase",filtro);
         startLoading();
         DatabaseReference ref = FirebaseDatabase.getInstance().getReference();
@@ -218,9 +223,8 @@ public class ActivityMenuInicial extends AppCompatActivity
         // pega os dados com base no no estado+cidade+bairro+categoria
         ref.child(filtro).addValueEventListener(new ValueEventListener() {
             @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                List<Postagem> listagemPostagens = new ArrayList<Postagem>();
-                HashMap<String, String> mapListagemPostagens = (HashMap<String, String>) dataSnapshot.getValue();
+            public void onDataChange(DataSnapshot dataSnapshot) {// se clicou em qualquer outra categoria, filtra normalmente
+                    List<Postagem> listagemPostagens = new ArrayList<Postagem>();
 
                     if(dataSnapshot.getChildrenCount()!=0){//se NÃO está vazio o banco
                         for (DataSnapshot postSnapshot: dataSnapshot.getChildren()) {
@@ -235,9 +239,9 @@ public class ActivityMenuInicial extends AppCompatActivity
                         viewFlipper.setDisplayedChild(1);// BANCO VAZIO MOSTRA LAYOUT COM MENSAGEM
                     }
 
-                // verificação para permissão de postagens...
-                verificaPermissao();
-            }
+                    // verificação para permissão de postagens...
+                    verificaPermissao();
+                }
 
             @Override
             public void onCancelled(DatabaseError databaseError) {
@@ -495,10 +499,10 @@ public class ActivityMenuInicial extends AppCompatActivity
 
         } else if(id == R.id.menu_categoria_origem){
             Toast.makeText(this, "Não implementado ainda", Toast.LENGTH_SHORT).show();
-            /*if(viewFlipper.getDisplayedChild()==1){
+            if(viewFlipper.getDisplayedChild()==1){
                 viewFlipper.setDisplayedChild(0);
             }
-            getDataFromFirebase(Constantes.POSTAGENS_ORIGEM());*/
+            getDataFromFirebase(Constantes.POSTAGENS_ORIGEM());
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
