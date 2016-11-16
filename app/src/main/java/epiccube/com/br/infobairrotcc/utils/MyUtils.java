@@ -58,16 +58,21 @@ public class MyUtils {
         }
     }
 
-    public static String primeiroNome(String nome){
+    public static String segundoNome(String nome){
         char[] nomeChar = nome.toCharArray();
         char[] primeiroNome = new char[nome.length()]; // todo tamanho está tosco
 
         for(int i = 0; i < nomeChar.length; i++){
             if (nomeChar[i] == ' '){
+                //teste
+                //segundoNome(nome);
+                //fim teste
                 break;
             }
             primeiroNome[i] = nomeChar[i];
         }
+
+
 
         // todo implementar pra pegar a primeira letra do sobrenome
 
@@ -75,6 +80,65 @@ public class MyUtils {
         return new String(primeiroNome).trim();
 
     }
+
+    // TODO algoritmo está estranho, mas funciona
+    public static String primeiroNome(String nome){
+
+        String nomeAbreviado = null;
+        boolean naoTemSobrenome = true;
+
+        char[] nomeChar = nome.toCharArray();
+        char[] nomeSobrenome = new char[nome.length()]; // todo tamanho está tosco
+        int cont = 0;
+
+        for(int i = 0; i < nomeChar.length; i++){
+
+            if (cont < 1){
+                if(nomeChar[i] == ' ') {
+                    nomeSobrenome[i] = nomeChar[i];
+                    cont++;
+                    i++;
+                }
+                nomeSobrenome[i] = nomeChar[i];
+            } else {
+                naoTemSobrenome = false;
+                nomeAbreviado = new String(nomeSobrenome).trim()+".";
+                break;
+            }
+        }
+
+        if(naoTemSobrenome){
+            nomeAbreviado = new String(nomeSobrenome).trim();
+        }
+
+        Log.e("nomeSobrenome",new String(nomeSobrenome)+" | "+cont);
+        return nomeAbreviado;
+    }
+
+
+    /*public static String primeiroNome(String nome){
+
+        char[] nomeChar = nome.toCharArray();
+        char[] nomeSobrenome = new char[nome.length()]; // todo tamanho está tosco
+        int cont = 0;
+
+        for(int i = 0; i < nomeChar.length; i++){
+
+            if (nomeChar[i] == ' '){
+                if(cont >= 1){
+                    break;
+                }
+                cont++;
+                nomeSobrenome[i] = nomeChar[i];
+                continue;
+            }
+            nomeSobrenome[i] = nomeChar[i];
+        }
+
+        Log.e("nomeSobrenome",new String(nomeSobrenome)+" | "+cont);
+        return new String(nomeSobrenome).trim();
+    }*/
+
 
     public static String concatenaCaminhoAtual(){
 
