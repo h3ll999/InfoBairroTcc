@@ -37,6 +37,8 @@
         <activity android:name=".views.activity.ActivityVisualizarFotos"
             android:theme="@style/TransparentStatusBarNavigation">
         </activity>
+        <activity android:name=".views.activity.ActivityLoading"
+            android:theme="@style/TransparentCompatLoading"> </activity>
 
     </application>
 

@@ -97,4 +97,6 @@ public class Eventos {
         }
     }
 
+    public static class FimLoading{}
+
 }

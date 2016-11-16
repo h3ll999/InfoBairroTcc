@@ -17,7 +17,15 @@
         <item name="android:background">@android:color/transparent</item>
     </style>
 
-    <style name="Theme.AppCompat.Translucent">
+    <style name="AppTheme.Translucent">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+        <item name="android:windowDrawsSystemBarBackgrounds">true</item>
+        <item name="android:statusBarColor">@android:color/transparent</item>
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+
         <item name="android:windowNoTitle">true</item>
         <item name="android:windowBackground">@android:color/transparent</item>
         <item name="android:colorBackgroundCacheHint">@null</item>
@@ -26,15 +34,25 @@
     </style>
 
     <style name="TransparentCompat" parent="AppTheme.NoActionBar">
-       <!-- <item name="android:windowNoTitle">true</item> -->
-         <item name="android:statusBarColor">#780000</item>
-         <item name="android:windowBackground">@android:color/transparent</item>
-         <item name="android:colorBackgroundCacheHint">@null</item>
-         <item name="android:windowIsTranslucent">true</item>
-         <item name="android:windowAnimationStyle">@android:style/Animation</item>
-         <item name="android:windowContentOverlay">@null</item>
-         <item name="android:backgroundDimEnabled">true</item>
-     </style>
+        <!-- <item name="android:windowNoTitle">true</item> -->
+        <item name="android:statusBarColor">#780000</item>
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <item name="android:colorBackgroundCacheHint">@null</item>
+        <item name="android:windowIsTranslucent">true</item>
+        <item name="android:windowAnimationStyle">@android:style/Animation</item>
+        <item name="android:windowContentOverlay">@null</item>
+        <item name="android:backgroundDimEnabled">true</item>
+    </style>
+
+    <style name="TransparentCompatLoading" parent="AppTheme.NoActionBar">
+        <item name="android:statusBarColor">#300000</item>
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <item name="android:colorBackgroundCacheHint">@null</item>
+        <item name="android:windowIsTranslucent">true</item>
+        <item name="android:windowAnimationStyle">@android:style/Animation</item>
+        <item name="android:windowContentOverlay">@null</item>
+        <item name="android:backgroundDimEnabled">true</item>
+    </style>
 
      <style name="dialogAnim" parent="@android:style/Animation.Activity">
          <item name="android:windowEnterAnimation">@anim/anim_up_primeiro</item>

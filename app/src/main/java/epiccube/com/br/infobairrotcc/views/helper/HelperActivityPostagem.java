@@ -40,6 +40,7 @@ import epiccube.com.br.infobairrotcc.models.contantes.Constantes;
 import epiccube.com.br.infobairrotcc.models.entities.Postagem;
 import epiccube.com.br.infobairrotcc.models.singleton.UsuarioLogado;
 import epiccube.com.br.infobairrotcc.utils.MyUtils;
+import epiccube.com.br.infobairrotcc.views.activity.ActivityLoading;
 import epiccube.com.br.infobairrotcc.views.adapter.AdapterPostagemFotos;
 import epiccube.com.br.infobairrotcc.views.dialogs.DialogoSelecionarCategoria;
 
@@ -185,7 +186,10 @@ public class HelperActivityPostagem {
     @Subscribe
     public void onEventSelecionouCategoria(EventoPegarCategoriaPostagem categoriaPostagem){
 
-        progressDialog = ProgressDialog.show(context,"Postando", "Aguarde...", true, false);
+        Intent i = new Intent(context, ActivityLoading.class);
+        context.startActivity(i);
+
+        //progressDialog = ProgressDialog.show(context,"Postando", "Aguarde...", true, false);
         getData(categoriaPostagem.getCategoria());
 
         //formata categoria...
@@ -226,7 +230,7 @@ public class HelperActivityPostagem {
             @Override
             public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
                 final int tam = imagensUri.size();
-                progressDialog.setTitle("Foto "+contador+"/"+tam);
+                //progressDialog.setTitle("Foto "+contador+"/"+tam);
                 listagemDeUpload.remove(0);
                 imagens.add(taskSnapshot.getDownloadUrl().toString());
                 Log.e("DOWNLOADLINK",taskSnapshot.getDownloadUrl().toString());
@@ -251,7 +255,7 @@ public class HelperActivityPostagem {
     void finalizar(){
 
         // TODO PRECISA SUBIR ESSA PORCARIA EM 2 LUGARES...CATEGORIA CERTA E NA "TODOS"
-        progressDialog.setTitle("Finalizando");
+        //progressDialog.setTitle("Finalizando");
         DatabaseReference ref = FirebaseDatabase.getInstance().getReference();
 
         final String primaryKey = ref
@@ -292,9 +296,10 @@ public class HelperActivityPostagem {
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
                     public void onSuccess(Void aVoid) {
-                        progressDialog.dismiss();
-                        Toast.makeText(context, "Compartilhado", Toast.LENGTH_SHORT).show();
+                        EventBus.getDefault().post(new Eventos.FimLoading());
+                        //progressDialog.dismiss();
                         context.finish();
+                        Toast.makeText(context, "Compartilhado", Toast.LENGTH_SHORT).show();
                     }
                 })
                 .addOnFailureListener(new OnFailureListener() {
