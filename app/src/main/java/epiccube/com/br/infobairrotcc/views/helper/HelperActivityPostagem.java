@@ -36,6 +36,7 @@ import java.util.UUID;
 import epiccube.com.br.infobairrotcc.R;
 import epiccube.com.br.infobairrotcc.eventos.Eventos;
 import epiccube.com.br.infobairrotcc.eventos.EventoPegarCategoriaPostagem;
+import epiccube.com.br.infobairrotcc.models.contantes.Constantes;
 import epiccube.com.br.infobairrotcc.models.entities.Postagem;
 import epiccube.com.br.infobairrotcc.models.singleton.UsuarioLogado;
 import epiccube.com.br.infobairrotcc.utils.MyUtils;
@@ -195,10 +196,7 @@ public class HelperActivityPostagem {
         } else {
             finalizar();
         }
-
-
     }
-
 
     void subirFotos(){
         FirebaseStorage storage = FirebaseStorage.getInstance();
@@ -252,11 +250,11 @@ public class HelperActivityPostagem {
     // GAMBIARRA FINAL CHAPTER
     void finalizar(){
 
-        // firebase...
+        // TODO PRECISA SUBIR ESSA PORCARIA EM 2 LUGARES...CATEGORIA CERTA E NA "TODOS"
         progressDialog.setTitle("Finalizando");
         DatabaseReference ref = FirebaseDatabase.getInstance().getReference();
 
-        String primaryKey = ref
+        final String primaryKey = ref
                 .child(MyUtils.removeAcentosEspacos(UsuarioLogado.getInstancia().getUsuario().getEstadoAtualId()))
                 .child(MyUtils.removeAcentosEspacos(UsuarioLogado.getInstancia().getUsuario().getCidadeAtualId()))
                 .child(MyUtils.removeAcentosEspacos(UsuarioLogado.getInstancia().getUsuario().getBairroAtualId()))
@@ -267,6 +265,29 @@ public class HelperActivityPostagem {
                 .child(MyUtils.removeAcentosEspacos(UsuarioLogado.getInstancia().getUsuario().getBairroAtualId()))
                 .child(categoriaSelecionada)
                 .child(primaryKey)
+                .setValue(p)
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void aVoid) {
+                        todos(primaryKey);
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Toast.makeText(context, "Erro "+e.getMessage(), Toast.LENGTH_SHORT).show();
+                    }
+                });
+    }
+
+    void todos(String pk){
+        DatabaseReference ref = FirebaseDatabase.getInstance().getReference();
+
+        ref.child(MyUtils.removeAcentosEspacos(UsuarioLogado.getInstancia().getUsuario().getEstadoAtualId()))
+                .child(MyUtils.removeAcentosEspacos(UsuarioLogado.getInstancia().getUsuario().getCidadeAtualId()))
+                .child(MyUtils.removeAcentosEspacos(UsuarioLogado.getInstancia().getUsuario().getBairroAtualId()))
+                .child(Constantes.POSTAGENS_SEM_FILTRO)
+                .child(pk)
                 .setValue(p)
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override

@@ -226,7 +226,7 @@ public class ActivityMenuInicial extends AppCompatActivity
             public void onDataChange(DataSnapshot dataSnapshot) {// se clicou em qualquer outra categoria, filtra normalmente
                     List<Postagem> listagemPostagens = new ArrayList<Postagem>();
 
-                    if(dataSnapshot.getChildrenCount()!=0){//se NÃO está vazio o banco
+                    if(dataSnapshot.getChildrenCount() != 0){//se NÃO está vazio o banco
                         for (DataSnapshot postSnapshot: dataSnapshot.getChildren()) {
                             Postagem p = postSnapshot.getValue(Postagem.class);
                             listagemPostagens.add(p);

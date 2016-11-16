@@ -158,5 +158,24 @@ public class MyUtils {
     }
 
 
+    public static String contatenaCaminhoPostagemFirebase(String categoria){
+        String caminho = MyUtils.removeAcentosEspacos(UsuarioLogado.getInstancia().getUsuario().getEstadoAtualId())+"/"+
+                MyUtils.removeAcentosEspacos(UsuarioLogado.getInstancia().getUsuario().getCidadeAtualId())+"/"+
+                MyUtils.removeAcentosEspacos(UsuarioLogado.getInstancia().getUsuario().getBairroAtualId())+"/"+
+                categoria;
+
+        return caminho;
+    }
+
+    public static String contatenaCaminhoPostagemOrigemFirebase(){
+        String caminho = MyUtils.removeAcentosEspacos(UsuarioLogado.getInstancia().getUsuario().getEstadoAtualId())+"/"+
+                MyUtils.removeAcentosEspacos(UsuarioLogado.getInstancia().getUsuario().getCidadeAtualId())+"/"+
+                MyUtils.removeAcentosEspacos(UsuarioLogado.getInstancia().getUsuario().getBairroAtualId())+"/"+
+                Constantes.POSTAGENS_SEM_FILTRO;
+
+        return caminho;
+    }
+
+
 
 }

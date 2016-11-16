@@ -5,7 +5,9 @@ import com.google.firebase.database.Exclude;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by ivanc on 11/10/2016.
@@ -161,6 +163,22 @@ public class Usuario implements Serializable {
     @Exclude
     public void setLatitudeLongitude(Double[] latitudeLongitude) {
         this.latitudeLongitude = latitudeLongitude;
+    }
+
+    @Exclude
+    public Map<String, Object> toMap() {
+
+        HashMap<String, Object> result = new HashMap<>();
+        result.put("nome", nome);
+        result.put("email", email);
+        result.put("senha", senha);
+        result.put("perfilUrl", perfilUrl);
+        result.put("bairroOrigemId", bairroOrigemId);
+        result.put("cidadeOrigemId", cidadeOrigemId);
+        result.put("estadoOrigemId", estadoOrigemId);
+        result.put("ultimaTrocaLocal", ultimaTrocaLocal);
+
+        return result;
     }
 
     @Override

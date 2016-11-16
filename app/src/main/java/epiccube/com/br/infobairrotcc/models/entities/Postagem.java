@@ -1,8 +1,11 @@
 package epiccube.com.br.infobairrotcc.models.entities;
 
+import com.google.firebase.database.Exclude;
+
 import java.io.Serializable;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by ivanc on 11/10/2016.
@@ -93,6 +96,20 @@ public class Postagem implements Serializable{
 
     public void setUrlFotosPostagens(HashMap<String, String> urlFotosPostagens) {
         this.urlFotosPostagens = urlFotosPostagens;
+    }
+
+    @Exclude
+    public Map<String, Object> toMap() {
+
+        HashMap<String, Object> result = new HashMap<>();
+        result.put("id", id);
+        result.put("titulo", titulo);
+        result.put("conteudo", conteudo);
+        result.put("categoria", categoria);
+        result.put("usuario", usuario);
+        result.put("urlFotosPostagem", urlFotosPostagem);
+
+        return result;
     }
 
     @Override
