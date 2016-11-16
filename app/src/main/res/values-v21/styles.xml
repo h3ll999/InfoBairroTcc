@@ -44,6 +44,12 @@
         <item name="android:backgroundDimEnabled">true</item>
     </style>
 
+    <style name="postagemTheme" parent="AppTheme">
+        <item name="colorPrimary">#ffffff</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+    </style>
+
     <style name="TransparentCompatLoading" parent="AppTheme.NoActionBar">
         <item name="android:statusBarColor">#300000</item>
         <item name="android:windowBackground">@android:color/transparent</item>

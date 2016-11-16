@@ -9,6 +9,8 @@ import android.os.Parcelable;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.WindowManager;
 
@@ -36,8 +38,12 @@ public class ActivityPostagem extends AppCompatActivity {
         //getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
         //        WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
-        //getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        //getSupportActionBar().setTitle("Nova postagem");
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setTitle("Nova postagem");
+        getSupportActionBar().setElevation(0);
+
+        //getSupportActionBar().setDisplayShowCustomEnabled(true);
+        //getSupportActionBar().setCustomView();
 
         setContentView(R.layout.activity_postagem);
 
@@ -73,6 +79,13 @@ public class ActivityPostagem extends AppCompatActivity {
                 EventBus.getDefault().post(new Eventos.PostagemMultiplasImagens(fotos));
             }
         }
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.postagem, menu);
+        return true;
     }
 
     @Override

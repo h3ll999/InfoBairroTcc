@@ -8,12 +8,12 @@
     android:padding="3dp"
     android:background="#00ff0000">
 
-    <RelativeLayout
+    <!--<RelativeLayout
         android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@drawable/layout_postagem"
-        >
+        >-->
 
         <RelativeLayout
             android:id="@+id/activity_postar_relative1"
@@ -94,7 +94,7 @@
 
         </RelativeLayout>
 
-    </RelativeLayout>
+    <!--</RelativeLayout>-->
 
 </LinearLayout>
 
