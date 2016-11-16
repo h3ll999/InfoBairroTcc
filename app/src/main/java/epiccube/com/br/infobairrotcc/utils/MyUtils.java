@@ -106,12 +106,9 @@ public class MyUtils {
                 break;
             }
         }
-
         if(naoTemSobrenome){
             nomeAbreviado = new String(nomeSobrenome).trim();
         }
-
-        Log.e("nomeSobrenome",new String(nomeSobrenome)+" | "+cont);
         return nomeAbreviado;
     }
 

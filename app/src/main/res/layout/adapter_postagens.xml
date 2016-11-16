@@ -39,7 +39,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Conteúdo"
-                android:maxLines="5"
+                android:maxLines="3"
                 android:layout_marginTop="10dp"
                 android:layout_marginLeft="16dp"
                 android:layout_marginRight="16dp"
@@ -56,9 +56,8 @@
                 android:layout_marginTop="16dp"
                 android:layout_marginLeft="16dp"
                 android:layout_marginBottom="5dp"
-                android:layout_below="@id/menu_inicial_txv_conteudo_postagem"
-                android:id="@+id/menu_inicial_txv_nome_usuario_postagem"
-                android:layout_toEndOf="@+id/menu_inicial_img_foto_usuario" />
+                android:layout_below="@id/menu_inicial_img_foto_usuario"
+                android:id="@+id/menu_inicial_txv_nome_usuario_postagem"/>
 
             <de.hdodenhof.circleimageview.CircleImageView
                 android:id="@+id/menu_inicial_img_foto_usuario"
