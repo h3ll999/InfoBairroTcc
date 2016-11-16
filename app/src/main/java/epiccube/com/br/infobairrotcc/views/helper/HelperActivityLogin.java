@@ -25,15 +25,19 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import org.greenrobot.eventbus.EventBus;
+
 import java.util.HashMap;
 
 import epiccube.com.br.infobairrotcc.R;
+import epiccube.com.br.infobairrotcc.eventos.Eventos;
 import epiccube.com.br.infobairrotcc.models.contantes.Constantes;
 import epiccube.com.br.infobairrotcc.models.entities.Usuario;
 import epiccube.com.br.infobairrotcc.models.mock.Mock;
 import epiccube.com.br.infobairrotcc.models.singleton.UsuarioLogado;
 import epiccube.com.br.infobairrotcc.validator.Validar;
 import epiccube.com.br.infobairrotcc.views.activity.ActivityCadastro;
+import epiccube.com.br.infobairrotcc.views.activity.ActivityLoading;
 import epiccube.com.br.infobairrotcc.views.activity.ActivityMenuInicial;
 
 /**
@@ -159,7 +163,8 @@ public class HelperActivityLogin {
                 .addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                progressDialog.dismiss();
+                //progressDialog.dismiss();
+
                 /*HashMap<String, String> a = (HashMap<String, String>) dataSnapshot.getValue();
 
                 //Pega os dados que chegaram...
@@ -178,6 +183,7 @@ public class HelperActivityLogin {
                 //Troca de tela
                 Intent i = new Intent(context, ActivityMenuInicial.class);
                 context.startActivity(i);
+                EventBus.getDefault().post(new Eventos.FimLoading());
             }
 
             @Override
@@ -189,7 +195,9 @@ public class HelperActivityLogin {
     }
 
     public void autoLogin(Activity activity){
-        progressDialog = ProgressDialog.show(activity, "Entrando", "Aguarde...", true,false);
+        Intent intent = new Intent(context, ActivityLoading.class);
+        context.startActivity(intent);
+        //progressDialog = ProgressDialog.show(activity, "Entrando", "Aguarde...", true,false);
         database = FirebaseDatabase.getInstance().getReference();;
         autenticador = FirebaseAuth.getInstance();
         user = FirebaseAuth.getInstance().getCurrentUser();
