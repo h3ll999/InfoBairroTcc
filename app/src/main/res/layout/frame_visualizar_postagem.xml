@@ -112,9 +112,11 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Estado"
-        android:textSize="12sp"
+        android:layout_marginRight="100dp"
+        android:textSize="10sp"
+        android:layout_marginTop="10dp"
         android:layout_alignTop="@+id/activity_visualiza_postagem_img_usuario_foto"
-        android:layout_centerHorizontal="true" />
+        android:layout_alignParentEnd="true" />
 
     <TextView
         android:id="@+id/activity_visualiza_postagem_cidade"
@@ -129,10 +131,12 @@
         android:id="@+id/activity_visualiza_postagem_bairro"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:gravity="top"
         android:text="Bairro"
-        android:textSize="16sp"
+        android:textSize="18sp"
         android:layout_below="@+id/activity_visualiza_postagem_cidade"
         android:layout_alignStart="@+id/activity_visualiza_postagem_cidade" />
+
 
 
 </RelativeLayout>
