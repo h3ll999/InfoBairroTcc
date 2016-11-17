@@ -3,6 +3,7 @@ package epiccube.com.br.infobairrotcc.views.helper;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -31,6 +32,10 @@ public class HelperVisualizaPostagem {
     private TextView conteudo;
     private ImageView imagensPostagens;
     private TextView verMais;
+
+    private EditText estado;
+    private EditText cidade;
+    private EditText bairro;
 
 
     public HelperVisualizaPostagem(AppCompatActivity context, Postagem postagem) {

@@ -17,9 +17,9 @@
         android:id="@+id/activity_visualiza_postagem_txv_usuario_nome"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_toRightOf="@+id/activity_visualiza_postagem_img_usuario_foto"
-        android:layout_marginTop="30dp"
-        android:layout_marginLeft="16dp"
+        android:layout_below="@+id/activity_visualiza_postagem_img_usuario_foto"
+        android:layout_marginTop="5dp"
+        android:layout_marginLeft="0dp"
         android:text="Nome"/>
 
     <RelativeLayout
@@ -27,8 +27,10 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="5dp"
-        android:background="@drawable/layout_visualizar_postagem"
-        android:layout_below="@+id/activity_visualiza_postagem_img_usuario_foto">
+
+        android:layout_below="@+id/activity_visualiza_postagem_txv_usuario_nome">
+
+        <!--android:background="@drawable/layout_visualizar_postagem"-->
 
         <TextView
             android:id="@+id/activity_visualiza_postagem_txv_postagem_conteudo"
@@ -43,7 +45,7 @@
             android:layout_width="match_parent"
             android:layout_height="200dp"
             android:scaleType="centerCrop"
-            android:layout_marginTop="16dp"
+            android:layout_marginTop="5dp"
             android:layout_below="@+id/activity_visualiza_postagem_txv_postagem_conteudo" />
 
         <TextView

@@ -148,13 +148,15 @@ public class HelperActivityPostagem {
         p.setCategoria(categoria);
         p.setUsuario(UsuarioLogado.getInstancia().getUsuario());
         p.setUrlFotosPostagem(new ArrayList<String>());
+        p.setEstado(UsuarioLogado.getInstancia().getUsuario().getEstadoAtualId());
+        p.setCidade(UsuarioLogado.getInstancia().getUsuario().getCidadeAtualId());
+        p.setBairro(UsuarioLogado.getInstancia().getUsuario().getBairroAtualId());
     }
 
     @Subscribe
     public void onEventUnregister(Eventos.Unregister unregister){
         EventBus.getDefault().unregister(this);
     }
-
 
     // Chamado após selecionar as imagens...Cria o adapter.
     @Subscribe
