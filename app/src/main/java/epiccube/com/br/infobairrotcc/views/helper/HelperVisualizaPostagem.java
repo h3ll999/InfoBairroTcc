@@ -2,6 +2,7 @@ package epiccube.com.br.infobairrotcc.views.helper;
 
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -33,9 +34,9 @@ public class HelperVisualizaPostagem {
     private ImageView imagensPostagens;
     private TextView verMais;
 
-    private EditText estado;
-    private EditText cidade;
-    private EditText bairro;
+    private TextView estado;
+    private TextView cidade;
+    private TextView bairro;
 
 
     public HelperVisualizaPostagem(AppCompatActivity context, Postagem postagem) {
@@ -51,6 +52,10 @@ public class HelperVisualizaPostagem {
         conteudo = (TextView) context.findViewById(R.id.activity_visualiza_postagem_txv_postagem_conteudo);
         imagensPostagens = (ImageView) context.findViewById(R.id.activity_visualiza_postagem_img_foto_postagem);
         verMais = (TextView) context.findViewById(R.id.activity_visualiza_postagem_txv_foto_postagem);
+
+        estado = (TextView) context.findViewById(R.id.activity_visualiza_postagem_estado);
+        cidade = (TextView) context.findViewById(R.id.activity_visualiza_postagem_cidade);
+        bairro = (TextView) context.findViewById(R.id.activity_visualiza_postagem_bairro);
 
         return this;
     }
@@ -105,6 +110,17 @@ public class HelperVisualizaPostagem {
         nome.setText(postagem.getUsuario().getNome());
         //titulo.setText(postagem.getTitulo());
         conteudo.setText(postagem.getConteudo());
+
+        try{
+
+            estado.setText(postagem.getEstado());
+            cidade.setText(postagem.getCidade());
+            bairro.setText(postagem.getBairro());
+
+        }catch (Exception e){
+            Log.e("Erro", e.getMessage());
+        }
+
 
     }
 }

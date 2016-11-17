@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:layout_marginRight="10dp"
@@ -8,105 +8,131 @@
     android:layout_height="match_parent">
 
     <de.hdodenhof.circleimageview.CircleImageView
-        android:id="@+id/activity_visualiza_postagem_img_usuario_foto"
-        android:layout_width="70dp"
-        android:layout_height="70dp"
-        android:layout_marginTop="16dp"/>
+    android:id="@+id/activity_visualiza_postagem_img_usuario_foto"
+    android:layout_width="70dp"
+    android:layout_height="70dp"
+    android:layout_marginTop="16dp"/>
 
     <TextView
-        android:id="@+id/activity_visualiza_postagem_txv_usuario_nome"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/activity_visualiza_postagem_img_usuario_foto"
-        android:layout_marginTop="5dp"
-        android:layout_marginLeft="0dp"
-        android:text="Nome"/>
+    android:id="@+id/activity_visualiza_postagem_txv_usuario_nome"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_below="@+id/activity_visualiza_postagem_img_usuario_foto"
+    android:layout_marginTop="5dp"
+    android:layout_marginLeft="0dp"
+    android:text="Nome"/>
 
     <RelativeLayout
-        android:id="@+id/activity_visualiza_postagem_layout_1"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="5dp"
+    android:id="@+id/activity_visualiza_postagem_layout_1"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="5dp"
 
-        android:layout_below="@+id/activity_visualiza_postagem_txv_usuario_nome">
+    android:layout_below="@+id/activity_visualiza_postagem_txv_usuario_nome">
 
         <!--android:background="@drawable/layout_visualizar_postagem"-->
 
         <TextView
-            android:id="@+id/activity_visualiza_postagem_txv_postagem_conteudo"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:textSize="18sp"
-            android:text="Conteúdo"/>
+        android:id="@+id/activity_visualiza_postagem_txv_postagem_conteudo"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:textSize="18sp"
+        android:text="Conteúdo"/>
 
         <ImageView
-            android:id="@+id/activity_visualiza_postagem_img_foto_postagem"
-            android:layout_width="match_parent"
-            android:layout_height="200dp"
-            android:scaleType="centerCrop"
-            android:layout_marginTop="5dp"
-            android:layout_below="@+id/activity_visualiza_postagem_txv_postagem_conteudo" />
+        android:id="@+id/activity_visualiza_postagem_img_foto_postagem"
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:scaleType="centerCrop"
+        android:layout_marginTop="5dp"
+        android:layout_below="@+id/activity_visualiza_postagem_txv_postagem_conteudo" />
 
         <TextView
-            android:id="@+id/activity_visualiza_postagem_txv_foto_postagem"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:paddingRight="3dp"
-            android:paddingLeft="3dp"
-            android:paddingTop="1dp"
-            android:paddingBottom="1dp"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="10dp"
-            android:layout_marginBottom="10dp"
-            android:elevation="10dp"
-            android:outlineProvider="bounds"
-            android:background="@drawable/layout_txv"
-            android:textColor="#ffffff"
-            android:layout_alignEnd="@+id/activity_visualiza_postagem_img_foto_postagem"
-            android:layout_alignBottom="@+id/activity_visualiza_postagem_img_foto_postagem"
-            android:gravity="right" />
+        android:id="@+id/activity_visualiza_postagem_txv_foto_postagem"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingRight="3dp"
+        android:paddingLeft="3dp"
+        android:paddingTop="1dp"
+        android:paddingBottom="1dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginBottom="10dp"
+        android:elevation="10dp"
+        android:outlineProvider="bounds"
+        android:background="@drawable/layout_txv"
+        android:textColor="#ffffff"
+        android:layout_alignEnd="@+id/activity_visualiza_postagem_img_foto_postagem"
+        android:layout_alignBottom="@+id/activity_visualiza_postagem_img_foto_postagem"
+        android:gravity="right" />
 
         <View
-            android:id="@+id/activity_visualiza_postagem_separator"
-            android:layout_width="match_parent"
-            android:layout_height="0.8dp"
-            android:layout_marginTop="16dp"
-            android:background="#bcbcbc"
-            android:layout_below="@+id/activity_visualiza_postagem_img_foto_postagem"
-            />
+        android:id="@+id/activity_visualiza_postagem_separator"
+        android:layout_width="match_parent"
+        android:layout_height="0.8dp"
+        android:layout_marginTop="16dp"
+        android:background="#bcbcbc"
+        android:layout_below="@+id/activity_visualiza_postagem_img_foto_postagem"
+        />
 
         <!-- #FF6666 -->
         <com.sackcentury.shinebuttonlib.ShineButton
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:layout_below="@+id/activity_visualiza_postagem_separator"
-            android:layout_marginTop="5dp"
-            android:src="@android:color/darker_gray"
-            android:id="@+id/po_image1"
-            android:layout_alignParentBottom="true"
-            android:layout_alignParentStart="true"
-            app:btn_color="@android:color/darker_gray"
-            app:btn_fill_color="@color/colorPrimary"
-            app:allow_random_color="false"
-            app:enable_flashing="false"
-            app:big_shine_color="#FF6666"
-            app:click_animation_duration="200"
-            app:shine_animation_duration="1500"
-            app:shine_turn_angle="10"
-            app:small_shine_offset_angle="20"
-            app:small_shine_color="#CC9999"
-            app:shine_count="8"
-            app:siShape="@raw/like"/>
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_below="@+id/activity_visualiza_postagem_separator"
+        android:layout_marginTop="5dp"
+        android:src="@android:color/darker_gray"
+        android:id="@+id/po_image1"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentStart="true"
+        app:btn_color="@android:color/darker_gray"
+        app:btn_fill_color="@color/colorPrimary"
+        app:allow_random_color="false"
+        app:enable_flashing="false"
+        app:big_shine_color="#FF6666"
+        app:click_animation_duration="200"
+        app:shine_animation_duration="1500"
+        app:shine_turn_angle="10"
+        app:small_shine_offset_angle="20"
+        app:small_shine_color="#CC9999"
+        app:shine_count="8"
+        app:siShape="@raw/like"/>
 
     </RelativeLayout>
 
     <View
-        android:id="@+id/activity_visualiza_postagem_v"
-        android:layout_below="@+id/activity_visualiza_postagem_layout_1"
-        android:layout_width="match_parent"
-        android:layout_height="16dp"/>
+    android:id="@+id/activity_visualiza_postagem_v"
+    android:layout_below="@+id/activity_visualiza_postagem_layout_1"
+    android:layout_width="match_parent"
+    android:layout_height="16dp"/>
 
+    <TextView
+        android:id="@+id/activity_visualiza_postagem_estado"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Estado"
+        android:textSize="12sp"
+        android:layout_alignTop="@+id/activity_visualiza_postagem_img_usuario_foto"
+        android:layout_centerHorizontal="true" />
+
+    <TextView
+        android:id="@+id/activity_visualiza_postagem_cidade"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Cidade"
+        android:textSize="14sp"
+        android:layout_below="@+id/activity_visualiza_postagem_estado"
+        android:layout_alignStart="@+id/activity_visualiza_postagem_estado" />
+
+    <TextView
+        android:id="@+id/activity_visualiza_postagem_bairro"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Bairro"
+        android:textSize="16sp"
+        android:layout_below="@+id/activity_visualiza_postagem_cidade"
+        android:layout_alignStart="@+id/activity_visualiza_postagem_cidade" />
 
 
 </RelativeLayout>
