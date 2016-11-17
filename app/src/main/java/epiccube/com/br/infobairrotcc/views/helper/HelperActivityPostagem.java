@@ -257,7 +257,6 @@ public class HelperActivityPostagem {
     // GAMBIARRA FINAL CHAPTER
     void finalizar(){
 
-        // TODO PRECISA SUBIR ESSA PORCARIA EM 2 LUGARES...CATEGORIA CERTA E NA "TODOS"
         //progressDialog.setTitle("Finalizando");
         DatabaseReference ref = FirebaseDatabase.getInstance().getReference();
 

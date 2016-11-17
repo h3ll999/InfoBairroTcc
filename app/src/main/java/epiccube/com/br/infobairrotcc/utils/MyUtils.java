@@ -72,10 +72,6 @@ public class MyUtils {
             primeiroNome[i] = nomeChar[i];
         }
 
-
-
-        // todo implementar pra pegar a primeira letra do sobrenome
-
         Log.e("primeiroNome",new String(primeiroNome));
         return new String(primeiroNome).trim();
 

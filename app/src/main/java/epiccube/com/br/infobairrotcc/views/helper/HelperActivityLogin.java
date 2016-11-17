@@ -136,7 +136,6 @@ public class HelperActivityLogin {
     }
 
     private void firebase(){
-        // TODO chama a activity
         Intent intent = new Intent(context, ActivityLoading.class);
         context.startActivity(intent);
 

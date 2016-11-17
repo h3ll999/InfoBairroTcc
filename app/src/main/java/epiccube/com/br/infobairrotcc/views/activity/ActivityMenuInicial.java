@@ -115,7 +115,7 @@ public class ActivityMenuInicial extends AppCompatActivity
         } else {
             Log.e("onCreate", "veio do Cadastro"); // cadastro roda o GPS de qualquer forma, então ele já vai pra cá...
 
-            getDataFromFirebase(Constantes.POSTAGENS_EVENTOS()); //TODO POR QUESTÕES DE TESTE
+            getDataFromFirebase(Constantes.POSTAGENS_EVENTOS());
         }
     }
 
@@ -246,7 +246,7 @@ public class ActivityMenuInicial extends AppCompatActivity
 
             @Override
             public void onCancelled(DatabaseError databaseError) {
-                Toast.makeText(ActivityMenuInicial.this, "Cancelado", Toast.LENGTH_SHORT).show();
+                //Toast.makeText(ActivityMenuInicial.this, "Cancelado", Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -371,10 +371,8 @@ public class ActivityMenuInicial extends AppCompatActivity
             UsuarioLogado.getInstancia().getUsuario().setCidadeAtualId(locais[1]);
             UsuarioLogado.getInstancia().getUsuario().setBairroAtualId(locais[2]);
 
-            // TODO remover isso daqui...reutilizar corretamente...
             // Este método está sendo chamado quando entra no app e quando clica no trocar localidade...
             getDataFromFirebase(Constantes.POSTAGENS_EVENTOS());
-            // TODO POSTAGENS_ORIGEM é a categoria padrão? Se tiver TODAS, vai precisar programar mais...
 
         } catch (IOException e) {
             Log.e("MenuInicial - Locais", e.getMessage());
