@@ -2,6 +2,7 @@ package epiccube.com.br.infobairrotcc.views.activity;
 
 import android.app.Activity;
 import android.content.ClipData;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -23,6 +24,7 @@ import java.util.ArrayList;
 
 import epiccube.com.br.infobairrotcc.R;
 import epiccube.com.br.infobairrotcc.eventos.Eventos;
+import epiccube.com.br.infobairrotcc.utils.ViewUtil;
 import epiccube.com.br.infobairrotcc.views.helper.HelperActivityPostagem;
 
 /**
@@ -59,7 +61,12 @@ public class ActivityPostagem extends AppCompatActivity {
         helper.cast().onClick();
 
         //TODO MAIS TEM QUE FICAR CINZA MEIO ESCURO...
-        Toast.makeText(this,"TODO: O '+' tem que ficar cinza escuro...", Toast.LENGTH_SHORT).show();
+        ViewUtil.init(this).showDialog(new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                dialogInterface.dismiss();
+            }
+        }, "TODO: O '+' tem que ficar cinza escuro...");
 
 
     }
