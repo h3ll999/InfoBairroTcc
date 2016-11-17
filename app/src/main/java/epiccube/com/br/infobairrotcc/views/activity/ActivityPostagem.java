@@ -14,6 +14,7 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.WindowManager;
+import android.widget.Toast;
 
 import org.greenrobot.eventbus.EventBus;
 
@@ -56,6 +57,9 @@ public class ActivityPostagem extends AppCompatActivity {
 
         helper = new HelperActivityPostagem(this);
         helper.cast().onClick();
+
+        //TODO MAIS TEM QUE FICAR CINZA MEIO ESCURO...
+        Toast.makeText(this,"TODO: O '+' tem que ficar cinza escuro...", Toast.LENGTH_SHORT).show();
 
 
     }
