@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.os.Parcelable;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -29,7 +30,7 @@ import epiccube.com.br.infobairrotcc.views.helper.HelperActivityPostagem;
 
 public class ActivityPostagem extends AppCompatActivity {
 
-    HelperActivityPostagem helper;
+    private HelperActivityPostagem helper;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -38,14 +39,20 @@ public class ActivityPostagem extends AppCompatActivity {
         //getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
         //        WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setTitle("Nova postagem");
-        getSupportActionBar().setElevation(0);
+
 
         //getSupportActionBar().setDisplayShowCustomEnabled(true);
         //getSupportActionBar().setCustomView();
 
         setContentView(R.layout.activity_postagem);
+
+        Toolbar toolbar = (Toolbar) findViewById(R.id.activity_postar_toolbar);
+        setSupportActionBar(toolbar);
+
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        //getSupportActionBar().setTitle("Nova postagem");
+        getSupportActionBar().setTitle(null);
+        getSupportActionBar().setElevation(0);
 
         helper = new HelperActivityPostagem(this);
         helper.cast().onClick();
@@ -81,12 +88,12 @@ public class ActivityPostagem extends AppCompatActivity {
         }
     }
 
-    @Override
+    /*@Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.postagem, menu);
         return true;
-    }
+    }*/
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {

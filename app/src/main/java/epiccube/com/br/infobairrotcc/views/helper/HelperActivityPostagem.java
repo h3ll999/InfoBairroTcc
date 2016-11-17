@@ -16,6 +16,7 @@ import android.widget.EditText;
 import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnFailureListener;
@@ -57,7 +58,7 @@ public class HelperActivityPostagem {
     private EditText titulo;
     private EditText conteudo;
     private ImageView inserirFotos; boolean adicionouFotos;
-    private Button postar;
+    private TextView postar;
     //private Spinner categorias;
     private GridView fotos;
     private RelativeLayout layoutGrid;
@@ -90,8 +91,8 @@ public class HelperActivityPostagem {
 
         titulo = (EditText) context.findViewById(R.id.activity_postar_edt_titulo);
         conteudo = (EditText) context.findViewById(R.id.activity_postar_edt_conteudo);
-        postar = (Button) context.findViewById(R.id.activity_postar_btn_concluir);
-        postar.getBackground().setColorFilter(Color.parseColor("#00ffffff"), PorterDuff.Mode.SRC_ATOP);
+        postar = (TextView) context.findViewById(R.id.activity_postar_btn_concluir);
+        //postar.getBackground().setColorFilter(Color.parseColor("#00ffffff"), PorterDuff.Mode.SRC_ATOP);
         inserirFotos = (ImageView) context.findViewById(R.id.activity_postar_img_abrir_galeria);
         //categorias = (Spinner) context.findViewById(R.id.activity_postar_spn_selecionar_categoria);
         fotos = (GridView) context.findViewById(R.id.activity_postar_grid_view);
