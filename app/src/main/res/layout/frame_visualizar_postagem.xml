@@ -27,6 +27,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_marginTop="5dp"
+
     android:layout_below="@+id/activity_visualiza_postagem_txv_usuario_nome">
 
         <!--android:background="@drawable/layout_visualizar_postagem"-->
@@ -35,7 +36,7 @@
         android:id="@+id/activity_visualiza_postagem_txv_postagem_conteudo"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="5dp"
+        android:layout_marginTop="16dp"
         android:textSize="18sp"
         android:text="Conteúdo"/>
 
@@ -132,6 +133,7 @@
         android:layout_height="wrap_content"
         android:gravity="top"
         android:text="Bairro"
+        android:textSize="18sp"
         android:layout_alignBaseline="@+id/activity_visualiza_postagem_txv_usuario_nome"
         android:layout_alignBottom="@+id/activity_visualiza_postagem_txv_usuario_nome"
         android:layout_toEndOf="@+id/activity_visualiza_postagem_txv_usuario_nome" />
