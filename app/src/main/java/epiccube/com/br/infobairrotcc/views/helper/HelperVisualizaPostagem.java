@@ -107,15 +107,15 @@ public class HelperVisualizaPostagem {
                 .placeholder(R.drawable.placeholder)
                 .into(perfil);
 
-        nome.setText(postagem.getUsuario().getNome());
+        nome.setText(postagem.getUsuario().getNome()+" em ");
         //titulo.setText(postagem.getTitulo());
         conteudo.setText(postagem.getConteudo());
 
         try{
 
-            estado.setText(postagem.getEstado());
-            cidade.setText(postagem.getCidade());
-            bairro.setText(postagem.getBairro());
+            //estado.setText(postagem.getEstado());
+            //cidade.setText(postagem.getCidade());
+            bairro.setText(postagem.getBairro().toUpperCase()+", "+postagem.getCidade());
 
         }catch (Exception e){
             Log.e("Erro", e.getMessage());
