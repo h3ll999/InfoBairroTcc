@@ -4,6 +4,7 @@ package epiccube.com.br.infobairrotcc.views.adapter;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,6 +14,9 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.squareup.picasso.Callback;
+import com.squareup.picasso.NetworkPolicy;
+import com.squareup.picasso.Picasso;
 
 import java.io.Serializable;
 import java.util.List;
@@ -47,14 +51,33 @@ public class AdapterPostagens extends RecyclerView.Adapter<AdapterPostagens.Adap
     }
 
     @Override
-    public void onBindViewHolder(final AdapterPostagensViewHolder holder, int position) {
+    public void onBindViewHolder(final AdapterPostagensViewHolder holder, final int position) {
 
         Glide.with(context)
                 .load(listaPostagem.get(position).getUsuario().getPerfilUrl())
-                .centerCrop()
-                .placeholder(R.drawable.placeholder)
+                .placeholder(R.drawable.placeholder) // DÁ BUG ESSA PORCARIA
+                .dontAnimate()
                 .diskCacheStrategy(DiskCacheStrategy.SOURCE)
                 .into(holder.imagemPerfil);
+
+        /*Picasso.with(context)
+                .load(listaPostagem.get(position).getUsuario().getPerfilUrl())
+                .placeholder(R.drawable.placeholder)
+                .networkPolicy(NetworkPolicy.OFFLINE)
+                .into(holder.imagemPerfil, new Callback() {
+                    @Override
+                    public void onSuccess() {
+                        Log.e("Picasso", "Sucesso");
+                    }
+
+                    @Override
+                    public void onError() {
+                        Picasso.with(context)
+                                .load(listaPostagem.get(position).getUsuario().getPerfilUrl())
+                                .placeholder(R.drawable.placeholder)
+                                .into(holder.imagemPerfil);
+                    }
+                });*/
 
         holder.titulo.setText(listaPostagem.get(position).getTitulo());
         holder.conteudo.setText(MyUtils.verificaFormatacaoPostagem(listaPostagem.get(position).getConteudo()));
@@ -77,6 +100,7 @@ public class AdapterPostagens extends RecyclerView.Adapter<AdapterPostagens.Adap
                     .centerCrop()
                     .thumbnail(0.3f)
                     .placeholder(R.drawable.placeholder_img_vazia)
+                    .dontAnimate()
                     .diskCacheStrategy(DiskCacheStrategy.SOURCE)
                     .into(holder.imagemPost);
 
@@ -91,6 +115,7 @@ public class AdapterPostagens extends RecyclerView.Adapter<AdapterPostagens.Adap
                     .centerCrop()
                     .thumbnail(0.3f)
                     .placeholder(R.drawable.placeholder_img_vazia)
+                    .dontAnimate()
                     .diskCacheStrategy(DiskCacheStrategy.SOURCE)
                     .into(holder.imagemPost);
         }
