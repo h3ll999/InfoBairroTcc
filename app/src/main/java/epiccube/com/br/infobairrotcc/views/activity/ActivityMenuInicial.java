@@ -143,7 +143,7 @@ public class ActivityMenuInicial extends AppCompatActivity
                 if(UsuarioLogado.getInstancia().getUsuario().getPermissaoPostagem()){
                     Intent intent = new Intent(ActivityMenuInicial.this, ActivityPostagem.class);
                     startActivity(intent);
-                    overridePendingTransition(R.anim.anim_up_primeiro, R.anim.anim_up_segundo);
+                    //overridePendingTransition(R.anim.anim_up_primeiro, R.anim.anim_up_segundo);
                 } else {
                     ViewUtil.init(ActivityMenuInicial.this).showDialog(new DialogInterface.OnClickListener() {
                         @Override

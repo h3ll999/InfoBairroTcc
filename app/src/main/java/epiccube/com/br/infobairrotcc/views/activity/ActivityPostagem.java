@@ -123,7 +123,7 @@ public class ActivityPostagem extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         finish();
-        overridePendingTransition(R.anim.anim_down_primeiro, R.anim.anim_down_segundo);
+        //overridePendingTransition(R.anim.anim_down_primeiro, R.anim.anim_down_segundo);
     }
 
 

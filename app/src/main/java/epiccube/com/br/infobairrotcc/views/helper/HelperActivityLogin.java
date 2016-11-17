@@ -136,7 +136,11 @@ public class HelperActivityLogin {
     }
 
     private void firebase(){
-        progressDialog = ProgressDialog.show(context,"Entrando", "Aguarde...",true,false);
+        // TODO chama a activity
+        Intent intent = new Intent(context, ActivityLoading.class);
+        context.startActivity(intent);
+
+        //progressDialog = ProgressDialog.show(context,"Entrando", "Aguarde...",true,false);
         //autentica
         autenticador.signInWithEmailAndPassword(email,senha)
                 .addOnSuccessListener(new OnSuccessListener<AuthResult>() {
@@ -150,7 +154,8 @@ public class HelperActivityLogin {
                     @Override
                     public void onFailure(@NonNull Exception e) {
                         Toast.makeText(context, e.getMessage(), Toast.LENGTH_SHORT).show();
-                        progressDialog.dismiss();
+                        EventBus.getDefault().post(new Eventos.FimLoading());
+                        //progressDialog.dismiss();
                     }
                 });
 
