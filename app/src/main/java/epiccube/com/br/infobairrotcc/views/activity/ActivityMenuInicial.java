@@ -185,6 +185,7 @@ public class ActivityMenuInicial extends AppCompatActivity
         Glide.with(this).load(UsuarioLogado.getInstancia().getUsuario().getPerfilUrl())
                 .diskCacheStrategy(DiskCacheStrategy.SOURCE)
                 .placeholder(R.drawable.placeholder)
+                .dontAnimate()
                 .into(imgUser);
 
         nomeUser.setText(UsuarioLogado.getInstancia().getUsuario().getNome());
@@ -433,6 +434,7 @@ public class ActivityMenuInicial extends AppCompatActivity
         } /*else if(dialog!=null){
             EventBus.getDefault().post(new Eventos.FechaDialogoPostagem());
         }*/ else {
+            FirebaseAuth.getInstance().signOut();
             super.onBackPressed();
         }
     }
@@ -513,6 +515,7 @@ public class ActivityMenuInicial extends AppCompatActivity
     @Override
     protected void onDestroy() {
         EventBus.getDefault().unregister(this);
+
         Toast.makeText(this, getString(R.string.exiting), Toast.LENGTH_SHORT).show();
 
         super.onDestroy();

@@ -74,7 +74,7 @@ public class HelperActivityLogin {
             public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
                 FirebaseUser u = autenticador.getCurrentUser();
                 if (u!=null){
-                    Log.e("FIREBASE_USER","Não logado");
+                    Log.e("HelperActivityLogin","Não serve pra nada");
                 }
             }
         };
@@ -163,7 +163,6 @@ public class HelperActivityLogin {
 
     private void finalizaRequisicaoDados(){
 
-        Log.e("HELPER_ACTIVITY_LOGIN",user.getUid());
         database.child(Constantes.USUARIO).child(user.getUid()).child(Constantes.PERFIL)
                 .addListenerForSingleValueEvent(new ValueEventListener() {
             @Override

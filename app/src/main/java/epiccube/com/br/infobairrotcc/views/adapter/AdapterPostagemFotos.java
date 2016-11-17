@@ -99,6 +99,7 @@ public class AdapterPostagemFotos extends BaseAdapter {
                     .centerCrop()
                     .crossFade()
                     .diskCacheStrategy(DiskCacheStrategy.SOURCE)
+                    .dontAnimate()
                     //.thumbnail(0.1f)
                     .placeholder(R.drawable.placeholder_img_vazia).into(imageView);
         //}
