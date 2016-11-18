@@ -252,10 +252,16 @@ public class HelperActivityCadastro {
 
         try {
 
-            LocationUtils l = new LocationUtils();
-            locais = l.getLocais(context, coord);
+            LocationUtils l = new LocationUtils(context, coord);
+            locais = l.getLocais();
 
             progressDialog.dismiss();
+
+            // TODO verificar melhor essa coisa nesse caso...
+            /*if (!l.servicoDisponivel(context)){
+                return;
+                // interrompe o fluxo
+            }*/
 
             usuario.setEstadoAtualId(locais[0]);
             usuario.setCidadeAtualId(locais[1]);

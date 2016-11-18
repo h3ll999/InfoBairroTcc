@@ -3,10 +3,17 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <item
+        android:id="@+id/action_new_loc"
+        android:orderInCategory="100"
+        android:title="Pegar local"
+        app:showAsAction="never" />
+
+    <item
         android:id="@+id/action_location"
         android:orderInCategory="100"
         android:title="Trocar localidade padrão"
         app:showAsAction="never" />
+
 
     <item
         android:id="@+id/action_settings"

@@ -364,8 +364,13 @@ public class ActivityMenuInicial extends AppCompatActivity
         try {
             progressDialog.dismiss();
 
-            LocationUtils l = new LocationUtils();
-            String[] locais = l.getLocais(this, coords);
+            LocationUtils l = new LocationUtils(this, coords);
+            String[] locais = l.getLocais();
+
+            if (!l.servicoDisponivel(this)){
+                return;
+                // interrompe o fluxo
+            }
 
             UsuarioLogado.getInstancia().getUsuario().setEstadoAtualId(locais[0]);
             UsuarioLogado.getInstancia().getUsuario().setCidadeAtualId(locais[1]);
@@ -459,6 +464,10 @@ public class ActivityMenuInicial extends AppCompatActivity
                     Permissions.FINE_LOCATION.solicitaPermissao(this);
                 }*/
                 checkMenuButton();
+                break;
+            case R.id.action_new_loc:
+                MyGPS gps = new MyGPS(this);
+                gps.init();
                 break;
             default:
                 Toast.makeText(this, getString(R.string.error), Toast.LENGTH_SHORT).show();
