@@ -59,10 +59,7 @@ public class LocationUtils {
                 //Se os dados não chegarem, então chama o método até o dado chegar...
                 contador++;
                 getLocais();
-            } else return;
-
-        } else {
-             return;
+            }
         }
     }
 
@@ -82,8 +79,6 @@ public class LocationUtils {
                     "Entretanto, você poderá visualizar as notícias do seu bairro de origem.");
 
             return false;
-
         } else {return true;}
-
     }
 }
