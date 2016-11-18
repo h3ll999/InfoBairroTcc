@@ -77,7 +77,9 @@ public class LocationUtils {
                 public void onClick(DialogInterface dialogInterface, int i) {
                     dialogInterface.dismiss();
                 }
-            }, "O serviço de localização, mantido pela Google, está indisponível no momento. Tente novamente em alguns instantes");
+            }, "O serviço de localização, mantido pela Google, " +
+                    "está indisponível no momento. Tente novamente em alguns instantes." +
+                    "Entretanto, você poderá visualizar as notícias do seu bairro de origem.");
 
             return false;
 
