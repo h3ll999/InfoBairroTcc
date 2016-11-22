@@ -507,7 +507,6 @@ public class ActivityMenuInicial extends AppCompatActivity
             getDataFromFirebase(Constantes.POSTAGENS_SERVICOS());
 
         } else if(id == R.id.menu_categoria_origem){
-            Toast.makeText(this, "Não implementado ainda", Toast.LENGTH_SHORT).show();
             if(viewFlipper.getDisplayedChild()==1){
                 viewFlipper.setDisplayedChild(0);
             }

@@ -201,7 +201,7 @@ public class HelperActivityLogin {
         Intent intent = new Intent(context, ActivityLoading.class);
         context.startActivity(intent);
         //progressDialog = ProgressDialog.show(activity, "Entrando", "Aguarde...", true,false);
-        database = FirebaseDatabase.getInstance().getReference();;
+        database = FirebaseDatabase.getInstance().getReference();
         autenticador = FirebaseAuth.getInstance();
         user = FirebaseAuth.getInstance().getCurrentUser();
         finalizaRequisicaoDados();

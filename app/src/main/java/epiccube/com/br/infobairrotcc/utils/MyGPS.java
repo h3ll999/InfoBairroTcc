@@ -45,7 +45,7 @@ public class MyGPS implements LocationListener {
             return;
         }
 
-        Location location = mLocationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
+        Location location = mLocationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
         if (location != null && location.getTime() > Calendar.getInstance().getTimeInMillis() - 2 * 60 * 1000) {
             // caso faz 2 minutos que pegou o local, pega o último local...
             coord = new Double[2];
@@ -53,11 +53,20 @@ public class MyGPS implements LocationListener {
             coord[1] = location.getLongitude();
             Log.e("MyGps--getLastKnownLoca","Lat: "+coord[0]+" | Long "+coord[1]);
             mLocationManager.removeUpdates(this);
+
             EventBus.getDefault().post(new Eventos.PegaCoordenada(coord));
         } else {
-            mLocationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, this);
+            // mLocationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, this);
             mLocationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 0, 0, this);
         }
+    }
+
+    public Double[] getCoord() {
+        return coord;
+    }
+
+    public void setCoord(Double[] coord) {
+        this.coord = coord;
     }
 
     @Override
@@ -74,7 +83,9 @@ public class MyGPS implements LocationListener {
             }catch (SecurityException e){
                 Log.e("MyGps--getLastKnownLoca",e.getMessage());
             }
-            // cagada...?!?!?!?
+
+
+            // TODO .... cagada...?!?!?!?
             EventBus.getDefault().post(new Eventos.PegaCoordenada(coord));
 
         }

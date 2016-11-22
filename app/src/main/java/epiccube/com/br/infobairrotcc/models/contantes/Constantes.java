@@ -1,6 +1,5 @@
 package epiccube.com.br.infobairrotcc.models.contantes;
 
-import epiccube.com.br.infobairrotcc.models.singleton.UsuarioLogado;
 import epiccube.com.br.infobairrotcc.utils.MyUtils;
 
 /**
@@ -23,16 +22,16 @@ public class Constantes {
     public static final String POSTAGENS_SERVICOS = "POSTAGENS_SERVICOS";
 
 
-    public static final String POSTAGENS_ORIGEM(){
+    public static String POSTAGENS_ORIGEM(){
         return MyUtils.concatenaCaminhoOrigem()+"/"+POSTAGENS_SEM_FILTRO;
     }
-    public static final String POSTAGENS_EVENTOS(){
+    public static String POSTAGENS_EVENTOS(){
         return MyUtils.concatenaCaminhoAtual()+"/"+POSTAGENS_EVENTOS;
     }
-    public static final String POSTAGENS_NOTICIAS(){
+    public static String POSTAGENS_NOTICIAS(){
         return MyUtils.concatenaCaminhoAtual()+"/"+POSTAGENS_NOTICIAS;
     }
-    public static final String POSTAGENS_SERVICOS(){
+    public static String POSTAGENS_SERVICOS(){
         return MyUtils.concatenaCaminhoAtual()+"/"+POSTAGENS_SERVICOS;
     }
 
