@@ -253,7 +253,9 @@ public class HelperActivityCadastro {
         try {
 
             LocationUtils l = new LocationUtils(context, coord);
-            locais = l.getLocais();
+
+            // TODO CONSERTAR ESSE NEGÓCIO...
+            //locais = l.getLocais();
 
             progressDialog.dismiss();
 

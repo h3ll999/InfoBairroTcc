@@ -1,6 +1,7 @@
 package epiccube.com.br.infobairrotcc.eventos;
 
 import android.net.Uri;
+import android.util.Log;
 
 import java.util.ArrayList;
 
@@ -94,6 +95,23 @@ public class Eventos {
 
         public void setCood(Double[] cood) {
             this.cood = cood;
+        }
+    }
+
+    public static class PegaEndereco{
+        private String [] locais;
+
+        public PegaEndereco(String[] locais) {
+            this.locais = locais;
+            Log.e("PegaEndereco", "BATEU");
+        }
+
+        public String[] getLocais() {
+            return locais;
+        }
+
+        public void setLocais(String[] locais) {
+            this.locais = locais;
         }
     }
 

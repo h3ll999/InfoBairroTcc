@@ -7,9 +7,13 @@ import android.location.Geocoder;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 
+import org.greenrobot.eventbus.EventBus;
+
 import java.io.IOException;
 import java.util.List;
 import java.util.Locale;
+
+import epiccube.com.br.infobairrotcc.eventos.Eventos;
 
 /**
  * Created by abadari on 25/10/2016.
@@ -29,10 +33,12 @@ public class LocationUtils {
         contador = 0;
     }
 
-    public String[] getLocais() throws IOException {
-
+    public void getLocais() throws IOException {
+        Log.e("LocationUtils", "BATEU");
         Geocoder gcd = new Geocoder(activity, Locale.getDefault());
-        List<Address> addresses = gcd.getFromLocation(coord[0], coord[1], 1);
+        List<Address> addresses = gcd.getFromLocation(coord[0], coord[1], 1); //TODO verificar se esse troço é ASÍNCRONO MESMO
+
+        //TODO daqui pra baixo é tudo NOUTRO LUGAR...
         if (addresses.size() > 0){
             locais = new String[3]; // cidade - bairro
             locais[0] = addresses.get(0).getAdminArea(); // estado
@@ -41,15 +47,20 @@ public class LocationUtils {
 
             //Log.e("LocationUtils-getLocais",locais[0]+" | "+locais[1]+" | "+locais[2]);
 
-            verificaSeEstaNulo(locais);
+            //verificaSeEstaNulo(locais);
 
-            return locais;
+            EventBus.getDefault().post(new Eventos.PegaEndereco(locais));
+
         } else {
-            return null;
+            // TODO CRY
         }
     }
 
-    private void verificaSeEstaNulo(String [] locais) throws IOException {
+    public void aaaaa(){
+
+    }
+
+    /*private void verificaSeEstaNulo(String [] locais) throws IOException {
 
         if(locais[0] == null ||
                 locais[1] == null ||
@@ -61,7 +72,7 @@ public class LocationUtils {
                 getLocais();
             }
         }
-    }
+    }*/
 
     public boolean servicoDisponivel(AppCompatActivity activity){
 

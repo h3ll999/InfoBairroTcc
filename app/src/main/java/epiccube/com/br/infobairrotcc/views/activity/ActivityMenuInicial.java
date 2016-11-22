@@ -357,7 +357,7 @@ public class ActivityMenuInicial extends AppCompatActivity
     }
 
     public void locais(){
-
+            Log.e("locais", "BATEU");
         // já está salvo as coords nesse momento...
         Double[] coords = UsuarioLogado.getInstancia().getUsuario().getLatitudeLongitude();
 
@@ -365,9 +365,9 @@ public class ActivityMenuInicial extends AppCompatActivity
             progressDialog.dismiss();
 
             LocationUtils l = new LocationUtils(this, coords);
-            String[] locais = l.getLocais();
+            l.getLocais();
 
-            if (!l.servicoDisponivel(this)){
+            /*if (!l.servicoDisponivel(this)){
                 return;
                 // interrompe o fluxo
             }
@@ -377,12 +377,21 @@ public class ActivityMenuInicial extends AppCompatActivity
             UsuarioLogado.getInstancia().getUsuario().setBairroAtualId(locais[2]);
 
             // Este método está sendo chamado quando entra no app e quando clica no trocar localidade...
-            getDataFromFirebase(Constantes.POSTAGENS_EVENTOS());
+            getDataFromFirebase(Constantes.POSTAGENS_EVENTOS());*/
 
         } catch (IOException e) {
             Log.e("MenuInicial - Locais", e.getMessage());
             locais(); // chama ele mesmo em caso de erro...
         }
+    }
+
+    public void setaEndereco(String[] locais){
+        UsuarioLogado.getInstancia().getUsuario().setEstadoAtualId(locais[0]);
+        UsuarioLogado.getInstancia().getUsuario().setCidadeAtualId(locais[1]);
+        UsuarioLogado.getInstancia().getUsuario().setBairroAtualId(locais[2]);
+
+        // Este método está sendo chamado quando entra no app e quando clica no trocar localidade...
+        getDataFromFirebase(Constantes.POSTAGENS_EVENTOS());
     }
 
     void checkMenuButton(){
@@ -407,6 +416,13 @@ public class ActivityMenuInicial extends AppCompatActivity
             ViewUtil.init(this).showCancelDialogLocation();// caso contrário, nega a troca
             Log.e("checkMenuButton","else");
         }
+    }
+
+    @Subscribe
+    public void pegaEndereco(Eventos.PegaEndereco endereco){
+        // TODO chama o resto...
+        Log.e("mainActEndereco", "BATEU");
+        setaEndereco(endereco.getLocais());
     }
 
     @Subscribe
