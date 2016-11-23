@@ -398,8 +398,7 @@ public class ActivityMenuInicial extends AppCompatActivity
                         JSONObject estadoJson = results.getJSONArray("address_components").getJSONObject(5);
                         String estado = estadoJson.getString("long_name");
 
-                        Log.e("onSuccess",estado+" | "+cidade+" | "+bairro);
-
+                        //Log.e("onSuccess",estado+" | "+cidade+" | "+bairro);
 
                         UsuarioLogado.getInstancia().getUsuario().setEstadoAtualId(estado);
                         UsuarioLogado.getInstancia().getUsuario().setCidadeAtualId(cidade);

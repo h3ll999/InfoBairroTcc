@@ -9,7 +9,7 @@ import epiccube.com.br.infobairrotcc.models.entities.Usuario;
 public class UsuarioLogado {
 
     private static UsuarioLogado instancia = null;
-    private Usuario usuario;
+    private static Usuario usuario;
 
     public UsuarioLogado() {
     }
@@ -19,6 +19,7 @@ public class UsuarioLogado {
             instancia = new UsuarioLogado();
 
         }
+
         return instancia;
     }
 

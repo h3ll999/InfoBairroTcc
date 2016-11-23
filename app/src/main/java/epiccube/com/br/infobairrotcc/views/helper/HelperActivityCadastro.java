@@ -30,18 +30,23 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
+import com.loopj.android.http.JsonHttpResponseHandler;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.io.IOException;
 import java.util.UUID;
 
+import cz.msebera.android.httpclient.Header;
 import epiccube.com.br.infobairrotcc.R;
 import epiccube.com.br.infobairrotcc.eventos.Eventos;
 import epiccube.com.br.infobairrotcc.models.contantes.Constantes;
 import epiccube.com.br.infobairrotcc.models.entities.Usuario;
 import epiccube.com.br.infobairrotcc.models.singleton.UsuarioLogado;
+import epiccube.com.br.infobairrotcc.utils.AsyncHTTP;
 import epiccube.com.br.infobairrotcc.utils.LocationUtils;
 import epiccube.com.br.infobairrotcc.utils.MyGPS;
 import epiccube.com.br.infobairrotcc.utils.Permissions;
@@ -140,10 +145,13 @@ public class HelperActivityCadastro {
                 senha = cadastro_edt_senha.getText().toString().trim();
 
                 if(Validar.CADASTRO(nome,email,senha)){
+
                     cadastro_btn_cadastrar.setEnabled(false);
                     usuario = new Usuario();
                     usuario.setNome(nome);
                     usuario.setEmail(email);
+                    UsuarioLogado.getInstancia().setUsuario(usuario);
+
                     //usuario.setSenha(senha);
 
                     //firebase();
@@ -243,7 +251,7 @@ public class HelperActivityCadastro {
     public void pegaCoordenada(Eventos.PegaCoordenada coordenada){
         coord = coordenada.getCood();
         usuario.setLatitudeLongitude(coord);
-        Log.e("pegaCoordenada","HelperActivityCadastro");
+        Log.e("pegaCoordenada", coord[0]+" | "+coord[1]);
         locais();
     }
 
@@ -252,31 +260,48 @@ public class HelperActivityCadastro {
 
         try {
 
-            LocationUtils l = new LocationUtils(context, coord);
+            AsyncHTTP.get(Constantes.GOOGLE_API(coord[0], coord[1]), null, new JsonHttpResponseHandler(){
 
-            // TODO CONSERTAR ESSE NEGÓCIO...
-            //locais = l.getLocais();
+                @Override
+                public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
 
-            progressDialog.dismiss();
+                    try {
 
-            // TODO verificar melhor essa coisa nesse caso...
-            /*if (!l.servicoDisponivel(context)){
-                return;
-                // interrompe o fluxo
-            }*/
+                        JSONObject results = response.getJSONArray("results").getJSONObject(0);
 
-            usuario.setEstadoAtualId(locais[0]);
-            usuario.setCidadeAtualId(locais[1]);
-            usuario.setBairroAtualId(locais[2]);
+                        JSONObject bairroJson = results.getJSONArray("address_components").getJSONObject(2);
+                        String bairro = bairroJson.getString("long_name");
 
-            if(locais[0]==null&&locais[1]==null&&locais[2]==null){
-                throw new Exception("Erro: ");
-            }
+                        JSONObject cidadeJson = results.getJSONArray("address_components").getJSONObject(3);
+                        String cidade = cidadeJson.getString("long_name");
 
-            pergunta();
+                        JSONObject estadoJson = results.getJSONArray("address_components").getJSONObject(5);
+                        String estado = estadoJson.getString("long_name");
+
+                        Log.e("onSuccessCadastro", bairro+" | "+cidade+" | "+estado);
+
+                        /*UsuarioLogado.getInstancia().getUsuario().setEstadoAtualId(estado);
+                        UsuarioLogado.getInstancia().getUsuario().setCidadeAtualId(cidade);
+                        UsuarioLogado.getInstancia().getUsuario().setBairroAtualId(bairro);*/
+
+                        usuario.setEstadoAtualId(estado);
+                        usuario.setCidadeAtualId(cidade);
+                        usuario.setBairroAtualId(bairro);
+
+                        progressDialog.dismiss();
+
+                        pergunta();
+
+                    } catch (JSONException e) {
+                        Log.e("Exception", "FUDEU");
+                        // tem que mostrar uma msg que deu pau na google...
+                    }
+
+                }
+            });
 
         } catch (Exception e) {
-            Toast.makeText(context, "Erro(remover esse toast): "+e.getMessage(), Toast.LENGTH_SHORT).show();
+            Toast.makeText(context, "Erro: "+e.getMessage(), Toast.LENGTH_SHORT).show();
             locais();// caso dá erro, chama de novo...
         }
     }
@@ -288,9 +313,9 @@ public class HelperActivityCadastro {
             public void onClick(DialogInterface dialog, int which) {
                 // se sim, então prosseguir (salvar o local no banco...)
                 usuario.setPermissaoPostagem(true);
-                usuario.setEstadoOrigemId(locais[0]);
-                usuario.setCidadeOrigemId(locais[1]);
-                usuario.setBairroOrigemId(locais[2]);
+                usuario.setEstadoOrigemId(usuario.getEstadoAtualId());
+                usuario.setCidadeOrigemId(usuario.getCidadeAtualId());
+                usuario.setBairroOrigemId(usuario.getBairroAtualId());
                 firebase();
             }
         }, new DialogInterface.OnClickListener() {
