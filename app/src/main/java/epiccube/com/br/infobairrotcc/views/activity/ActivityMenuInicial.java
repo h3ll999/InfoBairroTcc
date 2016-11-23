@@ -65,6 +65,7 @@ import epiccube.com.br.infobairrotcc.utils.MyUtils;
 import epiccube.com.br.infobairrotcc.utils.Permissions;
 import epiccube.com.br.infobairrotcc.utils.ViewUtil;
 import epiccube.com.br.infobairrotcc.views.adapter.AdapterPostagens;
+import epiccube.com.br.infobairrotcc.views.asynctask.AsyncTaskLocation;
 import epiccube.com.br.infobairrotcc.views.asynctask.AsynkTaskMockPostagem;
 import epiccube.com.br.infobairrotcc.views.dialogs.DialogPostagem;
 
@@ -357,15 +358,19 @@ public class ActivityMenuInicial extends AppCompatActivity
     }
 
     public void locais(){
-            Log.e("locais", "BATEU");
+
+        Log.e("Activity", "locais");
         // já está salvo as coords nesse momento...
         Double[] coords = UsuarioLogado.getInstancia().getUsuario().getLatitudeLongitude();
 
         try {
             progressDialog.dismiss();
 
-            LocationUtils l = new LocationUtils(this, coords);
-            l.getLocais();
+            //LocationUtils l = new LocationUtils(this, coords);
+            //l.getLocais();
+
+            AsyncTaskLocation asyncTaskLocation = new AsyncTaskLocation(this, coords);
+            asyncTaskLocation.execute();
 
             /*if (!l.servicoDisponivel(this)){
                 return;
@@ -379,8 +384,7 @@ public class ActivityMenuInicial extends AppCompatActivity
             // Este método está sendo chamado quando entra no app e quando clica no trocar localidade...
             getDataFromFirebase(Constantes.POSTAGENS_EVENTOS());*/
 
-        } catch (IOException e) {
-            Log.e("MenuInicial - Locais", e.getMessage());
+        } catch (Exception e) {
             locais(); // chama ele mesmo em caso de erro...
         }
     }
@@ -420,8 +424,7 @@ public class ActivityMenuInicial extends AppCompatActivity
 
     @Subscribe
     public void pegaEndereco(Eventos.PegaEndereco endereco){
-        // TODO chama o resto...
-        Log.e("mainActEndereco", "BATEU");
+        Log.e("Activity", "pegaEndereco");
         setaEndereco(endereco.getLocais());
     }
 

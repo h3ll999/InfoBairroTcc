@@ -1,6 +1,7 @@
 package epiccube.com.br.infobairrotcc.utils;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.location.Address;
 import android.location.Geocoder;
@@ -21,43 +22,42 @@ import epiccube.com.br.infobairrotcc.eventos.Eventos;
 
 public class LocationUtils {
 
-    private Activity activity;
+    private Context activity;
     private Double[] coord;
     private String [] locais;
 
     private int contador;
 
-    public LocationUtils(Activity activity, Double[] coord){
+    public LocationUtils(Context activity, Double[] coord){
         this.activity = activity;
         this.coord = coord;
         contador = 0;
     }
 
-    public void getLocais() throws IOException {
-        Log.e("LocationUtils", "BATEU");
-        Geocoder gcd = new Geocoder(activity, Locale.getDefault());
-        List<Address> addresses = gcd.getFromLocation(coord[0], coord[1], 1); //TODO verificar se esse troço é ASÍNCRONO MESMO
+    public List<Address> getLocais() throws IOException {
 
-        //TODO daqui pra baixo é tudo NOUTRO LUGAR...
+        //TODO Para garantir, vai ter que usar do serviço da Google e não essa porcaria de CLASSE
+
+        Log.e("LocationUtils", "getLocais");
+        Geocoder gcd = new Geocoder(activity, Locale.getDefault());
+        return gcd.getFromLocation(coord[0], coord[1], 1);
+    }
+
+    public void finalizar(List<Address> addresses){
         if (addresses.size() > 0){
-            locais = new String[3]; // cidade - bairro
+            Log.e("LocationUtils-address", addresses.toString());
+            locais = new String[3];
             locais[0] = addresses.get(0).getAdminArea(); // estado
             locais[1] = addresses.get(0).getLocality(); // cidade
             locais[2] = addresses.get(0).getSubLocality(); // bairro
 
-            //Log.e("LocationUtils-getLocais",locais[0]+" | "+locais[1]+" | "+locais[2]);
+            Log.e("LocationUtils-finalizar",locais[0]+" | "+locais[1]+" | "+locais[2]);
 
             //verificaSeEstaNulo(locais);
 
             EventBus.getDefault().post(new Eventos.PegaEndereco(locais));
 
-        } else {
-            // TODO CRY
         }
-    }
-
-    public void aaaaa(){
-
     }
 
     /*private void verificaSeEstaNulo(String [] locais) throws IOException {
