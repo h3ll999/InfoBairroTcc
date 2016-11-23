@@ -96,9 +96,9 @@ public class ActivityMenuInicial extends AppCompatActivity
         EventBus.getDefault().register(this);
 
         setFlipper();
-        setLoading();
         setToolbar();
         setFAB();
+        setLoading();
         setDrawer();
         setNavView();
 
@@ -320,12 +320,15 @@ public class ActivityMenuInicial extends AppCompatActivity
         recyclerView = (RecyclerView) findViewById(R.id.activity_menu_inicial_recycler_view); // recycler view castado antes...
         p = (ProgressBar) findViewById(R.id.progressBar1);
         p.setVisibility(View.INVISIBLE);
+        startLoading();
     }
 
     void startLoading(){
-        fab.setEnabled(false);
-        recyclerView.setVisibility(View.INVISIBLE);
-        p.setVisibility(View.VISIBLE);
+        if(fab.isEnabled()){
+            fab.setEnabled(false);
+            recyclerView.setVisibility(View.INVISIBLE);
+            p.setVisibility(View.VISIBLE);
+        }
     }
 
     void dismissLoading(){
