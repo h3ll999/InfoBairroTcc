@@ -45,5 +45,9 @@ public class Constantes {
         return Constantes.POSTAGENS+"/"+locais[0]+"/"+locais[1]+"/"+locais[2]+"/"+filtro;
     }
 
+    public static String GOOGLE_API(Double lat, Double longi){
+        return "https://maps.googleapis.com/maps/api/geocode/json?latlng="+lat.toString()+","+longi.toString()+"&key=AIzaSyDhgif6eLdQY7E1F1mxT2OqfVN19FErVJU";
+    }
+
 
 }
