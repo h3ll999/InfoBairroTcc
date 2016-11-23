@@ -385,31 +385,38 @@ public class ActivityMenuInicial extends AppCompatActivity
                 @Override
                 public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
 
-                    /*try {
+                    try {
 
                         JSONObject results = response.getJSONArray("results").getJSONObject(0);
-                        JSONObject bairroJson = results.getJSONObject("address_components").getJSONObject(0);
-                        String bairro = components.get
+
+                        JSONObject bairroJson = results.getJSONArray("address_components").getJSONObject(2);
+                        String bairro = bairroJson.getString("long_name");
+
+                        JSONObject cidadeJson = results.getJSONArray("address_components").getJSONObject(3);
+                        String cidade = cidadeJson.getString("long_name");
+
+                        JSONObject estadoJson = results.getJSONArray("address_components").getJSONObject(5);
+                        String estado = estadoJson.getString("long_name");
+
+                        Log.e("onSuccess",estado+" | "+cidade+" | "+bairro);
+
+
+                        UsuarioLogado.getInstancia().getUsuario().setEstadoAtualId(estado);
+                        UsuarioLogado.getInstancia().getUsuario().setCidadeAtualId(cidade);
+                        UsuarioLogado.getInstancia().getUsuario().setBairroAtualId(bairro);
+
+                        // Este método está sendo chamado quando entra no app e quando clica no trocar localidade...
+                        getDataFromFirebase(Constantes.POSTAGENS_EVENTOS());
 
                     } catch (JSONException e) {
                         Log.e("Exception", "FUDEU");
                         // tem que mostrar uma msg que deu pau na google...
-                    }*/
+                    }
 
                 }
             });
 
-            /*if (!l.servicoDisponivel(this)){
-                return;
-                // interrompe o fluxo
-            }
 
-            UsuarioLogado.getInstancia().getUsuario().setEstadoAtualId(locais[0]);
-            UsuarioLogado.getInstancia().getUsuario().setCidadeAtualId(locais[1]);
-            UsuarioLogado.getInstancia().getUsuario().setBairroAtualId(locais[2]);
-
-            // Este método está sendo chamado quando entra no app e quando clica no trocar localidade...
-            getDataFromFirebase(Constantes.POSTAGENS_EVENTOS());*/
 
         } catch (Exception e) {
             locais(); // chama ele mesmo em caso de erro...
