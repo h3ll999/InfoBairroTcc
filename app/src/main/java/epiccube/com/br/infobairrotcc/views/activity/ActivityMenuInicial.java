@@ -39,9 +39,13 @@ import com.google.firebase.database.ValueEventListener;
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonParser;
+import com.loopj.android.http.JsonHttpResponseHandler;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -52,6 +56,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
+import cz.msebera.android.httpclient.Header;
 import de.hdodenhof.circleimageview.CircleImageView;
 import epiccube.com.br.infobairrotcc.R;
 import epiccube.com.br.infobairrotcc.eventos.Eventos;
@@ -59,6 +64,7 @@ import epiccube.com.br.infobairrotcc.models.contantes.Constantes;
 import epiccube.com.br.infobairrotcc.models.entities.Postagem;
 import epiccube.com.br.infobairrotcc.models.entities.Usuario;
 import epiccube.com.br.infobairrotcc.models.singleton.UsuarioLogado;
+import epiccube.com.br.infobairrotcc.utils.AsyncHTTP;
 import epiccube.com.br.infobairrotcc.utils.LocationUtils;
 import epiccube.com.br.infobairrotcc.utils.MyGPS;
 import epiccube.com.br.infobairrotcc.utils.MyUtils;
@@ -369,8 +375,29 @@ public class ActivityMenuInicial extends AppCompatActivity
             //LocationUtils l = new LocationUtils(this, coords);
             //l.getLocais();
 
-            AsyncTaskLocation asyncTaskLocation = new AsyncTaskLocation(this, coords);
-            asyncTaskLocation.execute();
+            // TODO Chama o asynchttp
+
+            /*AsyncTaskLocation asyncTaskLocation = new AsyncTaskLocation(this, coords);
+            asyncTaskLocation.execute();*/
+
+            AsyncHTTP.get(Constantes.GOOGLE_API(coords[0], coords[1]), null, new JsonHttpResponseHandler(){
+
+                @Override
+                public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+
+                    /*try {
+
+                        JSONObject results = response.getJSONArray("results").getJSONObject(0);
+                        JSONObject bairroJson = results.getJSONObject("address_components").getJSONObject(0);
+                        String bairro = components.get
+
+                    } catch (JSONException e) {
+                        Log.e("Exception", "FUDEU");
+                        // tem que mostrar uma msg que deu pau na google...
+                    }*/
+
+                }
+            });
 
             /*if (!l.servicoDisponivel(this)){
                 return;
