@@ -36,6 +36,8 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.GenericTypeIndicator;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.messaging.FirebaseMessagingService;
+import com.google.firebase.messaging.RemoteMessage;
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonParser;
@@ -91,7 +93,7 @@ public class ActivityMenuInicial extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_menu_inicial);
 
-        Toast.makeText(this, "Bem vindo, "+UsuarioLogado.getInstancia().getUsuario().getNome(), Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, "Bem vindo, "+ UsuarioLogado.getInstancia().getUsuario().getNome(), Toast.LENGTH_SHORT).show();
 
         EventBus.getDefault().register(this);
 
@@ -111,7 +113,6 @@ public class ActivityMenuInicial extends AppCompatActivity
         }
     }
 
-
     void checagemInicial(){
         if(UsuarioLogado.getInstancia().getUsuario().getLatitudeLongitude() == null){
             // TODO ver melhor modo de verificar isso (INTENT)
@@ -125,10 +126,6 @@ public class ActivityMenuInicial extends AppCompatActivity
             getDataFromFirebase(Constantes.POSTAGENS_EVENTOS());
         }
     }
-
-
-
-
 
     // após o fim da requisição dos dados da asynctask, executa o método abaixo...
     /*@Subscribe
@@ -313,7 +310,6 @@ public class ActivityMenuInicial extends AppCompatActivity
 
         recyclerView.setAdapter(new AdapterPostagens(listagemPostagem, this));
 
-        //recyclerView.getRecycledViewPool().setMaxRecycledViews(0, 0);
     }
 
     void setLoading(){
@@ -414,11 +410,8 @@ public class ActivityMenuInicial extends AppCompatActivity
                         Log.e("Exception", "FUDEU");
                         // tem que mostrar uma msg que deu pau na google...
                     }
-
                 }
             });
-
-
 
         } catch (Exception e) {
             locais(); // chama ele mesmo em caso de erro...
